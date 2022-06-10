@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.DetailPhieuNhapActivity_Add">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/bg_detail"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="30dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/lbMaVatTu"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:textAppearance="@style/lableText"
+                android:text="Mã vật tư"/>
+
+            <TextView
+                android:id="@+id/etMaVatTu"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/lbMaVatTu"
+                android:textAppearance="@style/inputText"
+                android:textAlignment="textEnd"
+                android:text="G0"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Số lượng">
+                <EditText
+                    android:id="@+id/etSoLuong"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:textSize="16dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </RelativeLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp">
+
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:paddingLeft="20dp"
+            android:paddingBottom="20dp"
+            >
+
+            <ImageView
+                android:id="@+id/ivSaveDetailPhieuNhap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/bg_button_save" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/baloo"
+                android:gravity="center"
+                android:text="Lưu"
+                android:textColor="@color/white"
+                android:textSize="30dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:paddingBottom="20dp"
+            android:layout_alignParentRight="true"
+            android:paddingRight="20dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/bg_button_cancel"/>
+            <ImageView
+                android:id="@+id/ivCancelDetailPhieuNhap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@color/white"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/baloo"
+                android:gravity="center"
+                android:text="Hủy"
+                android:textColor="@color/black"
+                android:textSize="30dp" />
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

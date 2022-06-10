@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="30dp"
+    android:paddingHorizontal="20dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/bg_detail"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="30dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/lbSoPhieu"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/baloo"
+                android:text="Số phiếu : "
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/tvSoPhieu"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/lbSoPhieu"
+                android:fontFamily="@font/carter_one"
+                android:text="1"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="24dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbSoPhieu"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/lbMaKho"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/baloo"
+                android:text="Mã kho    : "
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/tvMaKho"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/lbMaKho"
+                android:fontFamily="@font/carter_one"
+                android:text="1"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="24dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbSoPhieu"
+            android:padding="10dp">
+            <TextView
+                android:id="@+id/lbNgayLap"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/baloo"
+                android:text="Ngày lập : "
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/tvNgayLap"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/lbNgayLap"
+                android:fontFamily="@font/carter_one"
+                android:text="1"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="24dp" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

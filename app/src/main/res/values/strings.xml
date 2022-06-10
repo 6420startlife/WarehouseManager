@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">WarehouseManager</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="list_vatTu">
+        <item>Gạch Ống - GO</item>
+        <item>Xi Măng - XM</item>
+        <item>Sắt Tròn - SA</item>
+        <item>Sơn Dầu - S0</item>
+    </string-array>
+</resources>

@@ -12,7 +12,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,6 +30,11 @@ import com.android.warehousemanager.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,9 +44,9 @@ public class PhieuNhapActivity extends AppCompatActivity {
     protected static final int REQUEST_ADD_PHIEU_NHAP = 2;
     protected static final int REQUEST_EDIT_PHIEU_NHAP = 3;
     protected static final int REQUEST_REMOVE_PHIEU_NHAP = 4;
-    protected static final int REQUEST_REMOVE_DETAIL_PHIEU_NHAP = 7;
     private RecyclerView rvPhieuNhap;
     private EditText etTimKiem;
+    private ProgressDialog progressDialog;
 
     private List<PhieuNhap> list = new ArrayList<>();
     private PhieuNhapAdapter adapter;
@@ -58,19 +65,19 @@ public class PhieuNhapActivity extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if(result.getResultCode() == REQUEST_ADD_PHIEU_NHAP){
-                        getDataFromApi();
+                        uploadDataFromApi();
                     }
                     else if(result.getResultCode() == REQUEST_EDIT_PHIEU_NHAP){
                         if(result.getData().getExtras() != null){
                             PhieuNhap value = (PhieuNhap) result.getData().getExtras().get("edit_phieu_nhap");
                             updateDataToApi(value);
-                            getDataFromApi();
+                            uploadDataFromApi();
                         }
                     }else if(result.getResultCode() == REQUEST_REMOVE_PHIEU_NHAP){
                         if(result.getData().getExtras() != null){
                             PhieuNhap value = (PhieuNhap) result.getData().getExtras().get("remove_phieu_nhap");
                             removeDataFromApi(value);
-                            getDataFromApi();
+                            uploadDataFromApi();
                         }
                     }
                 }
@@ -98,6 +105,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
                 Log.e("ErrorApi", t.getMessage());
             }
         });
+
     }
 
     private void updateDataToApi(PhieuNhap value) {
@@ -151,25 +159,29 @@ public class PhieuNhapActivity extends AppCompatActivity {
     }
 
     private void setEvent() {
-        getDataFromApi();
+        rvPhieuNhap.startLayoutAnimation();
+        adapter = new PhieuNhapAdapter(list ,new IClickItemPhieuNhapListener() {
+            @Override
+            public void onClickItemPhieuNhap(PhieuNhap value) {
+                onClickGoToDetail(value);
+            }
+        });
+        rvPhieuNhap.setAdapter(adapter);
+        uploadDataFromApi();
     }
 
-
-    private void getDataFromApi() {
+    private void uploadDataFromApi() {
+        progressDialog = ProgressDialog.show(PhieuNhapActivity.this,"Information","Loading ... ",true,false);
         ApiService.API_SERVICE.getAllPhieuNhap().enqueue(new Callback<List<PhieuNhap>>() {
             @Override
             public void onResponse(Call<List<PhieuNhap>> call, Response<List<PhieuNhap>> response) {
                 if(!response.isSuccessful()){
                     return;
                 }
-                rvPhieuNhap.startLayoutAnimation();
-                adapter = new PhieuNhapAdapter(response.body() ,new IClickItemPhieuNhapListener() {
-                    @Override
-                    public void onClickItemPhieuNhap(PhieuNhap value) {
-                        onClickGoToDetail(value);
-                    }
-                });
-                rvPhieuNhap.setAdapter(adapter);
+                list.clear();
+                list.addAll(response.body());
+                adapter.notifyDataSetChanged();
+                progressDialog.dismiss();
             }
 
             @Override

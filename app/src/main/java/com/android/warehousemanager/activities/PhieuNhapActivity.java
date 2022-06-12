@@ -71,13 +71,11 @@ public class PhieuNhapActivity extends AppCompatActivity {
                         if(result.getData().getExtras() != null){
                             PhieuNhap value = (PhieuNhap) result.getData().getExtras().get("edit_phieu_nhap");
                             updateDataToApi(value);
-                            uploadDataFromApi();
                         }
                     }else if(result.getResultCode() == REQUEST_REMOVE_PHIEU_NHAP){
                         if(result.getData().getExtras() != null){
                             PhieuNhap value = (PhieuNhap) result.getData().getExtras().get("remove_phieu_nhap");
                             removeDataFromApi(value);
-                            uploadDataFromApi();
                         }
                     }
                 }
@@ -89,13 +87,10 @@ public class PhieuNhapActivity extends AppCompatActivity {
             public void onResponse(Call<PhieuNhap> call, Response<PhieuNhap> response) {
                 if(!response.isSuccessful()) {
                     Toast.makeText(PhieuNhapActivity.this, "Request fail " + response.code(), Toast.LENGTH_SHORT).show();
-                    Log.e("PhieuNhap",value.getSoPhieu() + "");
-                    Log.e("PhieuNhap",response.raw() + "");
-
                     return;
                 }
                 if(response.code() == STATUS_CODE_NO_CONTENT){
-                    Toast.makeText(PhieuNhapActivity.this, "Xoá thành công", Toast.LENGTH_SHORT).show();
+                    uploadDataFromApi();
                 }
             }
 
@@ -117,7 +112,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
                     return;
                 }
                 if(response.code() == STATUS_CODE_NO_CONTENT){
-                    Toast.makeText(PhieuNhapActivity.this, "Sửa thành công", Toast.LENGTH_SHORT).show();
+                    uploadDataFromApi();
                 }
             }
 
@@ -159,6 +154,12 @@ public class PhieuNhapActivity extends AppCompatActivity {
     }
 
     private void setEvent() {
+        initProgressDialog();
+        initRecycleView();
+        uploadDataFromApi();
+    }
+
+    private void initRecycleView() {
         rvPhieuNhap.startLayoutAnimation();
         adapter = new PhieuNhapAdapter(list ,new IClickItemPhieuNhapListener() {
             @Override
@@ -167,15 +168,22 @@ public class PhieuNhapActivity extends AppCompatActivity {
             }
         });
         rvPhieuNhap.setAdapter(adapter);
-        uploadDataFromApi();
+    }
+
+    private void initProgressDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading ...");
+        progressDialog.setCancelable(false);
     }
 
     private void uploadDataFromApi() {
-        progressDialog = ProgressDialog.show(PhieuNhapActivity.this,"Information","Loading ... ",true,false);
+        progressDialog.show();
         ApiService.API_SERVICE.getAllPhieuNhap().enqueue(new Callback<List<PhieuNhap>>() {
             @Override
             public void onResponse(Call<List<PhieuNhap>> call, Response<List<PhieuNhap>> response) {
                 if(!response.isSuccessful()){
+                    Toast.makeText(PhieuNhapActivity.this, "Request Fail " + response.code(), Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                     return;
                 }
                 list.clear();
@@ -186,6 +194,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<PhieuNhap>> call, Throwable t) {
+                progressDialog.dismiss();
                 Toast.makeText(PhieuNhapActivity.this, "Call Api get All Phieu Nhap fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }

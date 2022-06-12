@@ -37,6 +37,11 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -56,8 +61,8 @@ public class VatTuActivity_Edit extends AppCompatActivity {
     private Uri _uri;
     private ProgressDialog progressDialog;
     private boolean isAdd = false;
+    private final String defaultImageUrl = "https://res.cloudinary.com/thuan6420/image/upload/v1652627208/xo5qx46gfuat6bas9jd0.jpg";;
 
-    //GETTER AND SETTER
     public Uri get_uri() {
         return _uri;
     }
@@ -108,7 +113,7 @@ public class VatTuActivity_Edit extends AppCompatActivity {
         btnLuuVatTu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkPermissionToUpload();
+                uploadImageToGetUrl();
             }
         });
         ivAnhVatTu_Edit.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +125,7 @@ public class VatTuActivity_Edit extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle == null) {
             isAdd = true;
-            Picasso.get().load("https://res.cloudinary.com/thuan6420/image/upload/v1652627208/xo5qx46gfuat6bas9jd0.jpg").into(ivAnhVatTu_Edit);
+            Picasso.get().load(defaultImageUrl).into(ivAnhVatTu_Edit);
         }else{
             VatTu value = (VatTu) bundle.get("edit_vat_tu");
             if(value != null){
@@ -133,14 +138,13 @@ public class VatTuActivity_Edit extends AppCompatActivity {
                 try{
                     Picasso.get().load(value.getAnhVatTu()).into(ivAnhVatTu_Edit);
                 }catch (Exception e){
-                    Picasso.get().load("https://res.cloudinary.com/thuan6420/image/upload/v1652627208/xo5qx46gfuat6bas9jd0.jpg").into(ivAnhVatTu_Edit);
+                    Picasso.get().load(defaultImageUrl).into(ivAnhVatTu_Edit);
                 }
             }
         }
     }
 
     private void chooseImage() {
-        Toast.makeText(this, "Đã click image", Toast.LENGTH_SHORT).show();
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             openGallery();
             return;
@@ -160,69 +164,80 @@ public class VatTuActivity_Edit extends AppCompatActivity {
         launcher.launch(Intent.createChooser(intent, "Select Pictures"));
     }
 
-    private void checkPermissionToUpload() {
-        progressDialog.show();
-        if(get_uri() != null){
-            if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-                uploadImageToGetUrl();
-            }else {
-                String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                requestPermissions(permission, REQUEST_READ_EXTERNAL_STORAGE_REAL_PATH);
-            }
-        }else{
+    private void uploadImageToGetUrl() {
+
+        if(get_uri() == null) {
+            progressDialog.show();
             VatTu value = new VatTu(tietMaVatTu.getText().toString().trim()
                     ,tietTenVatTu.getText().toString().trim()
-                    , getUrlImage()
+                    ,defaultImageUrl
                     ,tietDonViTinh.getText().toString().trim()
                     ,tietXuatXu.getText().toString().trim());
-            returnSaveResult(value);
+            returnResult(value);
+            return;
         }
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.show();
+                    }
+                });
+                String strRealPath = RealPathUtil.getRealPath(VatTuActivity_Edit.this,get_uri());
+                File file = new File(strRealPath);
+                RequestBody requestBodyFile = RequestBody.create(MediaType.parse("multipart/form-data"),file);
+                MultipartBody.Part partFile = MultipartBody.Part.createFormData("file",file.getName(),requestBodyFile);
+                ApiService.API_SERVICE.uploadImage(partFile).enqueue(new Callback<ApiResponse>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                        if(!response.isSuccessful()) {
+                            progressDialog.dismiss();
+                            return;
+                        }
+                        ApiResponse apiResponse = response.body();
+                        VatTu value = new VatTu(tietMaVatTu.getText().toString().trim()
+                                ,tietTenVatTu.getText().toString().trim()
+                                ,apiResponse.getData()
+                                ,tietDonViTinh.getText().toString().trim()
+                                ,tietXuatXu.getText().toString().trim());
+                        returnResult(value);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ApiResponse> call, Throwable t) {
+                        progressDialog.dismiss();
+                        if (t.getMessage().equalsIgnoreCase("timeout")){
+                            Toast.makeText(VatTuActivity_Edit.this, "Timeout", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        Toast.makeText(VatTuActivity_Edit.this, "Call API upload image fail", Toast.LENGTH_SHORT).show();
+                        Log.e("ErrorApi", t.getMessage());
+                    }
+                });
+            }
+        });
+
+
+
     }
 
-    private void returnSaveResult(VatTu value) {
+    private void returnResult(VatTu value) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         if(isAdd){
-            bundle.putSerializable("add_vat_tu",value);
+            bundle.putSerializable("add_vat_tu", value);
             intent.putExtras(bundle);
             setResult(REQUEST_ADD_VAT_TU,intent);
         }else {
-            bundle.putSerializable("edit_vat_tu",value);
+            bundle.putSerializable("edit_vat_tu", value);
             intent.putExtras(bundle);
             setResult(REQUEST_EDIT_VAT_TU,intent);
         }
         progressDialog.dismiss();
         finish();
-    }
-
-    private void uploadImageToGetUrl() {
-        String strRealPath = RealPathUtil.getRealPath(VatTuActivity_Edit.this,get_uri());
-        File file = new File(strRealPath);
-        RequestBody requestBodyFile = RequestBody.create(MediaType.parse("multipart/form-data"),file);
-        MultipartBody.Part partFile = MultipartBody.Part.createFormData("file",file.getName(),requestBodyFile);
-        ApiService.API_SERVICE.uploadImage(partFile).enqueue(new Callback<ApiResponse>() {
-            @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                if(!response.isSuccessful()) {
-                    return;
-                }
-                ApiResponse apiResponse = response.body();
-                Log.e("error",response.body().getData());
-                if(apiResponse.isSuccess() == true){
-                    VatTu value = new VatTu(tietMaVatTu.getText().toString().trim()
-                            ,tietTenVatTu.getText().toString().trim()
-                            ,apiResponse.getData()
-                            ,tietDonViTinh.getText().toString().trim()
-                            ,tietXuatXu.getText().toString().trim());
-                    returnSaveResult(value);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
-                Toast.makeText(VatTuActivity_Edit.this, "Call API upload image fail", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void setControl() {

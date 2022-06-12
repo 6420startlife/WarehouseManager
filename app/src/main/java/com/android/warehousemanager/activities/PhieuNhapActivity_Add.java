@@ -136,11 +136,16 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         month += 1;
-                        String date;
+                        String date = "";
+                        if(day < 10){
+                            date += "0" + day;
+                        }else {
+                            date += day;
+                        }
                         if(month < 10) {
-                            date = day + "/0" + month + "/" + year;
+                            date += "/0" + month + "/" + year;
                         }else{
-                            date = day + "/" + month + "/" + year;
+                            date += "/" + month + "/" + year;
                         }
                         etNgayLap.setText(date);
                     }
@@ -207,19 +212,21 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
             Toast.makeText(PhieuNhapActivity_Add.this,"Hãy thêm ít nhất 1 vật tư",Toast.LENGTH_SHORT).show();
             return;
         }
-
         String[] maKho =  actvKho.getText().toString().trim().split("\\s",2);
         PhieuNhap value = new PhieuNhap(etNgayLap.getText().toString().trim(),maKho[0]);
         ApiService.API_SERVICE.createPhieuNhap(value).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if(!response.isSuccessful()){
-                    Toast.makeText(PhieuNhapActivity_Add.this, "Request fail ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PhieuNhapActivity_Add.this, "Request fail " + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 ApiResponse apiResponse = response.body();
                 soPhieu = Integer.valueOf(apiResponse.getData());
                 createCTPNToApi(soPhieu, value);
+                Intent intent =  new Intent();
+                setResult(REQUEST_ADD_PHIEU_NHAP,intent);
+                finish();
             }
 
             @Override
@@ -228,9 +235,6 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
                 Log.e("ErrorApi",t.getMessage());
             }
         });
-        Intent intent =  new Intent();
-        setResult(REQUEST_ADD_PHIEU_NHAP,intent);
-        finish();
     }
 
     private void createCTPNToApi(int soPhieu, PhieuNhap value) {

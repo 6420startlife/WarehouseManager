@@ -104,17 +104,16 @@ public class PhieuNhapActivity_Edit extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         month += 1;
-                        String date;
+                        String date = "";
+                        if(day < 10){
+                            date += "0" + day;
+                        }else {
+                            date += day;
+                        }
                         if(month < 10) {
-                            if(day < 10){
-                                date = "0" + day + "/0" + month + "/" + year;
-                            }
-                            date = day + "/0" + month + "/" + year;
+                            date += "/0" + month + "/" + year;
                         }else{
-                            if(day < 10){
-                                date = "0" + day + "/0" + month + "/" + year;
-                            }
-                            date = day + "/" + month + "/" + year;
+                            date += "/" + month + "/" + year;
                         }
                         etNgayLap.setText(date);
                     }

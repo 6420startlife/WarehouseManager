@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.android.warehousemanager.interfaces.IClickItemKhoListener;
 import com.android.warehousemanager.models.Kho;
 import com.android.warehousemanager.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,6 +38,9 @@ public class KhoActivity extends AppCompatActivity {
     protected static final int REQUEST_ADD_KHO = 1;
     protected static final int REQUEST_EDIT_KHO = 2;
     private ListView lvKho;
+    private ProgressDialog progressDialog;
+
+    private List<Kho> listKho = new ArrayList<>();
     private KhoAdapter adapter;
 
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(
@@ -47,15 +52,11 @@ public class KhoActivity extends AppCompatActivity {
                         if(result.getData().getExtras() != null){
                             Kho value = (Kho) result.getData().getExtras().get("add_kho");
                             addDataToApi(value);
-                            adapter.addItem(value);
-                            adapter.notifyDataSetChanged();
                         }
                     }else if(result.getResultCode() == REQUEST_EDIT_KHO){
                         if(result.getData().getExtras() != null){
                             Kho value = (Kho) result.getData().getExtras().get("edit_kho");
                             updateDataToApi(value);
-                            adapter.editItem(value);
-                            adapter.notifyDataSetChanged();
                         }
                     }
                 }
@@ -65,7 +66,7 @@ public class KhoActivity extends AppCompatActivity {
         ApiService.API_SERVICE.updateKho(value).enqueue(new Callback<Kho>() {
             @Override
             public void onResponse(Call<Kho> call, Response<Kho> response) {
-                Toast.makeText(KhoActivity.this, "Sửa thành công", Toast.LENGTH_SHORT).show();
+                uploadDataFromApi();
             }
 
             @Override
@@ -81,7 +82,7 @@ public class KhoActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Kho> call, Response<Kho> response) {
                 if(response.code() == STATUS_CODE_NO_CONTENT){
-                    Toast.makeText(KhoActivity.this,"Thêm thành công",Toast.LENGTH_SHORT).show();
+                    uploadDataFromApi();
                 }
             }
             @Override
@@ -127,34 +128,52 @@ public class KhoActivity extends AppCompatActivity {
     }
 
     private void setEvent() {
-        getDataFromApi();
+        initProgressDialog();
+        initListView();
+        uploadDataFromApi();
     }
 
-    private void getDataFromApi() {
+    private void initProgressDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading ...");
+        progressDialog.setCancelable(false);
+    }
+
+    private void initListView() {
+        adapter = new KhoAdapter(KhoActivity.this, 0, listKho, new IClickItemKhoListener() {
+            @Override
+            public void onClickItemKho(Kho kho) {
+                onClickToEditKho(kho);
+            }
+
+            @Override
+            public void onLongClickItemKho(int position) {
+                onLongClickToRemoveKho(position);
+            }
+        });
+        lvKho.setAdapter(adapter);
+    }
+
+    private void uploadDataFromApi() {
+        progressDialog.show();
         ApiService.API_SERVICE.getAllKho().enqueue(new Callback<List<Kho>>() {
             @Override
             public void onResponse(Call<List<Kho>> call, Response<List<Kho>> response) {
                 if(!response.isSuccessful()){
+                    progressDialog.dismiss();
                     Toast.makeText(KhoActivity.this,"Code : " + response.code(),Toast.LENGTH_SHORT).show();
-                    Log.e("Code : ", "" + response.code());
+                    Log.e("CodeResponse", "" + response.code());
                     return;
                 }
-                adapter = new KhoAdapter(KhoActivity.this, 0, response.body(), new IClickItemKhoListener() {
-                    @Override
-                    public void onClickItemKho(Kho kho) {
-                        onClickToEditKho(kho);
-                    }
-
-                    @Override
-                    public void onLongClickItemKho(int position) {
-                        onLongClickToRemoveKho(position);
-                    }
-                });
-                lvKho.setAdapter(adapter);
+                listKho.clear();
+                listKho.addAll(response.body());
+                adapter.notifyDataSetChanged();
+                progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<List<Kho>> call, Throwable t) {
+                progressDialog.dismiss();
                 Toast.makeText(KhoActivity.this, "Call Api Get All Kho fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
@@ -187,8 +206,7 @@ public class KhoActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Kho> call, Response<Kho> response) {
                 if(response.code() == STATUS_CODE_NO_CONTENT){
-                    Toast.makeText(KhoActivity.this, "Xoá thành công", Toast.LENGTH_SHORT).show();
-                    return;
+                    uploadDataFromApi();
                 }
             }
 

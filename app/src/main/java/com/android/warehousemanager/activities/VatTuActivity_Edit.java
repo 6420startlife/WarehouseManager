@@ -165,7 +165,19 @@ public class VatTuActivity_Edit extends AppCompatActivity {
     }
 
     private void uploadImageToGetUrl() {
-
+        if(tietMaVatTu.getText().toString().trim().length() == 0){
+            tietMaVatTu.setError("hãy nhập mã vật tư");
+            return;
+        }else if(tietTenVatTu.getText().toString().trim().length() == 0){
+            tietTenVatTu.setError("hãy nhập tên vật tư");
+            return;
+        }else if(tietDonViTinh.getText().toString().trim().length() == 0){
+            tietDonViTinh.setError("hãy nhập đơn vị tính");
+            return;
+        }else if(tietXuatXu.getText().toString().trim().length() == 0){
+            tietXuatXu.setError("hãy nhập xuất xứ");
+            return;
+        }
         if(get_uri() == null) {
             progressDialog.show();
             VatTu value = new VatTu(tietMaVatTu.getText().toString().trim()

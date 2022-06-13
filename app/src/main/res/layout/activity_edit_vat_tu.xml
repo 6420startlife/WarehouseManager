@@ -45,6 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Mã Vật Tư"
+                    android:inputType="text"
                     android:id="@+id/tietMaVatTu"/>
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
@@ -56,6 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Tên Vật Tư"
+                    android:inputType="text"
                     android:id="@+id/tietTenVatTu"/>
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
@@ -67,6 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Đơn Vị Tính"
+                    android:inputType="number"
                     android:id="@+id/tietDonViTinh"/>
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
@@ -78,6 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Xuất Xứ"
+                    android:inputType="text"
                     android:id="@+id/tietXuatXu"/>
 
                 <Button

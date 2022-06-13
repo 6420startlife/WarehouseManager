@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Mã Kho"
+            android:inputType="text"
             android:id="@+id/tietMaKho"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -38,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Tên Kho"
+            android:inputType="text"
             android:id="@+id/tietTenKho"/>
     </com.google.android.material.textfield.TextInputLayout>
 

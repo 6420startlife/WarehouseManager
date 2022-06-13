@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.warehousemanager.api.ApiService;
 import com.android.warehousemanager.adapters.SpinnerAdapter;
@@ -92,6 +93,13 @@ public class DetailPhieuNhapActivity_Add extends AppCompatActivity {
     }
 
     private void onClickAddDetailPN() {
+        if(actvVatTu.getText().toString().trim().length() == 0){
+            Toast.makeText(this, "Chọn vật tư ", Toast.LENGTH_SHORT).show();
+            return;
+        }else if(etSoLuong.getText().toString().trim().length() == 0){
+            etSoLuong.setError("hãy nhập số lượng");
+            return;
+        }
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         String maVatTu[] = actvVatTu.getText().toString().trim().split("\\s",2);

@@ -140,6 +140,13 @@ public class PhieuNhapActivity_Edit extends AppCompatActivity {
     }
 
     private void returnSaveResult() {
+        if(actvKho.getText().toString().trim().length() == 0){
+            Toast.makeText(this, "Chọn kho", Toast.LENGTH_SHORT).show();
+            return;
+        }else if(etNgayLap.getText().toString().trim().length() == 0){
+            etNgayLap.setError("hãy nhập ngày");
+            return;
+        }
         String[] maKho =  actvKho.getText().toString().trim().split("\\s",2);
         PhieuNhap value = new PhieuNhap(soPhieu,etNgayLap.getText().toString().trim(), maKho[0]);
         Intent intent = new Intent();

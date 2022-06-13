@@ -208,7 +208,13 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
     }
 
     private void addPhieuNhap() {
-        if(adapter.getItemCount() == 0){
+        if(actvKho.getText().toString().trim().length() == 0){
+            Toast.makeText(this, "Chọn ", Toast.LENGTH_SHORT).show();
+            return;
+        }else if(etNgayLap.getText().toString().trim().length() == 0){
+            etNgayLap.setError("hãy nhập ngày");
+            return;
+        }else if(adapter.getItemCount() == 0){
             Toast.makeText(PhieuNhapActivity_Add.this,"Hãy thêm ít nhất 1 vật tư",Toast.LENGTH_SHORT).show();
             return;
         }

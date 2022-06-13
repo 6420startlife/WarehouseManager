@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.warehousemanager.models.Kho;
 import com.android.warehousemanager.R;
@@ -67,6 +68,13 @@ public class KhoActivity_Edit extends AppCompatActivity {
     }
 
     private void returnSaveResult() {
+        if(tietMaKho.getText().toString().trim().length() == 0){
+            tietMaKho.setError("hãy nhập mã kho");
+            return;
+        }else if(tietTenKho.getText().toString().trim().length() == 0){
+            tietTenKho.setError("hãy nhập tên kho");
+            return;
+        }
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         Kho kho = new Kho(tietMaKho.getText().toString().trim(),tietTenKho.getText().toString().trim());

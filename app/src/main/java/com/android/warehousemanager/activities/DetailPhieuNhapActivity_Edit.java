@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.warehousemanager.models.ChiTietPhieuNhap;
 import com.android.warehousemanager.R;
@@ -70,6 +71,10 @@ public class DetailPhieuNhapActivity_Edit extends AppCompatActivity {
     }
 
     private void onClickSaveDetailPhieuNhap() {
+        if(etSoLuong.getText().toString().trim().length() == 0){
+            etSoLuong.setError("hãy nhập số lượng");
+            return;
+        }
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         ChiTietPhieuNhap value = new ChiTietPhieuNhap(soPhieu,

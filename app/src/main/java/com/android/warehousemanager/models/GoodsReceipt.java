@@ -7,15 +7,15 @@ public class GoodsReceipt implements Serializable {
     private String date;
     private String idStorage;
 
-    public GoodsReceipt(int soPhieu, String ngayLap, String maKho) {
-        this.id = soPhieu;
-        this.date = ngayLap;
-        this.idStorage = maKho;
+    public GoodsReceipt(int id, String date, String idStorage) {
+        this.id = id;
+        this.date = date;
+        this.idStorage = idStorage;
     }
 
-    public GoodsReceipt(String ngayLap, String maKho) {
-        this.date = ngayLap;
-        this.idStorage = maKho;
+    public GoodsReceipt(String id, String idStorage) {
+        this.date = id;
+        this.idStorage = idStorage;
     }
 
     public int getId() {

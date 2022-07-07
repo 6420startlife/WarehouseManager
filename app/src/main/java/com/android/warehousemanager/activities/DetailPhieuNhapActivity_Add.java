@@ -1,7 +1,6 @@
 package com.android.warehousemanager.activities;
 
 
-
 import static com.android.warehousemanager.activities.DetailPhieuNhapActivity.REQUEST_ADD_DETAIL_PHIEU_NHAP;
 
 import androidx.annotation.NonNull;
@@ -29,10 +28,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetailPhieuNhapActivity_Add extends AppCompatActivity {
-    private ImageView ivCancelDetailPN,ivAddDetailPN;
+    private ImageView ivCancelDetailPN, ivAddDetailPN;
     private EditText etSoLuong;
     private AutoCompleteTextView actvVatTu;
     private int soPhieu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +61,7 @@ public class DetailPhieuNhapActivity_Add extends AppCompatActivity {
     private void setEvent() {
         try {
             soPhieu = Integer.valueOf(getIntent().getStringExtra("new_detail_so_phieu"));
-        }catch (Exception e){
+        } catch (Exception e) {
             soPhieu = -1;
         }
         ivCancelDetailPN.setOnClickListener(new View.OnClickListener() {
@@ -79,34 +79,34 @@ public class DetailPhieuNhapActivity_Add extends AppCompatActivity {
         ApiService.API_SERVICE.getVatTuSpinner().enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-                if(response.isSuccessful()){
-                    SpinnerAdapter spinnerAdapter = new SpinnerAdapter(DetailPhieuNhapActivity_Add.this,0,response.body());
+                if (response.isSuccessful()) {
+                    SpinnerAdapter spinnerAdapter = new SpinnerAdapter(DetailPhieuNhapActivity_Add.this, 0, response.body());
                     actvVatTu.setAdapter(spinnerAdapter);
                 }
             }
 
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
-                Log.e("ErrorApi",t.getMessage());
+                Log.e("ErrorApi", t.getMessage());
             }
         });
     }
 
     private void onClickAddDetailPN() {
-        if(actvVatTu.getText().toString().trim().length() == 0){
+        if (actvVatTu.getText().toString().trim().length() == 0) {
             Toast.makeText(this, "Chọn vật tư ", Toast.LENGTH_SHORT).show();
             return;
-        }else if(etSoLuong.getText().toString().trim().length() == 0){
+        } else if (etSoLuong.getText().toString().trim().length() == 0) {
             etSoLuong.setError("hãy nhập số lượng");
             return;
         }
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        String maVatTu[] = actvVatTu.getText().toString().trim().split("\\s",2);
+        String maVatTu[] = actvVatTu.getText().toString().trim().split("\\s", 2);
         DetailGoodsReceipt value = new DetailGoodsReceipt(soPhieu, maVatTu[0], Integer.valueOf(etSoLuong.getText().toString().trim()));
-        bundle.putSerializable("add_detail_phieu_nhap",value);
+        bundle.putSerializable("add_detail_phieu_nhap", value);
         intent.putExtras(bundle);
-        setResult(REQUEST_ADD_DETAIL_PHIEU_NHAP,intent);
+        setResult(REQUEST_ADD_DETAIL_PHIEU_NHAP, intent);
         finish();
     }
 

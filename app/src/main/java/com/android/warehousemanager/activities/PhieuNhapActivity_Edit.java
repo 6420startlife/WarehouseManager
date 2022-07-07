@@ -41,6 +41,7 @@ public class PhieuNhapActivity_Edit extends AppCompatActivity {
 
     private DatePickerDialog.OnDateSetListener listener;
     private Calendar calendar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,11 +72,11 @@ public class PhieuNhapActivity_Edit extends AppCompatActivity {
 
     private void setEvent() {
         Bundle bundle = getIntent().getExtras();
-        if(bundle == null) {
+        if (bundle == null) {
             return;
         }
         GoodsReceipt value_pn = (GoodsReceipt) bundle.get("edit_phieu_nhap");
-        if(value_pn != null){
+        if (value_pn != null) {
             soPhieu = value_pn.getId();
             etNgayLap.setText(value_pn.getDate());
         }
@@ -105,55 +106,55 @@ public class PhieuNhapActivity_Edit extends AppCompatActivity {
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         month += 1;
                         String date = "";
-                        if(day < 10){
+                        if (day < 10) {
                             date += "0" + day;
-                        }else {
+                        } else {
                             date += day;
                         }
-                        if(month < 10) {
+                        if (month < 10) {
                             date += "/0" + month + "/" + year;
-                        }else{
+                        } else {
                             date += "/" + month + "/" + year;
                         }
                         etNgayLap.setText(date);
                     }
-                },year,month,day);
+                }, year, month, day);
                 datePickerDialog.show();
             }
         });
         ApiService.API_SERVICE.getKhoSpinner().enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-                if(!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     Toast.makeText(PhieuNhapActivity_Edit.this, "Request fail", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                spinnerAdapter = new SpinnerAdapter(PhieuNhapActivity_Edit.this,0,response.body());
+                spinnerAdapter = new SpinnerAdapter(PhieuNhapActivity_Edit.this, 0, response.body());
                 actvKho.setAdapter(spinnerAdapter);
             }
 
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
-                Log.e("ErrorApi",t.getMessage());
+                Log.e("ErrorApi", t.getMessage());
             }
         });
     }
 
     private void returnSaveResult() {
-        if(actvKho.getText().toString().trim().length() == 0){
+        if (actvKho.getText().toString().trim().length() == 0) {
             Toast.makeText(this, "Chọn kho", Toast.LENGTH_SHORT).show();
             return;
-        }else if(etNgayLap.getText().toString().trim().length() == 0){
+        } else if (etNgayLap.getText().toString().trim().length() == 0) {
             etNgayLap.setError("hãy nhập ngày");
             return;
         }
-        String[] maKho =  actvKho.getText().toString().trim().split("\\s",2);
-        GoodsReceipt value = new GoodsReceipt(soPhieu,etNgayLap.getText().toString().trim(), maKho[0]);
+        String[] maKho = actvKho.getText().toString().trim().split("\\s", 2);
+        GoodsReceipt value = new GoodsReceipt(soPhieu, etNgayLap.getText().toString().trim(), maKho[0]);
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("edit_phieu_nhap",value);
+        bundle.putSerializable("edit_phieu_nhap", value);
         intent.putExtras(bundle);
-        setResult(REQUEST_EDIT_PHIEU_NHAP,intent);
+        setResult(REQUEST_EDIT_PHIEU_NHAP, intent);
         finish();
     }
 

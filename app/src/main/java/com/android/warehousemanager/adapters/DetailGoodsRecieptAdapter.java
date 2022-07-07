@@ -15,7 +15,7 @@ import com.android.warehousemanager.R;
 
 import java.util.List;
 
-public class DetailPhieuNhapAdapter extends RecyclerView.Adapter<DetailPhieuNhapAdapter.ViewHolder>{
+public class DetailPhieuNhapAdapter extends RecyclerView.Adapter<DetailPhieuNhapAdapter.ViewHolder> {
     private List<DetailGoodsReceipt> data;
     private IClickItemDetailPhieuNhapListener clickItemDetailPhieuNhapListener;
 
@@ -33,10 +33,10 @@ public class DetailPhieuNhapAdapter extends RecyclerView.Adapter<DetailPhieuNhap
 
     public void editData(DetailGoodsReceipt value) {
         int position;
-        for (DetailGoodsReceipt item: data) {
-            if(item.getId() == value.getId() && item.getIdSupply().equalsIgnoreCase(value.getIdSupply())) {
+        for (DetailGoodsReceipt item : data) {
+            if (item.getId() == value.getId() && item.getIdSupply().equalsIgnoreCase(value.getIdSupply())) {
                 position = data.indexOf(item);
-                data.set(position,value);
+                data.set(position, value);
                 break;
             }
         }
@@ -46,7 +46,7 @@ public class DetailPhieuNhapAdapter extends RecyclerView.Adapter<DetailPhieuNhap
         data.remove(position);
     }
 
-    public void updateSoPhieu(int soPhieu){
+    public void updateSoPhieu(int soPhieu) {
         for (DetailGoodsReceipt item : data) {
             item.setId(soPhieu);
         }
@@ -60,13 +60,13 @@ public class DetailPhieuNhapAdapter extends RecyclerView.Adapter<DetailPhieuNhap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_detail_phieu_nhap,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_detail_phieu_nhap, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        setEvent(holder,position);
+        setEvent(holder, position);
     }
 
     private void setEvent(ViewHolder holder, int position) {
@@ -89,6 +89,7 @@ public class DetailPhieuNhapAdapter extends RecyclerView.Adapter<DetailPhieuNhap
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvMaVatTu, tvSoLuong, tvDonViTinh;
         public ImageView ivDetailPhieuNhap;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             setControl(itemView);

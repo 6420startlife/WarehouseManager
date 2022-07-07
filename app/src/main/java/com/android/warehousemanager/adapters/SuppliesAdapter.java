@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class VatTuAdapter extends ArrayAdapter<Supply> {
-    private  Context context;
+    private Context context;
     public List<Supply> data;
 
     private ImageView ivAnhVatTu;
@@ -43,7 +43,7 @@ public class VatTuAdapter extends ArrayAdapter<Supply> {
     public void editItem(Supply supply) {
         int position;
         for (Supply item : data) {
-            if(item.getId().equalsIgnoreCase(supply.getId())){
+            if (item.getId().equalsIgnoreCase(supply.getId())) {
                 position = data.indexOf(item);
                 data.set(position, supply);
                 break;
@@ -54,7 +54,7 @@ public class VatTuAdapter extends ArrayAdapter<Supply> {
     public void removeItem(Supply supply) {
         int position;
         for (Supply item : data) {
-            if(item.getId().equalsIgnoreCase(supply.getId())){
+            if (item.getId().equalsIgnoreCase(supply.getId())) {
                 position = data.indexOf(item);
                 data.remove(position);
                 break;
@@ -96,7 +96,7 @@ public class VatTuAdapter extends ArrayAdapter<Supply> {
         tvXuatXu.setText(value.getFrom());
         try {
             Picasso.get().load(value.getImage()).into(ivAnhVatTu);
-        }catch (Exception e){
+        } catch (Exception e) {
             Picasso.get().load("https://res.cloudinary.com/thuan6420/image/upload/v1652627208/xo5qx46gfuat6bas9jd0.jpg").into(ivAnhVatTu);
         }
         layoutItemVatTu.setOnClickListener(new View.OnClickListener() {

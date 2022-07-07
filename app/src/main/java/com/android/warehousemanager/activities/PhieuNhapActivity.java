@@ -56,16 +56,15 @@ public class PhieuNhapActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == REQUEST_ADD_PHIEU_NHAP){
+                    if (result.getResultCode() == REQUEST_ADD_PHIEU_NHAP) {
                         uploadDataFromApi();
-                    }
-                    else if(result.getResultCode() == REQUEST_EDIT_PHIEU_NHAP){
-                        if(result.getData().getExtras() != null){
+                    } else if (result.getResultCode() == REQUEST_EDIT_PHIEU_NHAP) {
+                        if (result.getData().getExtras() != null) {
                             GoodsReceipt value = (GoodsReceipt) result.getData().getExtras().get("edit_phieu_nhap");
                             updateDataToApi(value);
                         }
-                    }else if(result.getResultCode() == REQUEST_REMOVE_PHIEU_NHAP){
-                        if(result.getData().getExtras() != null){
+                    } else if (result.getResultCode() == REQUEST_REMOVE_PHIEU_NHAP) {
+                        if (result.getData().getExtras() != null) {
                             GoodsReceipt value = (GoodsReceipt) result.getData().getExtras().get("remove_phieu_nhap");
                             removeDataFromApi(value);
                         }
@@ -77,11 +76,11 @@ public class PhieuNhapActivity extends AppCompatActivity {
         ApiService.API_SERVICE.removePhieuNhap(value.getId()).enqueue(new Callback<GoodsReceipt>() {
             @Override
             public void onResponse(Call<GoodsReceipt> call, Response<GoodsReceipt> response) {
-                if(!response.isSuccessful()) {
+                if (!response.isSuccessful()) {
                     Toast.makeText(PhieuNhapActivity.this, "Request fail " + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(response.code() == STATUS_CODE_NO_CONTENT){
+                if (response.code() == STATUS_CODE_NO_CONTENT) {
                     uploadDataFromApi();
                 }
             }
@@ -96,14 +95,14 @@ public class PhieuNhapActivity extends AppCompatActivity {
     }
 
     private void updateDataToApi(GoodsReceipt value) {
-        ApiService.API_SERVICE.updatePhieuNhap(value.getId(),value).enqueue(new Callback<GoodsReceipt>() {
+        ApiService.API_SERVICE.updatePhieuNhap(value.getId(), value).enqueue(new Callback<GoodsReceipt>() {
             @Override
             public void onResponse(Call<GoodsReceipt> call, Response<GoodsReceipt> response) {
-                if(!response.isSuccessful()) {
+                if (!response.isSuccessful()) {
                     Toast.makeText(PhieuNhapActivity.this, "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(response.code() == STATUS_CODE_NO_CONTENT){
+                if (response.code() == STATUS_CODE_NO_CONTENT) {
                     uploadDataFromApi();
                 }
             }
@@ -128,7 +127,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add,menu);
+        getMenuInflater().inflate(R.menu.menu_add, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -153,7 +152,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
 
     private void initRecycleView() {
         rvPhieuNhap.startLayoutAnimation();
-        adapter = new PhieuNhapAdapter(list ,new IClickItemPhieuNhapListener() {
+        adapter = new PhieuNhapAdapter(list, new IClickItemPhieuNhapListener() {
             @Override
             public void onClickItemPhieuNhap(GoodsReceipt value) {
                 onClickGoToDetail(value);
@@ -173,7 +172,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
         ApiService.API_SERVICE.getAllPhieuNhap().enqueue(new Callback<List<GoodsReceipt>>() {
             @Override
             public void onResponse(Call<List<GoodsReceipt>> call, Response<List<GoodsReceipt>> response) {
-                if(!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     Toast.makeText(PhieuNhapActivity.this, "Request Fail " + response.code(), Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                     return;

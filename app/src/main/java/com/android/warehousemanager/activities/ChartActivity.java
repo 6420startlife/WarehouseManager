@@ -22,7 +22,7 @@ public class ChartActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.btnAdd:
                 finish();
                 return true;
@@ -30,6 +30,6 @@ public class ChartActivity extends AppCompatActivity {
                 this.finish();
                 return true;
         }
-        return(super.onOptionsItemSelected(item));
+        return (super.onOptionsItemSelected(item));
     }
 }

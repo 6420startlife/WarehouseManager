@@ -10,6 +10,7 @@ import com.android.warehousemanager.R;
 
 public class MainActivity extends AppCompatActivity {
     public static final int STATUS_CODE_NO_CONTENT = 204;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

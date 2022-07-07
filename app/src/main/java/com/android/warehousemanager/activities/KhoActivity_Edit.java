@@ -48,7 +48,7 @@ public class KhoActivity_Edit extends AppCompatActivity {
         btnLuuKho = findViewById(R.id.btnLuuKho);
     }
 
-    private void setEvent(){
+    private void setEvent() {
         btnLuuKho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,9 +56,9 @@ public class KhoActivity_Edit extends AppCompatActivity {
             }
         });
         Bundle bundle = getIntent().getExtras();
-        if(bundle == null){
+        if (bundle == null) {
             isAdd = true;
-        }else{
+        } else {
             Storage value = (Storage) bundle.get("edit_kho");
             tietMaKho.setText(value.getId());
             tietMaKho.setEnabled(false);
@@ -67,24 +67,24 @@ public class KhoActivity_Edit extends AppCompatActivity {
     }
 
     private void returnSaveResult() {
-        if(tietMaKho.getText().toString().trim().length() == 0){
+        if (tietMaKho.getText().toString().trim().length() == 0) {
             tietMaKho.setError("hãy nhập mã kho");
             return;
-        }else if(tietTenKho.getText().toString().trim().length() == 0){
+        } else if (tietTenKho.getText().toString().trim().length() == 0) {
             tietTenKho.setError("hãy nhập tên kho");
             return;
         }
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        Storage storage = new Storage(tietMaKho.getText().toString().trim(),tietTenKho.getText().toString().trim());
-        if(isAdd){
+        Storage storage = new Storage(tietMaKho.getText().toString().trim(), tietTenKho.getText().toString().trim());
+        if (isAdd) {
             bundle.putSerializable("add_kho", storage);
             intent.putExtras(bundle);
-            setResult(REQUEST_ADD_KHO,intent);
-        }else {
+            setResult(REQUEST_ADD_KHO, intent);
+        } else {
             bundle.putSerializable("edit_kho", storage);
             intent.putExtras(bundle);
-            setResult(REQUEST_EDIT_KHO,intent);
+            setResult(REQUEST_EDIT_KHO, intent);
         }
         finish();
     }

@@ -58,17 +58,21 @@ public class VatTuActivity_Edit extends AppCompatActivity {
     private Uri _uri;
     private ProgressDialog progressDialog;
     private boolean isAdd = false;
-    private final String defaultImageUrl = "https://res.cloudinary.com/thuan6420/image/upload/v1652627208/xo5qx46gfuat6bas9jd0.jpg";;
+    private final String defaultImageUrl = "https://res.cloudinary.com/thuan6420/image/upload/v1652627208/xo5qx46gfuat6bas9jd0.jpg";
+    ;
 
     public Uri get_uri() {
         return _uri;
     }
+
     public void set_uri(Uri _uri) {
         this._uri = _uri;
     }
+
     public String getUrlImage() {
         return urlImage;
     }
+
     public void setUrlImage(String urlImage) {
         this.urlImage = urlImage;
     }
@@ -78,20 +82,19 @@ public class VatTuActivity_Edit extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == Activity.RESULT_OK){
-                        if(result.getData() != null){
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        if (result.getData() != null) {
                             set_uri(result.getData().getData());
-                            try{
+                            try {
                                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), get_uri());
                                 ivAnhVatTu_Edit.setImageBitmap(bitmap);
-                            }catch (IOException e){
-                                Log.e("Error",e.getMessage());
+                            } catch (IOException e) {
+                                Log.e("Error", e.getMessage());
                             }
                         }
                     }
                 }
             });
-
 
 
     @Override
@@ -120,21 +123,21 @@ public class VatTuActivity_Edit extends AppCompatActivity {
             }
         });
         Bundle bundle = getIntent().getExtras();
-        if(bundle == null) {
+        if (bundle == null) {
             isAdd = true;
             Picasso.get().load(defaultImageUrl).into(ivAnhVatTu_Edit);
-        }else{
+        } else {
             Supply value = (Supply) bundle.get("edit_vat_tu");
-            if(value != null){
+            if (value != null) {
                 tietMaVatTu.setText(value.getId());
                 tietMaVatTu.setEnabled(false);
                 tietTenVatTu.setText(value.getName());
                 tietDonViTinh.setText(value.getUnit());
                 tietXuatXu.setText(value.getFrom());
                 setUrlImage(value.getImage());
-                try{
+                try {
                     Picasso.get().load(value.getImage()).into(ivAnhVatTu_Edit);
-                }catch (Exception e){
+                } catch (Exception e) {
                     Picasso.get().load(defaultImageUrl).into(ivAnhVatTu_Edit);
                 }
             }
@@ -142,13 +145,13 @@ public class VatTuActivity_Edit extends AppCompatActivity {
     }
 
     private void chooseImage() {
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             openGallery();
             return;
         }
-        if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             openGallery();
-        }else {
+        } else {
             String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
             requestPermissions(permission, REQUEST_READ_EXTERNAL_STORAGE);
         }
@@ -162,26 +165,26 @@ public class VatTuActivity_Edit extends AppCompatActivity {
     }
 
     private void uploadImageToGetUrl() {
-        if(tietMaVatTu.getText().toString().trim().length() == 0){
+        if (tietMaVatTu.getText().toString().trim().length() == 0) {
             tietMaVatTu.setError("hãy nhập mã vật tư");
             return;
-        }else if(tietTenVatTu.getText().toString().trim().length() == 0){
+        } else if (tietTenVatTu.getText().toString().trim().length() == 0) {
             tietTenVatTu.setError("hãy nhập tên vật tư");
             return;
-        }else if(tietDonViTinh.getText().toString().trim().length() == 0){
+        } else if (tietDonViTinh.getText().toString().trim().length() == 0) {
             tietDonViTinh.setError("hãy nhập đơn vị tính");
             return;
-        }else if(tietXuatXu.getText().toString().trim().length() == 0){
+        } else if (tietXuatXu.getText().toString().trim().length() == 0) {
             tietXuatXu.setError("hãy nhập xuất xứ");
             return;
         }
-        if(get_uri() == null) {
+        if (get_uri() == null) {
             progressDialog.show();
             Supply value = new Supply(tietMaVatTu.getText().toString().trim()
-                    ,tietTenVatTu.getText().toString().trim()
-                    ,defaultImageUrl
-                    ,tietDonViTinh.getText().toString().trim()
-                    ,tietXuatXu.getText().toString().trim());
+                    , tietTenVatTu.getText().toString().trim()
+                    , defaultImageUrl
+                    , tietDonViTinh.getText().toString().trim()
+                    , tietXuatXu.getText().toString().trim());
             returnResult(value);
             return;
         }
@@ -195,30 +198,30 @@ public class VatTuActivity_Edit extends AppCompatActivity {
                         progressDialog.show();
                     }
                 });
-                String strRealPath = RealPathUtil.getRealPath(VatTuActivity_Edit.this,get_uri());
+                String strRealPath = RealPathUtil.getRealPath(VatTuActivity_Edit.this, get_uri());
                 File file = new File(strRealPath);
-                RequestBody requestBodyFile = RequestBody.create(MediaType.parse("multipart/form-data"),file);
-                MultipartBody.Part partFile = MultipartBody.Part.createFormData("file",file.getName(),requestBodyFile);
+                RequestBody requestBodyFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                MultipartBody.Part partFile = MultipartBody.Part.createFormData("file", file.getName(), requestBodyFile);
                 ApiService.API_SERVICE.uploadImage(partFile).enqueue(new Callback<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                        if(!response.isSuccessful()) {
+                        if (!response.isSuccessful()) {
                             progressDialog.dismiss();
                             return;
                         }
                         ApiResponse apiResponse = response.body();
                         Supply value = new Supply(tietMaVatTu.getText().toString().trim()
-                                ,tietTenVatTu.getText().toString().trim()
-                                ,apiResponse.getData()
-                                ,tietDonViTinh.getText().toString().trim()
-                                ,tietXuatXu.getText().toString().trim());
+                                , tietTenVatTu.getText().toString().trim()
+                                , apiResponse.getData()
+                                , tietDonViTinh.getText().toString().trim()
+                                , tietXuatXu.getText().toString().trim());
                         returnResult(value);
                     }
 
                     @Override
                     public void onFailure(Call<ApiResponse> call, Throwable t) {
                         progressDialog.dismiss();
-                        if (t.getMessage().equalsIgnoreCase("timeout")){
+                        if (t.getMessage().equalsIgnoreCase("timeout")) {
                             Toast.makeText(VatTuActivity_Edit.this, "Timeout", Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -230,20 +233,19 @@ public class VatTuActivity_Edit extends AppCompatActivity {
         });
 
 
-
     }
 
     private void returnResult(Supply value) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        if(isAdd){
+        if (isAdd) {
             bundle.putSerializable("add_vat_tu", value);
             intent.putExtras(bundle);
-            setResult(REQUEST_ADD_VAT_TU,intent);
-        }else {
+            setResult(REQUEST_ADD_VAT_TU, intent);
+        } else {
             bundle.putSerializable("edit_vat_tu", value);
             intent.putExtras(bundle);
-            setResult(REQUEST_EDIT_VAT_TU,intent);
+            setResult(REQUEST_EDIT_VAT_TU, intent);
         }
         progressDialog.dismiss();
         finish();
@@ -261,12 +263,12 @@ public class VatTuActivity_Edit extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == REQUEST_READ_EXTERNAL_STORAGE){
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == REQUEST_READ_EXTERNAL_STORAGE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openGallery();
             }
-        }else if(requestCode == REQUEST_READ_EXTERNAL_STORAGE_REAL_PATH){
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        } else if (requestCode == REQUEST_READ_EXTERNAL_STORAGE_REAL_PATH) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 uploadImageToGetUrl();
             }
         }

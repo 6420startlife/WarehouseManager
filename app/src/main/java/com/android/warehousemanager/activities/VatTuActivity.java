@@ -48,13 +48,13 @@ public class VatTuActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == REQUEST_ADD_VAT_TU){
-                        if(result.getData().getExtras() != null){
+                    if (result.getResultCode() == REQUEST_ADD_VAT_TU) {
+                        if (result.getData().getExtras() != null) {
                             Supply value = (Supply) result.getData().getExtras().get("add_vat_tu");
                             addDataToApi(value);
                         }
-                    }else if(result.getResultCode() == REQUEST_EDIT_VAT_TU){
-                        if(result.getData().getExtras() != null){
+                    } else if (result.getResultCode() == REQUEST_EDIT_VAT_TU) {
+                        if (result.getData().getExtras() != null) {
                             Supply value = (Supply) result.getData().getExtras().get("edit_vat_tu");
                             updateDataToApi(value);
                         }
@@ -80,7 +80,7 @@ public class VatTuActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.add:
                 onClickToAddVatTu();
                 return true;
@@ -88,7 +88,7 @@ public class VatTuActivity extends AppCompatActivity {
                 finish();
                 return true;
         }
-        return(super.onOptionsItemSelected(item));
+        return (super.onOptionsItemSelected(item));
     }
 
     private void setEvent() {
@@ -126,13 +126,14 @@ public class VatTuActivity extends AppCompatActivity {
         ApiService.API_SERVICE.createVatTu(value).enqueue(new Callback<Supply>() {
             @Override
             public void onResponse(Call<Supply> call, Response<Supply> response) {
-                if(response.code() == STATUS_CODE_NO_CONTENT){
+                if (response.code() == STATUS_CODE_NO_CONTENT) {
                     uploadDataFromData();
                 }
             }
+
             @Override
             public void onFailure(Call<Supply> call, Throwable t) {
-                Toast.makeText(VatTuActivity.this,"Call API create Vat Tu fail" ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(VatTuActivity.this, "Call API create Vat Tu fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
@@ -142,14 +143,14 @@ public class VatTuActivity extends AppCompatActivity {
         ApiService.API_SERVICE.updateVatTu(value).enqueue(new Callback<Supply>() {
             @Override
             public void onResponse(Call<Supply> call, Response<Supply> response) {
-                if(response.code() == STATUS_CODE_NO_CONTENT){
+                if (response.code() == STATUS_CODE_NO_CONTENT) {
                     uploadDataFromData();
                 }
             }
 
             @Override
             public void onFailure(Call<Supply> call, Throwable t) {
-                Toast.makeText(VatTuActivity.this,"Call API update Vat Tu fail" ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(VatTuActivity.this, "Call API update Vat Tu fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
@@ -159,25 +160,25 @@ public class VatTuActivity extends AppCompatActivity {
         ApiService.API_SERVICE.removeVatTu(item.getId()).enqueue(new Callback<Supply>() {
             @Override
             public void onResponse(Call<Supply> call, Response<Supply> response) {
-                if(response.code() == STATUS_CODE_NO_CONTENT){
+                if (response.code() == STATUS_CODE_NO_CONTENT) {
                     uploadDataFromData();
                 }
             }
 
             @Override
             public void onFailure(Call<Supply> call, Throwable t) {
-                Toast.makeText(VatTuActivity.this,"Call API remove Vat Tu fail" ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(VatTuActivity.this, "Call API remove Vat Tu fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
     }
 
-    private void uploadDataFromData(){
+    private void uploadDataFromData() {
         progressDialog.show();
         ApiService.API_SERVICE.getAllVatTu().enqueue(new Callback<List<Supply>>() {
             @Override
             public void onResponse(Call<List<Supply>> call, Response<List<Supply>> response) {
-                if(!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     progressDialog.dismiss();
                     Toast.makeText(VatTuActivity.this, "Request fail " + response.code(), Toast.LENGTH_SHORT).show();
                     return;

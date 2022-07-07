@@ -61,15 +61,14 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == REQUEST_ADD_DETAIL_PHIEU_NHAP){
-                        if(result.getData().getExtras() != null){
+                    if (result.getResultCode() == REQUEST_ADD_DETAIL_PHIEU_NHAP) {
+                        if (result.getData().getExtras() != null) {
                             DetailGoodsReceipt value = (DetailGoodsReceipt) result.getData().getExtras().get("add_detail_phieu_nhap");
                             adapter.setItem(value);
                             adapter.notifyDataSetChanged();
                         }
-                    }
-                    else if(result.getResultCode() == REQUEST_EDIT_DETAIL_PHIEU_NHAP){
-                        if(result.getData().getExtras() != null){
+                    } else if (result.getResultCode() == REQUEST_EDIT_DETAIL_PHIEU_NHAP) {
+                        if (result.getData().getExtras() != null) {
                             DetailGoodsReceipt value = (DetailGoodsReceipt) result.getData().getExtras().get("add_detail_phieu_nhap");
                             adapter.editData(value);
                             adapter.notifyDataSetChanged();
@@ -137,19 +136,19 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         month += 1;
                         String date = "";
-                        if(day < 10){
+                        if (day < 10) {
                             date += "0" + day;
-                        }else {
+                        } else {
                             date += day;
                         }
-                        if(month < 10) {
+                        if (month < 10) {
                             date += "/0" + month + "/" + year;
-                        }else{
+                        } else {
                             date += "/" + month + "/" + year;
                         }
                         etNgayLap.setText(date);
                     }
-                },year,month,day);
+                }, year, month, day);
                 datePickerDialog.show();
             }
         });
@@ -162,7 +161,7 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
             }
         });
         rvDetailPhieuNhap.setAdapter(adapter);
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -179,17 +178,17 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
         ApiService.API_SERVICE.getKhoSpinner().enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-                if(!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     Toast.makeText(PhieuNhapActivity_Add.this, "Request fail", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                spinnerAdapter = new SpinnerAdapter(PhieuNhapActivity_Add.this,0,response.body());
+                spinnerAdapter = new SpinnerAdapter(PhieuNhapActivity_Add.this, 0, response.body());
                 actvKho.setAdapter(spinnerAdapter);
             }
 
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
-                Log.e("ErrorApi",t.getMessage());
+                Log.e("ErrorApi", t.getMessage());
             }
         });
     }
@@ -208,37 +207,37 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
     }
 
     private void addPhieuNhap() {
-        if(actvKho.getText().toString().trim().length() == 0){
+        if (actvKho.getText().toString().trim().length() == 0) {
             Toast.makeText(this, "Chọn ", Toast.LENGTH_SHORT).show();
             return;
-        }else if(etNgayLap.getText().toString().trim().length() == 0){
+        } else if (etNgayLap.getText().toString().trim().length() == 0) {
             etNgayLap.setError("hãy nhập ngày");
             return;
-        }else if(adapter.getItemCount() == 0){
-            Toast.makeText(PhieuNhapActivity_Add.this,"Hãy thêm ít nhất 1 vật tư",Toast.LENGTH_SHORT).show();
+        } else if (adapter.getItemCount() == 0) {
+            Toast.makeText(PhieuNhapActivity_Add.this, "Hãy thêm ít nhất 1 vật tư", Toast.LENGTH_SHORT).show();
             return;
         }
-        String[] maKho =  actvKho.getText().toString().trim().split("\\s",2);
-        GoodsReceipt value = new GoodsReceipt(etNgayLap.getText().toString().trim(),maKho[0]);
+        String[] maKho = actvKho.getText().toString().trim().split("\\s", 2);
+        GoodsReceipt value = new GoodsReceipt(etNgayLap.getText().toString().trim(), maKho[0]);
         ApiService.API_SERVICE.createPhieuNhap(value).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                if(!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     Toast.makeText(PhieuNhapActivity_Add.this, "Request fail " + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 ApiResponse apiResponse = response.body();
                 soPhieu = Integer.valueOf(apiResponse.getData());
                 createCTPNToApi(soPhieu, value);
-                Intent intent =  new Intent();
-                setResult(REQUEST_ADD_PHIEU_NHAP,intent);
+                Intent intent = new Intent();
+                setResult(REQUEST_ADD_PHIEU_NHAP, intent);
                 finish();
             }
 
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable t) {
                 Toast.makeText(PhieuNhapActivity_Add.this, "Call Api create Phieu Nhap fail", Toast.LENGTH_SHORT).show();
-                Log.e("ErrorApi",t.getMessage());
+                Log.e("ErrorApi", t.getMessage());
             }
         });
     }

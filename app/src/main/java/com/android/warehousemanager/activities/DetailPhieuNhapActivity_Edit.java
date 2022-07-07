@@ -58,11 +58,11 @@ public class DetailPhieuNhapActivity_Edit extends AppCompatActivity {
         });
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle == null) {
+        if (bundle == null) {
             return;
         }
         DetailGoodsReceipt value_dpn = (DetailGoodsReceipt) bundle.get("edit_detail_phieu_nhap");
-        if(value_dpn != null){
+        if (value_dpn != null) {
             soPhieu = value_dpn.getId();
             tvMaVatTu.setText(value_dpn.getIdSupply());
             etSoLuong.setText(String.valueOf(value_dpn.getAmount()));
@@ -70,7 +70,7 @@ public class DetailPhieuNhapActivity_Edit extends AppCompatActivity {
     }
 
     private void onClickSaveDetailPhieuNhap() {
-        if(etSoLuong.getText().toString().trim().length() == 0){
+        if (etSoLuong.getText().toString().trim().length() == 0) {
             etSoLuong.setError("hãy nhập số lượng");
             return;
         }
@@ -79,9 +79,9 @@ public class DetailPhieuNhapActivity_Edit extends AppCompatActivity {
         DetailGoodsReceipt value = new DetailGoodsReceipt(soPhieu,
                 tvMaVatTu.getText().toString().trim(),
                 Integer.valueOf(etSoLuong.getText().toString().trim()));
-        bundle.putSerializable("edit_detail_phieu_nhap",value);
+        bundle.putSerializable("edit_detail_phieu_nhap", value);
         intent.putExtras(bundle);
-        setResult(REQUEST_EDIT_DETAIL_PHIEU_NHAP,intent);
+        setResult(REQUEST_EDIT_DETAIL_PHIEU_NHAP, intent);
         finish();
     }
 

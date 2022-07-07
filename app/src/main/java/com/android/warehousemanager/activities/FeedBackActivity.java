@@ -33,6 +33,7 @@ public class FeedBackActivity extends AppCompatActivity {
     private Button btnSendEmail;
     private final String username = "thuanemail6420@gmail.com";
     private final String password = "gtdmyfigoeainxnu";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,14 +62,14 @@ public class FeedBackActivity extends AppCompatActivity {
                 Properties props = new Properties();
                 props.put("mail.smtp.host", "smtp.gmail.com");
                 props.put("mail.smtp.socketFactory.port", "465");
-                props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+                props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
                 props.put("mail.smtp.auth", "true");
                 props.put("mail.smtp.port", "465");
 
                 Session session = Session.getInstance(props, new Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username,password);
+                        return new PasswordAuthentication(username, password);
                     }
                 });
 
@@ -96,13 +97,13 @@ public class FeedBackActivity extends AppCompatActivity {
         btnSendEmail = findViewById(R.id.btnSendEmail);
     }
 
-    private class SendMail extends AsyncTask<Message,String,String> {
+    private class SendMail extends AsyncTask<Message, String, String> {
         private ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = ProgressDialog.show(FeedBackActivity.this,"Information","Sending ... ",true,false);
+            dialog = ProgressDialog.show(FeedBackActivity.this, "Information", "Sending ... ", true, false);
         }
 
         @Override
@@ -120,7 +121,7 @@ public class FeedBackActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             dialog.dismiss();
-            if(s.equalsIgnoreCase("success")){
+            if (s.equalsIgnoreCase("success")) {
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(FeedBackActivity.this);
                 builder.setCancelable(false);
                 builder.setTitle(Html.fromHtml("<font color='#509324'>Success</font>"));
@@ -135,8 +136,8 @@ public class FeedBackActivity extends AppCompatActivity {
                     }
                 });
                 builder.show();
-            }else{
-                Toast.makeText(getApplicationContext(),"Something went wrong ?",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Something went wrong ?", Toast.LENGTH_SHORT).show();
             }
         }
     }

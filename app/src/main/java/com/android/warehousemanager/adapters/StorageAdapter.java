@@ -40,7 +40,7 @@ public class KhoAdapter extends ArrayAdapter<Storage> {
     public void editItem(Storage Storage) {
         int position;
         for (Storage item : data) {
-            if(item.getId().equalsIgnoreCase(Storage.getId())){
+            if (item.getId().equalsIgnoreCase(Storage.getId())) {
                 position = data.indexOf(item);
                 data.set(position, Storage);
                 break;
@@ -51,7 +51,7 @@ public class KhoAdapter extends ArrayAdapter<Storage> {
     public void removeItem(Storage Storage) {
         int position;
         for (Storage item : data) {
-            if(item.getId().equalsIgnoreCase(Storage.getId())){
+            if (item.getId().equalsIgnoreCase(Storage.getId())) {
                 position = data.indexOf(item);
                 data.remove(position);
                 break;

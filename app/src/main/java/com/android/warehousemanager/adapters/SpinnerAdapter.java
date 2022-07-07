@@ -15,10 +15,11 @@ import com.android.warehousemanager.R;
 import java.util.List;
 
 public class SpinnerAdapter extends ArrayAdapter<String> {
-    private  Context context;
+    private Context context;
     public List<String> data;
 
     private TextView tvSpinner;
+
     public SpinnerAdapter(@NonNull Context context, int resource, @NonNull List<String> objects) {
         super(context, resource, objects);
         this.context = context;

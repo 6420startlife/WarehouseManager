@@ -41,41 +41,55 @@ public interface ApiService {
 
     @GET("VatTu")
     Call<List<Supply>> getAllVatTu();
+
     @PUT("VatTu")
     Call<Supply> updateVatTu(@Body Supply supply);
+
     @POST("VatTu")
     Call<Supply> createVatTu(@Body Supply supply);
+
     @DELETE("VatTu/{id}")
     Call<Supply> removeVatTu(@Path("id") String maVatTu);
+
     @GET("VatTu/spinner")
     Call<List<String>> getVatTuSpinner();
 
     @GET("Kho")
     Call<List<Storage>> getAllKho();
+
     @PUT("Kho")
     Call<Storage> updateKho(@Body Storage storage);
+
     @POST("Kho")
     Call<Storage> createKho(@Body Storage storage);
+
     @DELETE("Kho/{id}")
     Call<Storage> removeKho(@Path("id") String maKho);
+
     @GET("Kho/spinner")
     Call<List<String>> getKhoSpinner();
 
     @GET("PhieuNhap")
     Call<List<GoodsReceipt>> getAllPhieuNhap();
+
     @PUT("PhieuNhap")
     Call<GoodsReceipt> updatePhieuNhap(@Query("soPhieu") int soPhieu, @Body GoodsReceipt phieuNhap);
+
     @POST("PhieuNhap")
     Call<ApiResponse> createPhieuNhap(@Body GoodsReceipt phieuNhap);
+
     @DELETE("PhieuNhap/{id}")
     Call<GoodsReceipt> removePhieuNhap(@Path("id") int soPhieu);
 
     @GET("ChiTietPhieuNhap/{soPhieu}")
     Call<List<DetailGoodsReceipt>> getAllChiTietPhieuNhap(@Path("soPhieu") int soPhieu);
+
     @POST("ChiTietPhieuNhap")
     Call<DetailGoodsReceipt> createChiTietPhieuNhap(@Body DetailGoodsReceipt chiTietPhieuNhap);
+
     @PUT("ChiTietPhieuNhap")
     Call<DetailGoodsReceipt> updateChiTietPhieuNhap(@Body DetailGoodsReceipt chiTietPhieuNhap);
+
     @DELETE("ChiTietPhieuNhap/{soPhieu}/{maVatTu}")
     Call<DetailGoodsReceipt> removeChiTietPhieuNhap(@Path("soPhieu") int soPhieu, @Path("maVatTu") String maVatTu);
 

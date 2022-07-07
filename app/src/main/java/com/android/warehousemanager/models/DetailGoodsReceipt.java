@@ -7,9 +7,9 @@ public class DetailGoodsReceipt implements Serializable {
     private String idSupply;
     private int amount;
 
-    public DetailGoodsReceipt(int id, String id_supply, int amount) {
+    public DetailGoodsReceipt(int id, String idSupply, int amount) {
         this.id = id;
-        this.idSupply = id_supply;
+        this.idSupply = idSupply;
         this.amount = amount;
     }
 

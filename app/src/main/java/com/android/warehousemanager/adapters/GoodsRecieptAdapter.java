@@ -35,9 +35,9 @@ public class PhieuNhapAdapter extends RecyclerView.Adapter<PhieuNhapAdapter.View
     public void editData(GoodsReceipt value) {
         int position;
         for (GoodsReceipt item : data) {
-            if(item.getId() == value.getId()){
+            if (item.getId() == value.getId()) {
                 position = data.indexOf(item);
-                data.set(position,value);
+                data.set(position, value);
                 break;
             }
         }
@@ -46,7 +46,7 @@ public class PhieuNhapAdapter extends RecyclerView.Adapter<PhieuNhapAdapter.View
     public void removeData(GoodsReceipt value) {
         int position;
         for (GoodsReceipt item : data) {
-            if(item.getId() == value.getId()){
+            if (item.getId() == value.getId()) {
                 position = data.indexOf(item);
                 data.remove(position);
                 break;
@@ -62,13 +62,13 @@ public class PhieuNhapAdapter extends RecyclerView.Adapter<PhieuNhapAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_phieu_nhap,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_phieu_nhap, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        setEvent(holder,position);
+        setEvent(holder, position);
     }
 
     private void setEvent(ViewHolder holder, int position) {
@@ -89,7 +89,7 @@ public class PhieuNhapAdapter extends RecyclerView.Adapter<PhieuNhapAdapter.View
         return data.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvSoPhieu, tvMaKho, tvNgayLap;
         public ImageView imgArrow;
 

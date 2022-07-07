@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.android.warehousemanager.api.ApiService;
 import com.android.warehousemanager.adapters.KhoAdapter;
 import com.android.warehousemanager.interfaces.IClickItemKhoListener;
-import com.android.warehousemanager.models.Kho;
+import com.android.warehousemanager.models.Storage;
 import com.android.warehousemanager.R;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class KhoActivity extends AppCompatActivity {
     private ListView lvKho;
     private ProgressDialog progressDialog;
 
-    private List<Kho> listKho = new ArrayList<>();
+    private List<Storage> listStorage = new ArrayList<>();
     private KhoAdapter adapter;
 
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(
@@ -50,43 +50,43 @@ public class KhoActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if(result.getResultCode() == REQUEST_ADD_KHO){
                         if(result.getData().getExtras() != null){
-                            Kho value = (Kho) result.getData().getExtras().get("add_kho");
+                            Storage value = (Storage) result.getData().getExtras().get("add_kho");
                             addDataToApi(value);
                         }
                     }else if(result.getResultCode() == REQUEST_EDIT_KHO){
                         if(result.getData().getExtras() != null){
-                            Kho value = (Kho) result.getData().getExtras().get("edit_kho");
+                            Storage value = (Storage) result.getData().getExtras().get("edit_kho");
                             updateDataToApi(value);
                         }
                     }
                 }
             });
 
-    private void updateDataToApi(Kho value) {
-        ApiService.API_SERVICE.updateKho(value).enqueue(new Callback<Kho>() {
+    private void updateDataToApi(Storage value) {
+        ApiService.API_SERVICE.updateKho(value).enqueue(new Callback<Storage>() {
             @Override
-            public void onResponse(Call<Kho> call, Response<Kho> response) {
+            public void onResponse(Call<Storage> call, Response<Storage> response) {
                 uploadDataFromApi();
             }
 
             @Override
-            public void onFailure(Call<Kho> call, Throwable t) {
+            public void onFailure(Call<Storage> call, Throwable t) {
                 Toast.makeText(KhoActivity.this, "Call Api update Kho fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
     }
 
-    private void addDataToApi(Kho value) {
-        ApiService.API_SERVICE.createKho(value).enqueue(new Callback<Kho>() {
+    private void addDataToApi(Storage value) {
+        ApiService.API_SERVICE.createKho(value).enqueue(new Callback<Storage>() {
             @Override
-            public void onResponse(Call<Kho> call, Response<Kho> response) {
+            public void onResponse(Call<Storage> call, Response<Storage> response) {
                 if(response.code() == STATUS_CODE_NO_CONTENT){
                     uploadDataFromApi();
                 }
             }
             @Override
-            public void onFailure(Call<Kho> call, Throwable t) {
+            public void onFailure(Call<Storage> call, Throwable t) {
                 Toast.makeText(KhoActivity.this,"Call API create Kho fail" ,Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
@@ -140,10 +140,10 @@ public class KhoActivity extends AppCompatActivity {
     }
 
     private void initListView() {
-        adapter = new KhoAdapter(KhoActivity.this, 0, listKho, new IClickItemKhoListener() {
+        adapter = new KhoAdapter(KhoActivity.this, 0, listStorage, new IClickItemKhoListener() {
             @Override
-            public void onClickItemKho(Kho kho) {
-                onClickToEditKho(kho);
+            public void onClickItemKho(Storage storage) {
+                onClickToEditKho(storage);
             }
 
             @Override
@@ -156,23 +156,23 @@ public class KhoActivity extends AppCompatActivity {
 
     private void uploadDataFromApi() {
         progressDialog.show();
-        ApiService.API_SERVICE.getAllKho().enqueue(new Callback<List<Kho>>() {
+        ApiService.API_SERVICE.getAllKho().enqueue(new Callback<List<Storage>>() {
             @Override
-            public void onResponse(Call<List<Kho>> call, Response<List<Kho>> response) {
+            public void onResponse(Call<List<Storage>> call, Response<List<Storage>> response) {
                 if(!response.isSuccessful()){
                     progressDialog.dismiss();
                     Toast.makeText(KhoActivity.this,"Code : " + response.code(),Toast.LENGTH_SHORT).show();
                     Log.e("CodeResponse", "" + response.code());
                     return;
                 }
-                listKho.clear();
-                listKho.addAll(response.body());
+                listStorage.clear();
+                listStorage.addAll(response.body());
                 adapter.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
             @Override
-            public void onFailure(Call<List<Kho>> call, Throwable t) {
+            public void onFailure(Call<List<Storage>> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(KhoActivity.this, "Call Api Get All Kho fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
@@ -186,7 +186,7 @@ public class KhoActivity extends AppCompatActivity {
         alertDialogBuilder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Kho item = adapter.getItem(position);
+                Storage item = adapter.getItem(position);
                 removeDataFromApi(item);
                 adapter.removeItem(position);
                 adapter.notifyDataSetChanged();
@@ -201,26 +201,26 @@ public class KhoActivity extends AppCompatActivity {
         alertDialogBuilder.show();
     }
 
-    private void removeDataFromApi(Kho item) {
-        ApiService.API_SERVICE.removeKho(item.getMaKho()).enqueue(new Callback<Kho>() {
+    private void removeDataFromApi(Storage item) {
+        ApiService.API_SERVICE.removeKho(item.getId()).enqueue(new Callback<Storage>() {
             @Override
-            public void onResponse(Call<Kho> call, Response<Kho> response) {
+            public void onResponse(Call<Storage> call, Response<Storage> response) {
                 if(response.code() == STATUS_CODE_NO_CONTENT){
                     uploadDataFromApi();
                 }
             }
 
             @Override
-            public void onFailure(Call<Kho> call, Throwable t) {
+            public void onFailure(Call<Storage> call, Throwable t) {
                 Toast.makeText(KhoActivity.this, "Call Api Remove Kho fail", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void onClickToEditKho(Kho kho) {
+    private void onClickToEditKho(Storage storage) {
         Intent intent = new Intent(KhoActivity.this, KhoActivity_Edit.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("edit_kho", kho);
+        bundle.putSerializable("edit_kho", storage);
         intent.putExtras(bundle);
         launcher.launch(intent);
     }

@@ -13,9 +13,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.warehousemanager.models.ChiTietPhieuNhap;
+import com.android.warehousemanager.models.DetailGoodsReceipt;
 import com.android.warehousemanager.R;
 
 public class DetailPhieuNhapActivity_Edit extends AppCompatActivity {
@@ -62,11 +61,11 @@ public class DetailPhieuNhapActivity_Edit extends AppCompatActivity {
         if(bundle == null) {
             return;
         }
-        ChiTietPhieuNhap value_dpn = (ChiTietPhieuNhap) bundle.get("edit_detail_phieu_nhap");
+        DetailGoodsReceipt value_dpn = (DetailGoodsReceipt) bundle.get("edit_detail_phieu_nhap");
         if(value_dpn != null){
-            soPhieu = value_dpn.getSoPhieu();
-            tvMaVatTu.setText(value_dpn.getMaVatTu());
-            etSoLuong.setText(String.valueOf(value_dpn.getSoLuong()));
+            soPhieu = value_dpn.getId();
+            tvMaVatTu.setText(value_dpn.getIdSupply());
+            etSoLuong.setText(String.valueOf(value_dpn.getAmount()));
         }
     }
 
@@ -77,7 +76,7 @@ public class DetailPhieuNhapActivity_Edit extends AppCompatActivity {
         }
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        ChiTietPhieuNhap value = new ChiTietPhieuNhap(soPhieu,
+        DetailGoodsReceipt value = new DetailGoodsReceipt(soPhieu,
                 tvMaVatTu.getText().toString().trim(),
                 Integer.valueOf(etSoLuong.getText().toString().trim()));
         bundle.putSerializable("edit_detail_phieu_nhap",value);

@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.android.warehousemanager.api.ApiService;
 import com.android.warehousemanager.adapters.SpinnerAdapter;
-import com.android.warehousemanager.models.ChiTietPhieuNhap;
+import com.android.warehousemanager.models.DetailGoodsReceipt;
 import com.android.warehousemanager.R;
 
 import java.util.List;
@@ -103,7 +103,7 @@ public class DetailPhieuNhapActivity_Add extends AppCompatActivity {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         String maVatTu[] = actvVatTu.getText().toString().trim().split("\\s",2);
-        ChiTietPhieuNhap value = new ChiTietPhieuNhap(soPhieu, maVatTu[0], Integer.valueOf(etSoLuong.getText().toString().trim()));
+        DetailGoodsReceipt value = new DetailGoodsReceipt(soPhieu, maVatTu[0], Integer.valueOf(etSoLuong.getText().toString().trim()));
         bundle.putSerializable("add_detail_phieu_nhap",value);
         intent.putExtras(bundle);
         setResult(REQUEST_ADD_DETAIL_PHIEU_NHAP,intent);

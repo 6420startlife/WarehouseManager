@@ -12,46 +12,46 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.warehousemanager.interfaces.IClickItemKhoListener;
-import com.android.warehousemanager.models.Kho;
+import com.android.warehousemanager.models.Storage;
 import com.android.warehousemanager.R;
 
 import java.util.List;
 
-public class KhoAdapter extends ArrayAdapter<Kho> {
+public class KhoAdapter extends ArrayAdapter<Storage> {
     private TextView tvMaKho, tvTenKho;
     private ConstraintLayout layoutKho;
 
     private Context context;
-    public List<Kho> data;
+    public List<Storage> data;
     private IClickItemKhoListener listener;
 
-    public List<Kho> getData() {
+    public List<Storage> getData() {
         return data;
     }
 
-    public void setData(List<Kho> data) {
+    public void setData(List<Storage> data) {
         this.data = data;
     }
 
-    public void addItem(Kho Kho) {
-        data.add(Kho);
+    public void addItem(Storage Storage) {
+        data.add(Storage);
     }
 
-    public void editItem(Kho Kho) {
+    public void editItem(Storage Storage) {
         int position;
-        for (Kho item : data) {
-            if(item.getMaKho().equalsIgnoreCase(Kho.getMaKho())){
+        for (Storage item : data) {
+            if(item.getId().equalsIgnoreCase(Storage.getId())){
                 position = data.indexOf(item);
-                data.set(position,Kho);
+                data.set(position, Storage);
                 break;
             }
         }
     }
 
-    public void removeItem(Kho Kho) {
+    public void removeItem(Storage Storage) {
         int position;
-        for (Kho item : data) {
-            if(item.getMaKho().equalsIgnoreCase(Kho.getMaKho())){
+        for (Storage item : data) {
+            if(item.getId().equalsIgnoreCase(Storage.getId())){
                 position = data.indexOf(item);
                 data.remove(position);
                 break;
@@ -65,11 +65,11 @@ public class KhoAdapter extends ArrayAdapter<Kho> {
 
     @Nullable
     @Override
-    public Kho getItem(int position) {
+    public Storage getItem(int position) {
         return data.get(position);
     }
 
-    public KhoAdapter(@NonNull Context context, int resource, @NonNull List<Kho> objects, IClickItemKhoListener listener) {
+    public KhoAdapter(@NonNull Context context, int resource, @NonNull List<Storage> objects, IClickItemKhoListener listener) {
         super(context, resource, objects);
         this.context = context;
         this.data = objects;
@@ -86,13 +86,13 @@ public class KhoAdapter extends ArrayAdapter<Kho> {
     }
 
     private void setEvent(int position) {
-        Kho kho = data.get(position);
-        tvMaKho.setText(kho.getMaKho());
-        tvTenKho.setText(kho.getTenKho());
+        Storage storage = data.get(position);
+        tvMaKho.setText(storage.getId());
+        tvTenKho.setText(storage.getName());
         layoutKho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onClickItemKho(kho);
+                listener.onClickItemKho(storage);
             }
         });
         layoutKho.setOnLongClickListener(new View.OnLongClickListener() {

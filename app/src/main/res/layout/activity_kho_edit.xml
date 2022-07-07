@@ -19,7 +19,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mã Kho"
+            android:hint="Mã Storage"
             android:inputType="text"
             android:id="@+id/tietMaKho"/>
 
@@ -38,7 +38,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tên Kho"
+            android:hint="Tên Storage"
             android:inputType="text"
             android:id="@+id/tietTenKho"/>
     </com.google.android.material.textfield.TextInputLayout>

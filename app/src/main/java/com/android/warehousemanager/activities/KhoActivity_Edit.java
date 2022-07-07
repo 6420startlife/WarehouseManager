@@ -11,9 +11,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.android.warehousemanager.models.Kho;
+import com.android.warehousemanager.models.Storage;
 import com.android.warehousemanager.R;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -60,10 +59,10 @@ public class KhoActivity_Edit extends AppCompatActivity {
         if(bundle == null){
             isAdd = true;
         }else{
-            Kho value = (Kho) bundle.get("edit_kho");
-            tietMaKho.setText(value.getMaKho());
+            Storage value = (Storage) bundle.get("edit_kho");
+            tietMaKho.setText(value.getId());
             tietMaKho.setEnabled(false);
-            tietTenKho.setText(value.getTenKho());
+            tietTenKho.setText(value.getName());
         }
     }
 
@@ -77,13 +76,13 @@ public class KhoActivity_Edit extends AppCompatActivity {
         }
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        Kho kho = new Kho(tietMaKho.getText().toString().trim(),tietTenKho.getText().toString().trim());
+        Storage storage = new Storage(tietMaKho.getText().toString().trim(),tietTenKho.getText().toString().trim());
         if(isAdd){
-            bundle.putSerializable("add_kho",kho);
+            bundle.putSerializable("add_kho", storage);
             intent.putExtras(bundle);
             setResult(REQUEST_ADD_KHO,intent);
         }else {
-            bundle.putSerializable("edit_kho",kho);
+            bundle.putSerializable("edit_kho", storage);
             intent.putExtras(bundle);
             setResult(REQUEST_EDIT_KHO,intent);
         }

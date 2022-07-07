@@ -1,7 +1,7 @@
 package com.android.warehousemanager.interfaces;
 
-import com.android.warehousemanager.models.PhieuNhap;
+import com.android.warehousemanager.models.GoodsReceipt;
 
 public interface IClickItemPhieuNhapListener {
-    void onClickItemPhieuNhap(PhieuNhap value);
+    void onClickItemPhieuNhap(GoodsReceipt value);
 }

@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.warehousemanager.models.ChiTietPhieuNhap;
 import com.android.warehousemanager.R;
@@ -64,9 +63,9 @@ public class DetailPhieuNhapActivity_Edit extends AppCompatActivity {
         }
         ChiTietPhieuNhap value_dpn = (ChiTietPhieuNhap) bundle.get("edit_detail_phieu_nhap");
         if(value_dpn != null){
-            soPhieu = value_dpn.getSoPhieu();
-            tvMaVatTu.setText(value_dpn.getMaVatTu());
-            etSoLuong.setText(String.valueOf(value_dpn.getSoLuong()));
+            soPhieu = value_dpn.getId();
+            tvMaVatTu.setText(value_dpn.getIdSupply());
+            etSoLuong.setText(String.valueOf(value_dpn.getAmount()));
         }
     }
 

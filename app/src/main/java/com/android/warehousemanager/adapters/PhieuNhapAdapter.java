@@ -35,7 +35,7 @@ public class PhieuNhapAdapter extends RecyclerView.Adapter<PhieuNhapAdapter.View
     public void editData(PhieuNhap value) {
         int position;
         for (PhieuNhap item : data) {
-            if(item.getSoPhieu() == value.getSoPhieu()){
+            if(item.getId() == value.getId()){
                 position = data.indexOf(item);
                 data.set(position,value);
                 break;
@@ -46,7 +46,7 @@ public class PhieuNhapAdapter extends RecyclerView.Adapter<PhieuNhapAdapter.View
     public void removeData(PhieuNhap value) {
         int position;
         for (PhieuNhap item : data) {
-            if(item.getSoPhieu() == value.getSoPhieu()){
+            if(item.getId() == value.getId()){
                 position = data.indexOf(item);
                 data.remove(position);
                 break;
@@ -73,9 +73,9 @@ public class PhieuNhapAdapter extends RecyclerView.Adapter<PhieuNhapAdapter.View
 
     private void setEvent(ViewHolder holder, int position) {
         PhieuNhap value = data.get(position);
-        holder.tvSoPhieu.setText(String.valueOf(value.getSoPhieu()));
-        holder.tvMaKho.setText(value.getMaKho());
-        holder.tvNgayLap.setText(String.valueOf(value.getNgayLap()));
+        holder.tvSoPhieu.setText(String.valueOf(value.getId()));
+        holder.tvMaKho.setText(value.getIdWarehouse());
+        holder.tvNgayLap.setText(String.valueOf(value.getDateOfStart()));
         holder.imgArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

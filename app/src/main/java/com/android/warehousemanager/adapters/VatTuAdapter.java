@@ -43,7 +43,7 @@ public class VatTuAdapter extends ArrayAdapter<VatTu> {
     public void editItem(VatTu vatTu) {
         int position;
         for (VatTu item : data) {
-            if(item.getMaVatTu().equalsIgnoreCase(vatTu.getMaVatTu())){
+            if(item.getId().equalsIgnoreCase(vatTu.getId())){
                 position = data.indexOf(item);
                 data.set(position,vatTu);
                 break;
@@ -54,7 +54,7 @@ public class VatTuAdapter extends ArrayAdapter<VatTu> {
     public void removeItem(VatTu vatTu) {
         int position;
         for (VatTu item : data) {
-            if(item.getMaVatTu().equalsIgnoreCase(vatTu.getMaVatTu())){
+            if(item.getId().equalsIgnoreCase(vatTu.getId())){
                 position = data.indexOf(item);
                 data.remove(position);
                 break;
@@ -90,12 +90,12 @@ public class VatTuAdapter extends ArrayAdapter<VatTu> {
 
     private void setEvent(int position) {
         VatTu value = data.get(position);
-        tvMaVatTu.setText(value.getMaVatTu());
-        tvTenVatTu.setText(value.getTenVatTu());
-        tvDonViTinh.setText(value.getDonViTinh());
-        tvXuatXu.setText(value.getXuatXu());
+        tvMaVatTu.setText(value.getId());
+        tvTenVatTu.setText(value.getName());
+        tvDonViTinh.setText(value.getUnit());
+        tvXuatXu.setText(value.getFrom());
         try {
-            Picasso.get().load(value.getAnhVatTu()).into(ivAnhVatTu);
+            Picasso.get().load(value.getImage()).into(ivAnhVatTu);
         }catch (Exception e){
             Picasso.get().load("https://res.cloudinary.com/thuan6420/image/upload/v1652627208/xo5qx46gfuat6bas9jd0.jpg").into(ivAnhVatTu);
         }

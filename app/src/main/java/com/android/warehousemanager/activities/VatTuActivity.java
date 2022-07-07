@@ -24,7 +24,7 @@ import android.widget.Toast;
 import com.android.warehousemanager.api.ApiService;
 import com.android.warehousemanager.adapters.VatTuAdapter;
 import com.android.warehousemanager.interfaces.IClickItemVatTuListener;
-import com.android.warehousemanager.models.VatTu;
+import com.android.warehousemanager.models.Supply;
 import com.android.warehousemanager.R;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class VatTuActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     private VatTuAdapter adapter;
-    private List<VatTu> listVatTu = new ArrayList<>();
+    private List<Supply> listSupply = new ArrayList<>();
 
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -50,12 +50,12 @@ public class VatTuActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if(result.getResultCode() == REQUEST_ADD_VAT_TU){
                         if(result.getData().getExtras() != null){
-                            VatTu value = (VatTu) result.getData().getExtras().get("add_vat_tu");
+                            Supply value = (Supply) result.getData().getExtras().get("add_vat_tu");
                             addDataToApi(value);
                         }
                     }else if(result.getResultCode() == REQUEST_EDIT_VAT_TU){
                         if(result.getData().getExtras() != null){
-                            VatTu value = (VatTu) result.getData().getExtras().get("edit_vat_tu");
+                            Supply value = (Supply) result.getData().getExtras().get("edit_vat_tu");
                             updateDataToApi(value);
                         }
                     }
@@ -108,10 +108,10 @@ public class VatTuActivity extends AppCompatActivity {
     }
 
     private void initListView() {
-        adapter = new VatTuAdapter(VatTuActivity.this, 0, listVatTu, new IClickItemVatTuListener() {
+        adapter = new VatTuAdapter(VatTuActivity.this, 0, listSupply, new IClickItemVatTuListener() {
             @Override
-            public void onClickItemVatTu(VatTu vatTu) {
-                onClickToEditVatTu(vatTu);
+            public void onClickItemVatTu(Supply supply) {
+                onClickToEditVatTu(supply);
             }
 
             @Override
@@ -122,50 +122,50 @@ public class VatTuActivity extends AppCompatActivity {
         lvVatTu.setAdapter(adapter);
     }
 
-    private void addDataToApi(VatTu value) {
-        ApiService.API_SERVICE.createVatTu(value).enqueue(new Callback<VatTu>() {
+    private void addDataToApi(Supply value) {
+        ApiService.API_SERVICE.createVatTu(value).enqueue(new Callback<Supply>() {
             @Override
-            public void onResponse(Call<VatTu> call, Response<VatTu> response) {
+            public void onResponse(Call<Supply> call, Response<Supply> response) {
                 if(response.code() == STATUS_CODE_NO_CONTENT){
                     uploadDataFromData();
                 }
             }
             @Override
-            public void onFailure(Call<VatTu> call, Throwable t) {
+            public void onFailure(Call<Supply> call, Throwable t) {
                 Toast.makeText(VatTuActivity.this,"Call API create Vat Tu fail" ,Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
     }
 
-    private void updateDataToApi(VatTu value) {
-        ApiService.API_SERVICE.updateVatTu(value).enqueue(new Callback<VatTu>() {
+    private void updateDataToApi(Supply value) {
+        ApiService.API_SERVICE.updateVatTu(value).enqueue(new Callback<Supply>() {
             @Override
-            public void onResponse(Call<VatTu> call, Response<VatTu> response) {
+            public void onResponse(Call<Supply> call, Response<Supply> response) {
                 if(response.code() == STATUS_CODE_NO_CONTENT){
                     uploadDataFromData();
                 }
             }
 
             @Override
-            public void onFailure(Call<VatTu> call, Throwable t) {
+            public void onFailure(Call<Supply> call, Throwable t) {
                 Toast.makeText(VatTuActivity.this,"Call API update Vat Tu fail" ,Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
     }
 
-    private void removeDataFromApi(VatTu item) {
-        ApiService.API_SERVICE.removeVatTu(item.getMa_vat_tu()).enqueue(new Callback<VatTu>() {
+    private void removeDataFromApi(Supply item) {
+        ApiService.API_SERVICE.removeVatTu(item.getId()).enqueue(new Callback<Supply>() {
             @Override
-            public void onResponse(Call<VatTu> call, Response<VatTu> response) {
+            public void onResponse(Call<Supply> call, Response<Supply> response) {
                 if(response.code() == STATUS_CODE_NO_CONTENT){
                     uploadDataFromData();
                 }
             }
 
             @Override
-            public void onFailure(Call<VatTu> call, Throwable t) {
+            public void onFailure(Call<Supply> call, Throwable t) {
                 Toast.makeText(VatTuActivity.this,"Call API remove Vat Tu fail" ,Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
@@ -174,22 +174,22 @@ public class VatTuActivity extends AppCompatActivity {
 
     private void uploadDataFromData(){
         progressDialog.show();
-        ApiService.API_SERVICE.getAllVatTu().enqueue(new Callback<List<VatTu>>() {
+        ApiService.API_SERVICE.getAllVatTu().enqueue(new Callback<List<Supply>>() {
             @Override
-            public void onResponse(Call<List<VatTu>> call, Response<List<VatTu>> response) {
+            public void onResponse(Call<List<Supply>> call, Response<List<Supply>> response) {
                 if(!response.isSuccessful()){
                     progressDialog.dismiss();
                     Toast.makeText(VatTuActivity.this, "Request fail " + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                listVatTu.clear();
-                listVatTu.addAll(response.body());
+                listSupply.clear();
+                listSupply.addAll(response.body());
                 adapter.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
             @Override
-            public void onFailure(Call<List<VatTu>> call, Throwable t) {
+            public void onFailure(Call<List<Supply>> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(VatTuActivity.this, "Call Api fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
@@ -208,7 +208,7 @@ public class VatTuActivity extends AppCompatActivity {
         alertDialogBuilder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                VatTu item = adapter.getItem(position);
+                Supply item = adapter.getItem(position);
                 removeDataFromApi(item);
                 uploadDataFromData();
             }
@@ -222,10 +222,10 @@ public class VatTuActivity extends AppCompatActivity {
         alertDialogBuilder.show();
     }
 
-    private void onClickToEditVatTu(VatTu vatTu) {
+    private void onClickToEditVatTu(Supply supply) {
         Intent intent = new Intent(VatTuActivity.this, VatTuActivity_Edit.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("edit_vat_tu", vatTu);
+        bundle.putSerializable("edit_vat_tu", supply);
         intent.putExtras(bundle);
         launcher.launch(intent);
     }

@@ -3,60 +3,60 @@ package com.android.warehousemanager.models;
 import java.io.Serializable;
 
 public class VatTu implements Serializable {
-    private String maVatTu;
-    private String tenVatTu;
-    private String anhVatTu;
-    private String donViTinh;
-    private String xuatXu;
+    private String ma_vat_tu;
+    private String ten_vat_tu;
+    private String anh_vat_tu;
+    private String don_vi_tinh;
+    private String xuat_xu;
 
     public VatTu(String maVatTu, String tenVatTu, String anhVatTu, String donViTinh, String xuatXu) {
-        this.maVatTu = maVatTu;
-        this.tenVatTu = tenVatTu;
-        this.anhVatTu = anhVatTu;
-        this.donViTinh = donViTinh;
-        this.xuatXu = xuatXu;
+        this.ma_vat_tu = maVatTu;
+        this.ten_vat_tu = tenVatTu;
+        this.anh_vat_tu = anhVatTu;
+        this.don_vi_tinh = donViTinh;
+        this.xuat_xu = xuatXu;
     }
 
     public VatTu() {
     }
 
-    public String getMaVatTu() {
-        return maVatTu;
+    public String getMa_vat_tu() {
+        return ma_vat_tu;
     }
 
-    public void setMaVatTu(String maVatTu) {
-        this.maVatTu = maVatTu;
+    public void setMa_vat_tu(String ma_vat_tu) {
+        this.ma_vat_tu = ma_vat_tu;
     }
 
-    public String getTenVatTu() {
-        return tenVatTu;
+    public String getTen_vat_tu() {
+        return ten_vat_tu;
     }
 
-    public void setTenVatTu(String tenVatTu) {
-        this.tenVatTu = tenVatTu;
+    public void setTen_vat_tu(String ten_vat_tu) {
+        this.ten_vat_tu = ten_vat_tu;
     }
 
-    public String getAnhVatTu() {
-        return anhVatTu;
+    public String getAnh_vat_tu() {
+        return anh_vat_tu;
     }
 
-    public void setAnhVatTu(String anhVatTu) {
-        this.anhVatTu = anhVatTu;
+    public void setAnh_vat_tu(String anh_vat_tu) {
+        this.anh_vat_tu = anh_vat_tu;
     }
 
-    public String getDonViTinh() {
-        return donViTinh;
+    public String getDon_vi_tinh() {
+        return don_vi_tinh;
     }
 
-    public void setDonViTinh(String donViTinh) {
-        this.donViTinh = donViTinh;
+    public void setDon_vi_tinh(String don_vi_tinh) {
+        this.don_vi_tinh = don_vi_tinh;
     }
 
-    public String getXuatXu() {
-        return xuatXu;
+    public String getXuat_xu() {
+        return xuat_xu;
     }
 
-    public void setXuatXu(String xuatXu) {
-        this.xuatXu = xuatXu;
+    public void setXuat_xu(String xuat_xu) {
+        this.xuat_xu = xuat_xu;
     }
 }

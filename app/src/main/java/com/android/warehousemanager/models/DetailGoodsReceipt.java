@@ -7,10 +7,10 @@ public class DetailGoodsReceipt implements Serializable {
     private String idSupply;
     private int amount;
 
-    public DetailGoodsReceipt(int sophieu, String mavattu, int soluong) {
-        this.id = sophieu;
-        this.idSupply = mavattu;
-        this.amount = soluong;
+    public DetailGoodsReceipt(int id, String id_supply, int amount) {
+        this.id = id;
+        this.idSupply = id_supply;
+        this.amount = amount;
     }
 
     public int getId() {

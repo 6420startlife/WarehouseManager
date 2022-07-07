@@ -3,42 +3,42 @@ package com.android.warehousemanager.models;
 import java.io.Serializable;
 
 public class PhieuNhap implements Serializable {
-    private int soPhieu;
-    private String ngayLap;
-    private String maKho;
+    private int id;
+    private String dateOfStart;
+    private String idWarehouse;
 
-    public PhieuNhap(int soPhieu, String ngayLap, String maKho) {
-        this.soPhieu = soPhieu;
-        this.ngayLap = ngayLap;
-        this.maKho = maKho;
+    public PhieuNhap(int id, String dateOfStart, String idWarehouse) {
+        this.id = id;
+        this.dateOfStart = dateOfStart;
+        this.idWarehouse = idWarehouse;
     }
 
-    public PhieuNhap(String ngayLap, String maKho) {
-        this.ngayLap = ngayLap;
-        this.maKho = maKho;
+    public PhieuNhap(String dateOfStart, String idWarehouse) {
+        this.dateOfStart = dateOfStart;
+        this.idWarehouse = idWarehouse;
     }
 
-    public int getSoPhieu() {
-        return soPhieu;
+    public int getId() {
+        return id;
     }
 
-    public void setSoPhieu(int soPhieu) {
-        this.soPhieu = soPhieu;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getMaKho() {
-        return maKho;
+    public String getIdWarehouse() {
+        return idWarehouse;
     }
 
-    public void setMaKho(String maKho) {
-        this.maKho = maKho;
+    public void setIdWarehouse(String idWarehouse) {
+        this.idWarehouse = idWarehouse;
     }
 
-    public String getNgayLap() {
-        return ngayLap;
+    public String getDateOfStart() {
+        return dateOfStart;
     }
 
-    public void setNgayLap(String ngayLap) {
-        this.ngayLap = ngayLap;
+    public void setDateOfStart(String dateOfStart) {
+        this.dateOfStart = dateOfStart;
     }
 }

@@ -34,7 +34,7 @@ public class DetailPhieuNhapAdapter extends RecyclerView.Adapter<DetailPhieuNhap
     public void editData(ChiTietPhieuNhap value) {
         int position;
         for (ChiTietPhieuNhap item: data) {
-            if(item.getSoPhieu() == value.getSoPhieu() && item.getMaVatTu().equalsIgnoreCase(value.getMaVatTu())) {
+            if(item.getId() == value.getId() && item.getIdSupply().equalsIgnoreCase(value.getIdSupply())) {
                 position = data.indexOf(item);
                 data.set(position,value);
                 break;
@@ -48,7 +48,7 @@ public class DetailPhieuNhapAdapter extends RecyclerView.Adapter<DetailPhieuNhap
 
     public void updateSoPhieu(int soPhieu){
         for (ChiTietPhieuNhap item : data) {
-            item.setSoPhieu(soPhieu);
+            item.setId(soPhieu);
         }
     }
 
@@ -71,8 +71,8 @@ public class DetailPhieuNhapAdapter extends RecyclerView.Adapter<DetailPhieuNhap
 
     private void setEvent(ViewHolder holder, int position) {
         ChiTietPhieuNhap value = data.get(position);
-        holder.tvMaVatTu.setText(value.getMaVatTu());
-        holder.tvSoLuong.setText(String.valueOf(value.getSoLuong()));
+        holder.tvMaVatTu.setText(value.getIdSupply());
+        holder.tvSoLuong.setText(String.valueOf(value.getAmount()));
         holder.ivDetailPhieuNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

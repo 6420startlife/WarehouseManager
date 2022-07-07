@@ -37,11 +37,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -129,14 +126,14 @@ public class VatTuActivity_Edit extends AppCompatActivity {
         }else{
             VatTu value = (VatTu) bundle.get("edit_vat_tu");
             if(value != null){
-                tietMaVatTu.setText(value.getMaVatTu());
+                tietMaVatTu.setText(value.getId());
                 tietMaVatTu.setEnabled(false);
-                tietTenVatTu.setText(value.getTenVatTu());
-                tietDonViTinh.setText(value.getDonViTinh());
-                tietXuatXu.setText(value.getXuatXu());
-                setUrlImage(value.getAnhVatTu());
+                tietTenVatTu.setText(value.getName());
+                tietDonViTinh.setText(value.getUnit());
+                tietXuatXu.setText(value.getFrom());
+                setUrlImage(value.getImage());
                 try{
-                    Picasso.get().load(value.getAnhVatTu()).into(ivAnhVatTu_Edit);
+                    Picasso.get().load(value.getImage()).into(ivAnhVatTu_Edit);
                 }catch (Exception e){
                     Picasso.get().load(defaultImageUrl).into(ivAnhVatTu_Edit);
                 }

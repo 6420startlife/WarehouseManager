@@ -10,23 +10,15 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,9 +56,9 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
                             return;
                         }
                         PhieuNhap value = (PhieuNhap) result.getData().getExtras().get("edit_phieu_nhap");
-                        tvSoPhieu.setText(String.valueOf(value.getSoPhieu()));
-                        tvMaKho.setText(value.getMaKho());
-                        tvNgayLap.setText(value.getNgayLap());
+                        tvSoPhieu.setText(String.valueOf(value.getId()));
+                        tvMaKho.setText(value.getIdWarehouse());
+                        tvNgayLap.setText(value.getDateOfStart());
                         setResult(REQUEST_EDIT_PHIEU_NHAP,result.getData());
                     }
                     else if(result.getResultCode() == REQUEST_ADD_DETAIL_PHIEU_NHAP){
@@ -147,9 +139,9 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
         }
         PhieuNhap value = (PhieuNhap) bundle.get("edit_phieu_nhap");
         if(value != null){
-            tvSoPhieu.setText(String.valueOf(value.getSoPhieu()));
-            tvMaKho.setText(value.getMaKho());
-            tvNgayLap.setText(value.getNgayLap());
+            tvSoPhieu.setText(String.valueOf(value.getId()));
+            tvMaKho.setText(value.getIdWarehouse());
+            tvNgayLap.setText(value.getDateOfStart());
         }
         ivEditPhieuNhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,7 +167,7 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
     }
 
     private void getDataFromApi(PhieuNhap value) {
-        ApiService.API_SERVICE.getAllChiTietPhieuNhap(value.getSoPhieu()).enqueue(new Callback<List<ChiTietPhieuNhap>>() {
+        ApiService.API_SERVICE.getAllChiTietPhieuNhap(value.getId()).enqueue(new Callback<List<ChiTietPhieuNhap>>() {
             @Override
             public void onResponse(Call<List<ChiTietPhieuNhap>> call, Response<List<ChiTietPhieuNhap>> response) {
                 if(!response.isSuccessful()){
@@ -220,7 +212,7 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
     }
 
     private void removeDataFromApi(ChiTietPhieuNhap value) {
-        ApiService.API_SERVICE.removeChiTietPhieuNhap(value.getSoPhieu(),value.getMaVatTu()).enqueue(new Callback() {
+        ApiService.API_SERVICE.removeChiTietPhieuNhap(value.getId(),value.getIdSupply()).enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
                 if(response.code() == STATUS_CODE_NO_CONTENT) {

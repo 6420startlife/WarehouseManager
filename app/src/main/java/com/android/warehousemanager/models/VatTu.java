@@ -3,60 +3,60 @@ package com.android.warehousemanager.models;
 import java.io.Serializable;
 
 public class VatTu implements Serializable {
-    private String maVatTu;
-    private String tenVatTu;
-    private String anhVatTu;
-    private String donViTinh;
-    private String xuatXu;
+    private String id;
+    private String name;
+    private String image;
+    private String unit;
+    private String from;
 
     public VatTu(String maVatTu, String tenVatTu, String anhVatTu, String donViTinh, String xuatXu) {
-        this.maVatTu = maVatTu;
-        this.tenVatTu = tenVatTu;
-        this.anhVatTu = anhVatTu;
-        this.donViTinh = donViTinh;
-        this.xuatXu = xuatXu;
+        this.id = maVatTu;
+        this.name = tenVatTu;
+        this.image = anhVatTu;
+        this.unit = donViTinh;
+        this.from = xuatXu;
     }
 
     public VatTu() {
     }
 
-    public String getMaVatTu() {
-        return maVatTu;
+    public String getId() {
+        return id;
     }
 
-    public void setMaVatTu(String maVatTu) {
-        this.maVatTu = maVatTu;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getTenVatTu() {
-        return tenVatTu;
+    public String getName() {
+        return name;
     }
 
-    public void setTenVatTu(String tenVatTu) {
-        this.tenVatTu = tenVatTu;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getAnhVatTu() {
-        return anhVatTu;
+    public String getImage() {
+        return image;
     }
 
-    public void setAnhVatTu(String anhVatTu) {
-        this.anhVatTu = anhVatTu;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public String getDonViTinh() {
-        return donViTinh;
+    public String getUnit() {
+        return unit;
     }
 
-    public void setDonViTinh(String donViTinh) {
-        this.donViTinh = donViTinh;
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
-    public String getXuatXu() {
-        return xuatXu;
+    public String getFrom() {
+        return from;
     }
 
-    public void setXuatXu(String xuatXu) {
-        this.xuatXu = xuatXu;
+    public void setFrom(String from) {
+        this.from = from;
     }
 }

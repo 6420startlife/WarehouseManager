@@ -202,7 +202,7 @@ public class KhoActivity extends AppCompatActivity {
     }
 
     private void removeDataFromApi(Kho item) {
-        ApiService.API_SERVICE.removeKho(item.getMaKho()).enqueue(new Callback<Kho>() {
+        ApiService.API_SERVICE.removeKho(item.getId()).enqueue(new Callback<Kho>() {
             @Override
             public void onResponse(Call<Kho> call, Response<Kho> response) {
                 if(response.code() == STATUS_CODE_NO_CONTENT){

@@ -156,7 +156,7 @@ public class VatTuActivity extends AppCompatActivity {
     }
 
     private void removeDataFromApi(VatTu item) {
-        ApiService.API_SERVICE.removeVatTu(item.getMaVatTu()).enqueue(new Callback<VatTu>() {
+        ApiService.API_SERVICE.removeVatTu(item.getId()).enqueue(new Callback<VatTu>() {
             @Override
             public void onResponse(Call<VatTu> call, Response<VatTu> response) {
                 if(response.code() == STATUS_CODE_NO_CONTENT){

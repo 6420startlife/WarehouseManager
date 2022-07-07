@@ -40,7 +40,7 @@ public class KhoAdapter extends ArrayAdapter<Kho> {
     public void editItem(Kho Kho) {
         int position;
         for (Kho item : data) {
-            if(item.getMaKho().equalsIgnoreCase(Kho.getMaKho())){
+            if(item.getId().equalsIgnoreCase(Kho.getId())){
                 position = data.indexOf(item);
                 data.set(position,Kho);
                 break;
@@ -51,7 +51,7 @@ public class KhoAdapter extends ArrayAdapter<Kho> {
     public void removeItem(Kho Kho) {
         int position;
         for (Kho item : data) {
-            if(item.getMaKho().equalsIgnoreCase(Kho.getMaKho())){
+            if(item.getId().equalsIgnoreCase(Kho.getId())){
                 position = data.indexOf(item);
                 data.remove(position);
                 break;
@@ -87,8 +87,8 @@ public class KhoAdapter extends ArrayAdapter<Kho> {
 
     private void setEvent(int position) {
         Kho kho = data.get(position);
-        tvMaKho.setText(kho.getMaKho());
-        tvTenKho.setText(kho.getTenKho());
+        tvMaKho.setText(kho.getId());
+        tvTenKho.setText(kho.getName());
         layoutKho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

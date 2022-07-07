@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.android.warehousemanager.models.Kho;
 import com.android.warehousemanager.R;
@@ -61,9 +60,9 @@ public class KhoActivity_Edit extends AppCompatActivity {
             isAdd = true;
         }else{
             Kho value = (Kho) bundle.get("edit_kho");
-            tietMaKho.setText(value.getMaKho());
+            tietMaKho.setText(value.getId());
             tietMaKho.setEnabled(false);
-            tietTenKho.setText(value.getTenKho());
+            tietTenKho.setText(value.getName());
         }
     }
 

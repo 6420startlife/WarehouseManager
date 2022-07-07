@@ -76,8 +76,8 @@ public class PhieuNhapActivity_Edit extends AppCompatActivity {
         }
         PhieuNhap value_pn = (PhieuNhap) bundle.get("edit_phieu_nhap");
         if(value_pn != null){
-            soPhieu = value_pn.getSoPhieu();
-            etNgayLap.setText(value_pn.getNgayLap());
+            soPhieu = value_pn.getId();
+            etNgayLap.setText(value_pn.getDateOfStart());
         }
 
         ivCancelPhieuNhap.setOnClickListener(new View.OnClickListener() {

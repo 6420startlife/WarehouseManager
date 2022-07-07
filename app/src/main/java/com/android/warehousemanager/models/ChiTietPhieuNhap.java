@@ -3,38 +3,40 @@ package com.android.warehousemanager.models;
 import java.io.Serializable;
 
 public class ChiTietPhieuNhap implements Serializable {
-    private int soPhieu;
-    private String maVatTu;
-    private int qualtity;
 
-    public ChiTietPhieuNhap(int soPhieu, String maVatTu, int soLuong) {
-        this.soPhieu = soPhieu;
-        this.maVatTu = maVatTu;
-        this.qualtity = soLuong;
+    private int id;
+    private String idSupply;
+    private int amount;
+
+    public ChiTietPhieuNhap(int id, String idSupply, int amount) {
+        this.id = id;
+        this.idSupply = idSupply;
+        this.amount = amount;
     }
 
-    public int getSoPhieu() {
-        return soPhieu;
+    public int getId() {
+        return id;
     }
 
-    public void setSoPhieu(int soPhieu) {
-        this.soPhieu = soPhieu;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getMaVatTu() {
-        return maVatTu;
+    public String getIdSupply() {
+        return idSupply;
     }
 
-    public void setMaVatTu(String maVatTu) {
-        this.maVatTu = maVatTu;
+    public void setIdSupply(String idSupply) {
+        this.idSupply = idSupply;
     }
 
-    public int getQualtity() {
-        return qualtity;
+
+    public int getAmount() {
+        return amount;
     }
 
-    public void setQualtity(int qualtity) {
-        this.qualtity = qualtity;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
 }

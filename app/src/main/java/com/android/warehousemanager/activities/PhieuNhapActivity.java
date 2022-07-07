@@ -8,13 +8,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -30,11 +27,6 @@ import com.android.warehousemanager.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,7 +74,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
             });
 
     private void removeDataFromApi(PhieuNhap value) {
-        ApiService.API_SERVICE.removePhieuNhap(value.getSoPhieu()).enqueue(new Callback<PhieuNhap>() {
+        ApiService.API_SERVICE.removePhieuNhap(value.getId()).enqueue(new Callback<PhieuNhap>() {
             @Override
             public void onResponse(Call<PhieuNhap> call, Response<PhieuNhap> response) {
                 if(!response.isSuccessful()) {
@@ -104,7 +96,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
     }
 
     private void updateDataToApi(PhieuNhap value) {
-        ApiService.API_SERVICE.updatePhieuNhap(value.getSoPhieu(),value).enqueue(new Callback<PhieuNhap>() {
+        ApiService.API_SERVICE.updatePhieuNhap(value.getId(),value).enqueue(new Callback<PhieuNhap>() {
             @Override
             public void onResponse(Call<PhieuNhap> call, Response<PhieuNhap> response) {
                 if(!response.isSuccessful()) {

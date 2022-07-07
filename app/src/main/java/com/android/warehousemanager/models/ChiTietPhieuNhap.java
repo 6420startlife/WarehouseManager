@@ -3,38 +3,38 @@ package com.android.warehousemanager.models;
 import java.io.Serializable;
 
 public class ChiTietPhieuNhap implements Serializable {
-    private int soPhieu;
-    private String maVatTu;
-    private int soLuong;
+    private int sophieu;
+    private String mavattu;
+    private int soluong;
 
-    public ChiTietPhieuNhap(int soPhieu, String maVatTu, int soLuong) {
-        this.soPhieu = soPhieu;
-        this.maVatTu = maVatTu;
-        this.soLuong = soLuong;
+    public ChiTietPhieuNhap(int sophieu, String mavattu, int soluong) {
+        this.sophieu = sophieu;
+        this.mavattu = mavattu;
+        this.soluong = soluong;
     }
 
-    public int getSoPhieu() {
-        return soPhieu;
+    public int getSophieu() {
+        return sophieu;
     }
 
-    public void setSoPhieu(int soPhieu) {
-        this.soPhieu = soPhieu;
+    public void setSophieu(int sophieu) {
+        this.sophieu = sophieu;
     }
 
-    public String getMaVatTu() {
-        return maVatTu;
+    public String getMavattu() {
+        return mavattu;
     }
 
-    public void setMaVatTu(String maVatTu) {
-        this.maVatTu = maVatTu;
+    public void setMavattu(String mavattu) {
+        this.mavattu = mavattu;
     }
 
-    public int getSoLuong() {
-        return soLuong;
+    public int getSoluong() {
+        return soluong;
     }
 
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
+    public void setSoluong(int soluong) {
+        this.soluong = soluong;
     }
 
 }

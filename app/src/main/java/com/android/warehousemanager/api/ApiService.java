@@ -1,14 +1,9 @@
 package com.android.warehousemanager.api;
 
 import com.android.warehousemanager.models.ApiResponse;
-<<<<<<< HEAD
-import com.android.warehousemanager.models.Kho;
-import com.android.warehousemanager.models.PhieuNhap;
-=======
 import com.android.warehousemanager.models.DetailGoodsReceipt;
 import com.android.warehousemanager.models.Storage;
 import com.android.warehousemanager.models.GoodsReceipt;
->>>>>>> thuanBranch
 import com.android.warehousemanager.models.Supply;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

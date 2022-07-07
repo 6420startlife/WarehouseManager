@@ -10,31 +10,23 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.warehousemanager.api.ApiService;
 import com.android.warehousemanager.adapters.DetailPhieuNhapAdapter;
-import com.android.warehousemanager.models.ChiTietPhieuNhap;
-import com.android.warehousemanager.models.PhieuNhap;
+import com.android.warehousemanager.models.DetailGoodsReceipt;
+import com.android.warehousemanager.models.GoodsReceipt;
 import com.android.warehousemanager.interfaces.IClickItemDetailPhieuNhapListener;
 import com.android.warehousemanager.R;
 
@@ -63,15 +55,15 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
                         if(result.getData() == null){
                             return;
                         }
-                        PhieuNhap value = (PhieuNhap) result.getData().getExtras().get("edit_phieu_nhap");
-                        tvSoPhieu.setText(String.valueOf(value.getSoPhieu()));
-                        tvMaKho.setText(value.getMaKho());
-                        tvNgayLap.setText(value.getNgayLap());
+                        GoodsReceipt value = (GoodsReceipt) result.getData().getExtras().get("edit_phieu_nhap");
+                        tvSoPhieu.setText(String.valueOf(value.getId()));
+                        tvMaKho.setText(value.getIdStorage());
+                        tvNgayLap.setText(value.getDate());
                         setResult(REQUEST_EDIT_PHIEU_NHAP,result.getData());
                     }
                     else if(result.getResultCode() == REQUEST_ADD_DETAIL_PHIEU_NHAP){
                         if(result.getData().getExtras() != null){
-                            ChiTietPhieuNhap value = (ChiTietPhieuNhap) result.getData().getExtras().get("add_detail_phieu_nhap");
+                            DetailGoodsReceipt value = (DetailGoodsReceipt) result.getData().getExtras().get("add_detail_phieu_nhap");
                             addDataToApi(value);
                             adapter.setItem(value);
                             adapter.notifyDataSetChanged();
@@ -79,7 +71,7 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
                     }
                     else if(result.getResultCode() == REQUEST_EDIT_DETAIL_PHIEU_NHAP){
                         if(result.getData().getExtras() != null){
-                            ChiTietPhieuNhap value = (ChiTietPhieuNhap) result.getData().getExtras().get("edit_detail_phieu_nhap");
+                            DetailGoodsReceipt value = (DetailGoodsReceipt) result.getData().getExtras().get("edit_detail_phieu_nhap");
                             updateDataToApi(value);
                             adapter.editData(value);
                             adapter.notifyDataSetChanged();
@@ -88,7 +80,7 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
                 }
             });
 
-    private void updateDataToApi(ChiTietPhieuNhap value) {
+    private void updateDataToApi(DetailGoodsReceipt value) {
         ApiService.API_SERVICE.updateChiTietPhieuNhap(value).enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -109,7 +101,7 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
         });
     }
 
-    private void addDataToApi(ChiTietPhieuNhap value) {
+    private void addDataToApi(DetailGoodsReceipt value) {
         ApiService.API_SERVICE.createChiTietPhieuNhap(value).enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -145,16 +137,16 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
         if(bundle == null) {
             return;
         }
-        PhieuNhap value = (PhieuNhap) bundle.get("edit_phieu_nhap");
+        GoodsReceipt value = (GoodsReceipt) bundle.get("edit_phieu_nhap");
         if(value != null){
-            tvSoPhieu.setText(String.valueOf(value.getSoPhieu()));
-            tvMaKho.setText(value.getMaKho());
-            tvNgayLap.setText(value.getNgayLap());
+            tvSoPhieu.setText(String.valueOf(value.getId()));
+            tvMaKho.setText(value.getIdStorage());
+            tvNgayLap.setText(value.getDate());
         }
         ivEditPhieuNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PhieuNhap value = new PhieuNhap(Integer.valueOf(tvSoPhieu.getText().toString().trim())
+                GoodsReceipt value = new GoodsReceipt(Integer.valueOf(tvSoPhieu.getText().toString().trim())
                         ,tvNgayLap.getText().toString().trim(),tvMaKho.getText().toString().trim());
                 onClickGoToEditPhieuNhap(value);
             }
@@ -174,10 +166,10 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
         getDataFromApi(value);
     }
 
-    private void getDataFromApi(PhieuNhap value) {
-        ApiService.API_SERVICE.getAllChiTietPhieuNhap(value.getSoPhieu()).enqueue(new Callback<List<ChiTietPhieuNhap>>() {
+    private void getDataFromApi(GoodsReceipt value) {
+        ApiService.API_SERVICE.getAllChiTietPhieuNhap(value.getId()).enqueue(new Callback<List<DetailGoodsReceipt>>() {
             @Override
-            public void onResponse(Call<List<ChiTietPhieuNhap>> call, Response<List<ChiTietPhieuNhap>> response) {
+            public void onResponse(Call<List<DetailGoodsReceipt>> call, Response<List<DetailGoodsReceipt>> response) {
                 if(!response.isSuccessful()){
                     Toast.makeText(DetailPhieuNhapActivity.this, "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
                     return;
@@ -186,17 +178,17 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<ChiTietPhieuNhap>> call, Throwable t) {
+            public void onFailure(Call<List<DetailGoodsReceipt>> call, Throwable t) {
                 Toast.makeText(DetailPhieuNhapActivity.this, "Call Api get All CTPN fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi",t.getMessage());
             }
         });
     }
 
-    private void fetchDataToAdapter(List<ChiTietPhieuNhap> list) {
+    private void fetchDataToAdapter(List<DetailGoodsReceipt> list) {
         adapter = new DetailPhieuNhapAdapter(list, new IClickItemDetailPhieuNhapListener() {
             @Override
-            public void onClickDetailPhieuNhap(ChiTietPhieuNhap value) {
+            public void onClickDetailPhieuNhap(DetailGoodsReceipt value) {
 
                 onClickGoToEditDetailPhieuNhap(value);
             }
@@ -211,7 +203,7 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
-                ChiTietPhieuNhap chiTietPhieuNhap = adapter.getData().get(position);
+                DetailGoodsReceipt chiTietPhieuNhap = adapter.getData().get(position);
                 removeDataFromApi(chiTietPhieuNhap);
                 adapter.removeData(position);
                 adapter.notifyDataSetChanged();
@@ -219,8 +211,8 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
         }).attachToRecyclerView(rvDetailPhieuNhap);
     }
 
-    private void removeDataFromApi(ChiTietPhieuNhap value) {
-        ApiService.API_SERVICE.removeChiTietPhieuNhap(value.getSoPhieu(),value.getMaVatTu()).enqueue(new Callback() {
+    private void removeDataFromApi(DetailGoodsReceipt value) {
+        ApiService.API_SERVICE.removeChiTietPhieuNhap(value.getId(),value.getIdSupply()).enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
                 if(response.code() == STATUS_CODE_NO_CONTENT) {
@@ -245,7 +237,7 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void onClickGoToEditDetailPhieuNhap(ChiTietPhieuNhap value) {
+    protected void onClickGoToEditDetailPhieuNhap(DetailGoodsReceipt value) {
         Intent intent = new Intent(DetailPhieuNhapActivity.this, DetailPhieuNhapActivity_Edit.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("edit_detail_phieu_nhap", value);
@@ -260,7 +252,7 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
     }
 
     private void onClickDeletePhieuNhap() {
-        PhieuNhap value = new PhieuNhap(Integer.valueOf(tvSoPhieu.getText().toString())
+        GoodsReceipt value = new GoodsReceipt(Integer.valueOf(tvSoPhieu.getText().toString())
                 ,tvNgayLap.getText().toString().trim(),tvMaKho.getText().toString().trim());
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
@@ -270,7 +262,7 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
         finish();
     }
 
-    private void onClickGoToEditPhieuNhap(PhieuNhap value) {
+    private void onClickGoToEditPhieuNhap(GoodsReceipt value) {
         Intent intent = new Intent(DetailPhieuNhapActivity.this, PhieuNhapActivity_Edit.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("edit_phieu_nhap",value);

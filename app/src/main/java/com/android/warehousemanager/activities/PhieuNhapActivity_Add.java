@@ -29,8 +29,8 @@ import com.android.warehousemanager.api.ApiService;
 import com.android.warehousemanager.adapters.DetailPhieuNhapAdapter;
 import com.android.warehousemanager.adapters.SpinnerAdapter;
 import com.android.warehousemanager.models.ApiResponse;
-import com.android.warehousemanager.models.ChiTietPhieuNhap;
-import com.android.warehousemanager.models.PhieuNhap;
+import com.android.warehousemanager.models.DetailGoodsReceipt;
+import com.android.warehousemanager.models.GoodsReceipt;
 import com.android.warehousemanager.interfaces.IClickItemDetailPhieuNhapListener;
 import com.android.warehousemanager.R;
 
@@ -63,14 +63,14 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if(result.getResultCode() == REQUEST_ADD_DETAIL_PHIEU_NHAP){
                         if(result.getData().getExtras() != null){
-                            ChiTietPhieuNhap value = (ChiTietPhieuNhap) result.getData().getExtras().get("add_detail_phieu_nhap");
+                            DetailGoodsReceipt value = (DetailGoodsReceipt) result.getData().getExtras().get("add_detail_phieu_nhap");
                             adapter.setItem(value);
                             adapter.notifyDataSetChanged();
                         }
                     }
                     else if(result.getResultCode() == REQUEST_EDIT_DETAIL_PHIEU_NHAP){
                         if(result.getData().getExtras() != null){
-                            ChiTietPhieuNhap value = (ChiTietPhieuNhap) result.getData().getExtras().get("add_detail_phieu_nhap");
+                            DetailGoodsReceipt value = (DetailGoodsReceipt) result.getData().getExtras().get("add_detail_phieu_nhap");
                             adapter.editData(value);
                             adapter.notifyDataSetChanged();
                         }
@@ -154,10 +154,10 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
             }
         });
 
-        List<ChiTietPhieuNhap> data = new LinkedList<>();
+        List<DetailGoodsReceipt> data = new LinkedList<>();
         adapter = new DetailPhieuNhapAdapter(data, new IClickItemDetailPhieuNhapListener() {
             @Override
-            public void onClickDetailPhieuNhap(ChiTietPhieuNhap value) {
+            public void onClickDetailPhieuNhap(DetailGoodsReceipt value) {
                 onClickGoToEditDetailPhieuNhap(value);
             }
         });
@@ -194,7 +194,7 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
         });
     }
 
-    private void onClickGoToEditDetailPhieuNhap(ChiTietPhieuNhap value) {
+    private void onClickGoToEditDetailPhieuNhap(DetailGoodsReceipt value) {
         Intent intent = new Intent(PhieuNhapActivity_Add.this, DetailPhieuNhapActivity_Edit.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("edit_detail_phieu_nhap", value);
@@ -219,7 +219,7 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
             return;
         }
         String[] maKho =  actvKho.getText().toString().trim().split("\\s",2);
-        PhieuNhap value = new PhieuNhap(etNgayLap.getText().toString().trim(),maKho[0]);
+        GoodsReceipt value = new GoodsReceipt(etNgayLap.getText().toString().trim(),maKho[0]);
         ApiService.API_SERVICE.createPhieuNhap(value).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
@@ -243,9 +243,9 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
         });
     }
 
-    private void createCTPNToApi(int soPhieu, PhieuNhap value) {
+    private void createCTPNToApi(int soPhieu, GoodsReceipt value) {
         adapter.updateSoPhieu(soPhieu);
-        for (ChiTietPhieuNhap item : adapter.getData()) {
+        for (DetailGoodsReceipt item : adapter.getData()) {
             ApiService.API_SERVICE.createChiTietPhieuNhap(item).enqueue(new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) {

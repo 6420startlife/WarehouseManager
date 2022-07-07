@@ -9,32 +9,32 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.warehousemanager.models.ChiTietPhieuNhap;
+import com.android.warehousemanager.models.DetailGoodsReceipt;
 import com.android.warehousemanager.interfaces.IClickItemDetailPhieuNhapListener;
 import com.android.warehousemanager.R;
 
 import java.util.List;
 
 public class DetailPhieuNhapAdapter extends RecyclerView.Adapter<DetailPhieuNhapAdapter.ViewHolder>{
-    private List<ChiTietPhieuNhap> data;
+    private List<DetailGoodsReceipt> data;
     private IClickItemDetailPhieuNhapListener clickItemDetailPhieuNhapListener;
 
-    public List<ChiTietPhieuNhap> getData() {
+    public List<DetailGoodsReceipt> getData() {
         return data;
     }
 
-    public void setData(List<ChiTietPhieuNhap> data) {
+    public void setData(List<DetailGoodsReceipt> data) {
         this.data = data;
     }
 
-    public void setItem(ChiTietPhieuNhap value) {
+    public void setItem(DetailGoodsReceipt value) {
         data.add(value);
     }
 
-    public void editData(ChiTietPhieuNhap value) {
+    public void editData(DetailGoodsReceipt value) {
         int position;
-        for (ChiTietPhieuNhap item: data) {
-            if(item.getSoPhieu() == value.getSoPhieu() && item.getMaVatTu().equalsIgnoreCase(value.getMaVatTu())) {
+        for (DetailGoodsReceipt item: data) {
+            if(item.getId() == value.getId() && item.getIdSupply().equalsIgnoreCase(value.getIdSupply())) {
                 position = data.indexOf(item);
                 data.set(position,value);
                 break;
@@ -47,12 +47,12 @@ public class DetailPhieuNhapAdapter extends RecyclerView.Adapter<DetailPhieuNhap
     }
 
     public void updateSoPhieu(int soPhieu){
-        for (ChiTietPhieuNhap item : data) {
-            item.setSoPhieu(soPhieu);
+        for (DetailGoodsReceipt item : data) {
+            item.setId(soPhieu);
         }
     }
 
-    public DetailPhieuNhapAdapter(List<ChiTietPhieuNhap> data, IClickItemDetailPhieuNhapListener listener) {
+    public DetailPhieuNhapAdapter(List<DetailGoodsReceipt> data, IClickItemDetailPhieuNhapListener listener) {
         this.data = data;
         this.clickItemDetailPhieuNhapListener = listener;
     }
@@ -70,9 +70,9 @@ public class DetailPhieuNhapAdapter extends RecyclerView.Adapter<DetailPhieuNhap
     }
 
     private void setEvent(ViewHolder holder, int position) {
-        ChiTietPhieuNhap value = data.get(position);
-        holder.tvMaVatTu.setText(value.getMaVatTu());
-        holder.tvSoLuong.setText(String.valueOf(value.getSoLuong()));
+        DetailGoodsReceipt value = data.get(position);
+        holder.tvMaVatTu.setText(value.getIdSupply());
+        holder.tvSoLuong.setText(String.valueOf(value.getAmount()));
         holder.ivDetailPhieuNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -9,12 +9,12 @@ public class Supply implements Serializable {
     private String unit;
     private String from;
 
-    public Supply(String maVatTu, String tenVatTu, String anhVatTu, String donViTinh, String xuatXu) {
-        this.id = maVatTu;
-        this.name = tenVatTu;
-        this.image = anhVatTu;
-        this.unit = donViTinh;
-        this.from = xuatXu;
+    public Supply(String id, String name, String image, String unit, String from) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.unit = unit;
+        this.from = from;
     }
 
     public Supply() {

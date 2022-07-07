@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.android.warehousemanager.api.ApiService;
 import com.android.warehousemanager.adapters.SpinnerAdapter;
-import com.android.warehousemanager.models.PhieuNhap;
+import com.android.warehousemanager.models.GoodsReceipt;
 import com.android.warehousemanager.R;
 
 import java.util.Calendar;
@@ -74,10 +74,10 @@ public class PhieuNhapActivity_Edit extends AppCompatActivity {
         if(bundle == null) {
             return;
         }
-        PhieuNhap value_pn = (PhieuNhap) bundle.get("edit_phieu_nhap");
+        GoodsReceipt value_pn = (GoodsReceipt) bundle.get("edit_phieu_nhap");
         if(value_pn != null){
-            soPhieu = value_pn.getSoPhieu();
-            etNgayLap.setText(value_pn.getNgayLap());
+            soPhieu = value_pn.getId();
+            etNgayLap.setText(value_pn.getDate());
         }
 
         ivCancelPhieuNhap.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +148,7 @@ public class PhieuNhapActivity_Edit extends AppCompatActivity {
             return;
         }
         String[] maKho =  actvKho.getText().toString().trim().split("\\s",2);
-        PhieuNhap value = new PhieuNhap(soPhieu,etNgayLap.getText().toString().trim(), maKho[0]);
+        GoodsReceipt value = new GoodsReceipt(soPhieu,etNgayLap.getText().toString().trim(), maKho[0]);
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable("edit_phieu_nhap",value);

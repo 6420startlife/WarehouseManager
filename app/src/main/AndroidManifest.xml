@@ -16,37 +16,37 @@
             android:name=".activities.ChartActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.FeedBackActivity"
+            android:name=".activities.SendMailActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.VatTuActivity_Edit"
+            android:name=".activities.EditSupplyActivity"
             android:exported="true" />
         <activity
-            android:name=".activities.VatTuActivity"
+            android:name=".activities.SupplyActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.KhoActivity_Edit"
+            android:name=".activities.EditStorageActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.DetailPhieuNhapActivity_Edit"
+            android:name=".activities.EditDetailGoodsReceiptActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.KhoActivity"
+            android:name=".activities.StorageActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.DetailPhieuNhapActivity_Add"
+            android:name=".activities.AddDetailGoodsReceiptActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.PhieuNhapActivity_Add"
+            android:name=".activities.AddGoodsReceiptActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.PhieuNhapActivity_Edit"
+            android:name=".activities.EditGoodsReceiptActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.DetailPhieuNhapActivity"
+            android:name=".activities.DetailGoodsReceiptActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.PhieuNhapActivity"
+            android:name=".activities.GoodsReceiptActivity"
             android:exported="false" />
         <activity
             android:name=".activities.MainActivity"

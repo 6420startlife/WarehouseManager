@@ -2,8 +2,8 @@ package com.android.warehousemanager.activities;
 
 
 import static com.android.warehousemanager.activities.MainActivity.STATUS_CODE_NO_CONTENT;
-import static com.android.warehousemanager.activities.PhieuNhapActivity.REQUEST_EDIT_PHIEU_NHAP;
-import static com.android.warehousemanager.activities.PhieuNhapActivity.REQUEST_REMOVE_PHIEU_NHAP;
+import static com.android.warehousemanager.activities.GoodsReceiptActivity.REQUEST_EDIT_PHIEU_NHAP;
+import static com.android.warehousemanager.activities.GoodsReceiptActivity.REQUEST_REMOVE_PHIEU_NHAP;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.warehousemanager.api.ApiService;
-import com.android.warehousemanager.adapters.DetailPhieuNhapAdapter;
+import com.android.warehousemanager.adapters.DetailGoodsReceiptAdapter;
 import com.android.warehousemanager.models.DetailGoodsReceipt;
 import com.android.warehousemanager.models.GoodsReceipt;
 import com.android.warehousemanager.interfaces.IClickItemDetailPhieuNhapListener;
@@ -36,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailPhieuNhapActivity extends AppCompatActivity {
+public class DetailGoodsReceiptActivity extends AppCompatActivity {
     protected static final int REQUEST_ADD_DETAIL_PHIEU_NHAP = 5;
     protected static final int REQUEST_EDIT_DETAIL_PHIEU_NHAP = 6;
     private TextView tvSoPhieu, tvMaKho, tvNgayLap;
@@ -44,7 +44,7 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
     private RecyclerView rvDetailPhieuNhap;
     private ImageView ivAddDetailPhieuNhap;
 
-    private DetailPhieuNhapAdapter adapter;
+    private DetailGoodsReceiptAdapter adapter;
 
     private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -85,17 +85,17 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) {
                 if(!response.isSuccessful()){
-                    Toast.makeText(DetailPhieuNhapActivity.this, "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailGoodsReceiptActivity.this, "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(response.code() == STATUS_CODE_NO_CONTENT) {
-                    Toast.makeText(DetailPhieuNhapActivity.this, "Sửa thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailGoodsReceiptActivity.this, "Sửa thành công", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Toast.makeText(DetailPhieuNhapActivity.this, "Call Api update CTPN fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailGoodsReceiptActivity.this, "Call Api update CTPN fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi",t.getMessage());
             }
         });
@@ -106,17 +106,17 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) {
                 if(!response.isSuccessful()){
-                    Toast.makeText(DetailPhieuNhapActivity.this, "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailGoodsReceiptActivity.this, "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(response.code() == STATUS_CODE_NO_CONTENT) {
-                    Toast.makeText(DetailPhieuNhapActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailGoodsReceiptActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Toast.makeText(DetailPhieuNhapActivity.this, "Call Api add CTPN fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailGoodsReceiptActivity.this, "Call Api add CTPN fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi",t.getMessage());
             }
         });
@@ -171,7 +171,7 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<DetailGoodsReceipt>> call, Response<List<DetailGoodsReceipt>> response) {
                 if(!response.isSuccessful()){
-                    Toast.makeText(DetailPhieuNhapActivity.this, "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailGoodsReceiptActivity.this, "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 fetchDataToAdapter(response.body());
@@ -179,14 +179,14 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<DetailGoodsReceipt>> call, Throwable t) {
-                Toast.makeText(DetailPhieuNhapActivity.this, "Call Api get All CTPN fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailGoodsReceiptActivity.this, "Call Api get All CTPN fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi",t.getMessage());
             }
         });
     }
 
     private void fetchDataToAdapter(List<DetailGoodsReceipt> list) {
-        adapter = new DetailPhieuNhapAdapter(list, new IClickItemDetailPhieuNhapListener() {
+        adapter = new DetailGoodsReceiptAdapter(list, new IClickItemDetailPhieuNhapListener() {
             @Override
             public void onClickDetailPhieuNhap(DetailGoodsReceipt value) {
 
@@ -216,13 +216,13 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) {
                 if(response.code() == STATUS_CODE_NO_CONTENT) {
-                    Toast.makeText(DetailPhieuNhapActivity.this, "Xoá thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailGoodsReceiptActivity.this, "Xoá thành công", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Toast.makeText(DetailPhieuNhapActivity.this, "call api remove ctpn fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailGoodsReceiptActivity.this, "call api remove ctpn fail", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -238,7 +238,7 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
     }
 
     protected void onClickGoToEditDetailPhieuNhap(DetailGoodsReceipt value) {
-        Intent intent = new Intent(DetailPhieuNhapActivity.this, DetailPhieuNhapActivity_Edit.class);
+        Intent intent = new Intent(DetailGoodsReceiptActivity.this, EditDetailGoodsReceiptActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("edit_detail_phieu_nhap", value);
         intent.putExtras(bundle);
@@ -246,7 +246,7 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
     }
 
     private void onClickGoToAddDetailPhieuNhap() {
-        Intent intent = new Intent(DetailPhieuNhapActivity.this, DetailPhieuNhapActivity_Add.class);
+        Intent intent = new Intent(DetailGoodsReceiptActivity.this, AddDetailGoodsReceiptActivity.class);
         intent.putExtra("new_detail_so_phieu",tvSoPhieu.getText().toString().trim());
         launcher.launch(intent);
     }
@@ -263,7 +263,7 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
     }
 
     private void onClickGoToEditPhieuNhap(GoodsReceipt value) {
-        Intent intent = new Intent(DetailPhieuNhapActivity.this, PhieuNhapActivity_Edit.class);
+        Intent intent = new Intent(DetailGoodsReceiptActivity.this, EditGoodsReceiptActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("edit_phieu_nhap",value);
         intent.putExtras(bundle);

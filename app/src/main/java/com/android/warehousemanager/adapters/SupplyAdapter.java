@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class VatTuAdapter extends ArrayAdapter<Supply> {
+public class SupplyAdapter extends ArrayAdapter<Supply> {
     private  Context context;
     public List<Supply> data;
 
@@ -72,7 +72,7 @@ public class VatTuAdapter extends ArrayAdapter<Supply> {
         return data.get(position);
     }
 
-    public VatTuAdapter(@NonNull Context context, int resource, @NonNull List<Supply> objects, IClickItemVatTuListener listener) {
+    public SupplyAdapter(@NonNull Context context, int resource, @NonNull List<Supply> objects, IClickItemVatTuListener listener) {
         super(context, resource, objects);
         this.context = context;
         this.data = objects;

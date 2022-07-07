@@ -2,7 +2,7 @@ package com.android.warehousemanager.activities;
 
 
 
-import static com.android.warehousemanager.activities.DetailPhieuNhapActivity.REQUEST_ADD_DETAIL_PHIEU_NHAP;
+import static com.android.warehousemanager.activities.DetailGoodsReceiptActivity.REQUEST_ADD_DETAIL_PHIEU_NHAP;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailPhieuNhapActivity_Add extends AppCompatActivity {
+public class AddDetailGoodsReceiptActivity extends AppCompatActivity {
     private ImageView ivCancelDetailPN,ivAddDetailPN;
     private EditText etSoLuong;
     private AutoCompleteTextView actvVatTu;
@@ -67,7 +67,7 @@ public class DetailPhieuNhapActivity_Add extends AppCompatActivity {
         ivCancelDetailPN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DetailPhieuNhapActivity_Add.super.onBackPressed();
+                AddDetailGoodsReceiptActivity.super.onBackPressed();
             }
         });
         ivAddDetailPN.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +80,7 @@ public class DetailPhieuNhapActivity_Add extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if(response.isSuccessful()){
-                    SpinnerAdapter spinnerAdapter = new SpinnerAdapter(DetailPhieuNhapActivity_Add.this,0,response.body());
+                    SpinnerAdapter spinnerAdapter = new SpinnerAdapter(AddDetailGoodsReceiptActivity.this,0,response.body());
                     actvVatTu.setAdapter(spinnerAdapter);
                 }
             }

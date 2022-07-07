@@ -1,8 +1,8 @@
 package com.android.warehousemanager.activities;
 
-import static com.android.warehousemanager.activities.DetailPhieuNhapActivity.REQUEST_ADD_DETAIL_PHIEU_NHAP;
-import static com.android.warehousemanager.activities.DetailPhieuNhapActivity.REQUEST_EDIT_DETAIL_PHIEU_NHAP;
-import static com.android.warehousemanager.activities.PhieuNhapActivity.REQUEST_ADD_PHIEU_NHAP;
+import static com.android.warehousemanager.activities.DetailGoodsReceiptActivity.REQUEST_ADD_DETAIL_PHIEU_NHAP;
+import static com.android.warehousemanager.activities.DetailGoodsReceiptActivity.REQUEST_EDIT_DETAIL_PHIEU_NHAP;
+import static com.android.warehousemanager.activities.GoodsReceiptActivity.REQUEST_ADD_PHIEU_NHAP;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -26,7 +26,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.warehousemanager.api.ApiService;
-import com.android.warehousemanager.adapters.DetailPhieuNhapAdapter;
+import com.android.warehousemanager.adapters.DetailGoodsReceiptAdapter;
 import com.android.warehousemanager.adapters.SpinnerAdapter;
 import com.android.warehousemanager.models.ApiResponse;
 import com.android.warehousemanager.models.DetailGoodsReceipt;
@@ -42,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhieuNhapActivity_Add extends AppCompatActivity {
+public class AddGoodsReceiptActivity extends AppCompatActivity {
     private ImageView ivAddDetailPhieuNhap, ivCancelPhieuNhap, ivAddPhieuNhap;
     private EditText etNgayLap;
     private AutoCompleteTextView actvKho;
@@ -51,7 +51,7 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
     private Calendar calendar;
 
     private RecyclerView rvDetailPhieuNhap;
-    private DetailPhieuNhapAdapter adapter;
+    private DetailGoodsReceiptAdapter adapter;
     private SpinnerAdapter spinnerAdapter;
     private int soPhieu;
 
@@ -132,7 +132,7 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
         etNgayLap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(PhieuNhapActivity_Add.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddGoodsReceiptActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         month += 1;
@@ -155,7 +155,7 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
         });
 
         List<DetailGoodsReceipt> data = new LinkedList<>();
-        adapter = new DetailPhieuNhapAdapter(data, new IClickItemDetailPhieuNhapListener() {
+        adapter = new DetailGoodsReceiptAdapter(data, new IClickItemDetailPhieuNhapListener() {
             @Override
             public void onClickDetailPhieuNhap(DetailGoodsReceipt value) {
                 onClickGoToEditDetailPhieuNhap(value);
@@ -180,10 +180,10 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if(!response.isSuccessful()){
-                    Toast.makeText(PhieuNhapActivity_Add.this, "Request fail", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddGoodsReceiptActivity.this, "Request fail", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                spinnerAdapter = new SpinnerAdapter(PhieuNhapActivity_Add.this,0,response.body());
+                spinnerAdapter = new SpinnerAdapter(AddGoodsReceiptActivity.this,0,response.body());
                 actvKho.setAdapter(spinnerAdapter);
             }
 
@@ -195,7 +195,7 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
     }
 
     private void onClickGoToEditDetailPhieuNhap(DetailGoodsReceipt value) {
-        Intent intent = new Intent(PhieuNhapActivity_Add.this, DetailPhieuNhapActivity_Edit.class);
+        Intent intent = new Intent(AddGoodsReceiptActivity.this, EditDetailGoodsReceiptActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("edit_detail_phieu_nhap", value);
         intent.putExtras(bundle);
@@ -203,7 +203,7 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
     }
 
     private void onClickGoToAddDetailPhieuNhap() {
-        Intent intent = new Intent(PhieuNhapActivity_Add.this, DetailPhieuNhapActivity_Add.class);
+        Intent intent = new Intent(AddGoodsReceiptActivity.this, AddDetailGoodsReceiptActivity.class);
         launcher.launch(intent);
     }
 
@@ -215,7 +215,7 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
             etNgayLap.setError("hãy nhập ngày");
             return;
         }else if(adapter.getItemCount() == 0){
-            Toast.makeText(PhieuNhapActivity_Add.this,"Hãy thêm ít nhất 1 vật tư",Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddGoodsReceiptActivity.this,"Hãy thêm ít nhất 1 vật tư",Toast.LENGTH_SHORT).show();
             return;
         }
         String[] maKho =  actvKho.getText().toString().trim().split("\\s",2);
@@ -224,7 +224,7 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if(!response.isSuccessful()){
-                    Toast.makeText(PhieuNhapActivity_Add.this, "Request fail " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddGoodsReceiptActivity.this, "Request fail " + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 ApiResponse apiResponse = response.body();
@@ -237,7 +237,7 @@ public class PhieuNhapActivity_Add extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable t) {
-                Toast.makeText(PhieuNhapActivity_Add.this, "Call Api create Phieu Nhap fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddGoodsReceiptActivity.this, "Call Api create Phieu Nhap fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi",t.getMessage());
             }
         });

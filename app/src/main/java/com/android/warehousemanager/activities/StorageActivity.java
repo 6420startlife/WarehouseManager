@@ -21,7 +21,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.warehousemanager.api.ApiService;
-import com.android.warehousemanager.adapters.KhoAdapter;
+import com.android.warehousemanager.adapters.StorageAdapter;
 import com.android.warehousemanager.interfaces.IClickItemKhoListener;
 import com.android.warehousemanager.models.Storage;
 import com.android.warehousemanager.R;
@@ -34,14 +34,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class KhoActivity extends AppCompatActivity {
+public class StorageActivity extends AppCompatActivity {
     protected static final int REQUEST_ADD_KHO = 1;
     protected static final int REQUEST_EDIT_KHO = 2;
     private ListView lvKho;
     private ProgressDialog progressDialog;
 
     private List<Storage> listStorage = new ArrayList<>();
-    private KhoAdapter adapter;
+    private StorageAdapter adapter;
 
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -71,7 +71,7 @@ public class KhoActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Storage> call, Throwable t) {
-                Toast.makeText(KhoActivity.this, "Call Api update Kho fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(StorageActivity.this, "Call Api update Kho fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
@@ -87,7 +87,7 @@ public class KhoActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<Storage> call, Throwable t) {
-                Toast.makeText(KhoActivity.this,"Call API create Kho fail" ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(StorageActivity.this,"Call API create Kho fail" ,Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
@@ -123,7 +123,7 @@ public class KhoActivity extends AppCompatActivity {
     }
 
     private void onClickToAddKho() {
-        Intent intent = new Intent(KhoActivity.this,KhoActivity_Edit.class);
+        Intent intent = new Intent(StorageActivity.this, EditStorageActivity.class);
         launcher.launch(intent);
     }
 
@@ -140,7 +140,7 @@ public class KhoActivity extends AppCompatActivity {
     }
 
     private void initListView() {
-        adapter = new KhoAdapter(KhoActivity.this, 0, listStorage, new IClickItemKhoListener() {
+        adapter = new StorageAdapter(StorageActivity.this, 0, listStorage, new IClickItemKhoListener() {
             @Override
             public void onClickItemKho(Storage storage) {
                 onClickToEditKho(storage);
@@ -161,7 +161,7 @@ public class KhoActivity extends AppCompatActivity {
             public void onResponse(Call<List<Storage>> call, Response<List<Storage>> response) {
                 if(!response.isSuccessful()){
                     progressDialog.dismiss();
-                    Toast.makeText(KhoActivity.this,"Code : " + response.code(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StorageActivity.this,"Code : " + response.code(),Toast.LENGTH_SHORT).show();
                     Log.e("CodeResponse", "" + response.code());
                     return;
                 }
@@ -174,14 +174,14 @@ public class KhoActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Storage>> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(KhoActivity.this, "Call Api Get All Kho fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(StorageActivity.this, "Call Api Get All Kho fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
     }
 
     private void onLongClickToRemoveKho(int position) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(KhoActivity.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(StorageActivity.this);
         alertDialogBuilder.setMessage("Bán có muốn xóa kho này!");
         alertDialogBuilder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
@@ -212,13 +212,13 @@ public class KhoActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Storage> call, Throwable t) {
-                Toast.makeText(KhoActivity.this, "Call Api Remove Kho fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(StorageActivity.this, "Call Api Remove Kho fail", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void onClickToEditKho(Storage storage) {
-        Intent intent = new Intent(KhoActivity.this, KhoActivity_Edit.class);
+        Intent intent = new Intent(StorageActivity.this, EditStorageActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("edit_kho", storage);
         intent.putExtras(bundle);

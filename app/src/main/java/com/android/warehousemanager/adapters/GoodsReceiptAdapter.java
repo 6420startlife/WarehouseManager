@@ -15,7 +15,7 @@ import com.android.warehousemanager.R;
 
 import java.util.List;
 
-public class PhieuNhapAdapter extends RecyclerView.Adapter<PhieuNhapAdapter.ViewHolder> {
+public class GoodsReceiptAdapter extends RecyclerView.Adapter<GoodsReceiptAdapter.ViewHolder> {
 
     private List<GoodsReceipt> data;
     private IClickItemPhieuNhapListener clickItemPhieuNhapListener;
@@ -54,7 +54,7 @@ public class PhieuNhapAdapter extends RecyclerView.Adapter<PhieuNhapAdapter.View
         }
     }
 
-    public PhieuNhapAdapter(List<GoodsReceipt> data, IClickItemPhieuNhapListener listener) {
+    public GoodsReceiptAdapter(List<GoodsReceipt> data, IClickItemPhieuNhapListener listener) {
         this.data = data;
         this.clickItemPhieuNhapListener = listener;
     }

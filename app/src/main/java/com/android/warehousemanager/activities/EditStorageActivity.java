@@ -1,7 +1,7 @@
 package com.android.warehousemanager.activities;
 
-import static com.android.warehousemanager.activities.KhoActivity.REQUEST_ADD_KHO;
-import static com.android.warehousemanager.activities.KhoActivity.REQUEST_EDIT_KHO;
+import static com.android.warehousemanager.activities.StorageActivity.REQUEST_ADD_KHO;
+import static com.android.warehousemanager.activities.StorageActivity.REQUEST_EDIT_KHO;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +16,7 @@ import com.android.warehousemanager.models.Storage;
 import com.android.warehousemanager.R;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class KhoActivity_Edit extends AppCompatActivity {
+public class EditStorageActivity extends AppCompatActivity {
     private TextInputEditText tietMaKho, tietTenKho;
     private Button btnLuuKho;
 

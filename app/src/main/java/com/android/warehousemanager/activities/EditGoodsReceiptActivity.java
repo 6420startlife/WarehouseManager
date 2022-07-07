@@ -1,6 +1,6 @@
 package com.android.warehousemanager.activities;
 
-import static com.android.warehousemanager.activities.PhieuNhapActivity.REQUEST_EDIT_PHIEU_NHAP;
+import static com.android.warehousemanager.activities.GoodsReceiptActivity.REQUEST_EDIT_PHIEU_NHAP;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhieuNhapActivity_Edit extends AppCompatActivity {
+public class EditGoodsReceiptActivity extends AppCompatActivity {
     private ImageView ivSaveEditPhieuNhap, ivCancelPhieuNhap;
     private EditText etNgayLap;
     private AutoCompleteTextView actvKho;
@@ -54,7 +54,7 @@ public class PhieuNhapActivity_Edit extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        ArrayAdapter data = new ArrayAdapter(PhieuNhapActivity_Edit.this,
+        ArrayAdapter data = new ArrayAdapter(EditGoodsReceiptActivity.this,
                 R.layout.item_vat_tu, new LinkedList());
         actvKho.setAdapter(data);
     }
@@ -100,7 +100,7 @@ public class PhieuNhapActivity_Edit extends AppCompatActivity {
         etNgayLap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(PhieuNhapActivity_Edit.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(EditGoodsReceiptActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         month += 1;
@@ -125,10 +125,10 @@ public class PhieuNhapActivity_Edit extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if(!response.isSuccessful()){
-                    Toast.makeText(PhieuNhapActivity_Edit.this, "Request fail", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditGoodsReceiptActivity.this, "Request fail", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                spinnerAdapter = new SpinnerAdapter(PhieuNhapActivity_Edit.this,0,response.body());
+                spinnerAdapter = new SpinnerAdapter(EditGoodsReceiptActivity.this,0,response.body());
                 actvKho.setAdapter(spinnerAdapter);
             }
 

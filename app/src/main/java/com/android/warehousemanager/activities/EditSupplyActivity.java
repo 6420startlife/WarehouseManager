@@ -1,7 +1,7 @@
 package com.android.warehousemanager.activities;
 
-import static com.android.warehousemanager.activities.VatTuActivity.REQUEST_ADD_VAT_TU;
-import static com.android.warehousemanager.activities.VatTuActivity.REQUEST_EDIT_VAT_TU;
+import static com.android.warehousemanager.activities.SupplyActivity.REQUEST_ADD_VAT_TU;
+import static com.android.warehousemanager.activities.SupplyActivity.REQUEST_EDIT_VAT_TU;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -47,7 +47,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VatTuActivity_Edit extends AppCompatActivity {
+public class EditSupplyActivity extends AppCompatActivity {
     public static final int REQUEST_READ_EXTERNAL_STORAGE = 10;
     public static final int REQUEST_READ_EXTERNAL_STORAGE_REAL_PATH = 11;
     private ImageView ivAnhVatTu_Edit;
@@ -105,7 +105,7 @@ public class VatTuActivity_Edit extends AppCompatActivity {
     }
 
     private void setEvent() {
-        progressDialog = new ProgressDialog(VatTuActivity_Edit.this);
+        progressDialog = new ProgressDialog(EditSupplyActivity.this);
         progressDialog.setMessage("Please wait ...");
         btnLuuVatTu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,7 +195,7 @@ public class VatTuActivity_Edit extends AppCompatActivity {
                         progressDialog.show();
                     }
                 });
-                String strRealPath = RealPathUtil.getRealPath(VatTuActivity_Edit.this,get_uri());
+                String strRealPath = RealPathUtil.getRealPath(EditSupplyActivity.this,get_uri());
                 File file = new File(strRealPath);
                 RequestBody requestBodyFile = RequestBody.create(MediaType.parse("multipart/form-data"),file);
                 MultipartBody.Part partFile = MultipartBody.Part.createFormData("file",file.getName(),requestBodyFile);
@@ -219,10 +219,10 @@ public class VatTuActivity_Edit extends AppCompatActivity {
                     public void onFailure(Call<ApiResponse> call, Throwable t) {
                         progressDialog.dismiss();
                         if (t.getMessage().equalsIgnoreCase("timeout")){
-                            Toast.makeText(VatTuActivity_Edit.this, "Timeout", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditSupplyActivity.this, "Timeout", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Toast.makeText(VatTuActivity_Edit.this, "Call API upload image fail", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditSupplyActivity.this, "Call API upload image fail", Toast.LENGTH_SHORT).show();
                         Log.e("ErrorApi", t.getMessage());
                     }
                 });

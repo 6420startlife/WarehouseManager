@@ -17,7 +17,7 @@ import com.android.warehousemanager.R;
 
 import java.util.List;
 
-public class KhoAdapter extends ArrayAdapter<Storage> {
+public class StorageAdapter extends ArrayAdapter<Storage> {
     private TextView tvMaKho, tvTenKho;
     private ConstraintLayout layoutKho;
 
@@ -69,7 +69,7 @@ public class KhoAdapter extends ArrayAdapter<Storage> {
         return data.get(position);
     }
 
-    public KhoAdapter(@NonNull Context context, int resource, @NonNull List<Storage> objects, IClickItemKhoListener listener) {
+    public StorageAdapter(@NonNull Context context, int resource, @NonNull List<Storage> objects, IClickItemKhoListener listener) {
         super(context, resource, objects);
         this.context = context;
         this.data = objects;

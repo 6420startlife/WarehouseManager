@@ -1,7 +1,7 @@
 package com.android.warehousemanager.activities;
 
 
-import static com.android.warehousemanager.activities.DetailPhieuNhapActivity.REQUEST_EDIT_DETAIL_PHIEU_NHAP;
+import static com.android.warehousemanager.activities.DetailGoodsReceiptActivity.REQUEST_EDIT_DETAIL_PHIEU_NHAP;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.android.warehousemanager.models.DetailGoodsReceipt;
 import com.android.warehousemanager.R;
 
-public class DetailPhieuNhapActivity_Edit extends AppCompatActivity {
+public class EditDetailGoodsReceiptActivity extends AppCompatActivity {
     private ImageView ivSaveDetailPhieuNhap, ivCancelDetailPhieuNhap;
     private TextView tvMaVatTu;
     private EditText etSoLuong;

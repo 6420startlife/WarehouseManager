@@ -18,15 +18,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void gotoPhieuNhap(View view) {
-        startActivity(new Intent(this, PhieuNhapActivity.class));
+        startActivity(new Intent(this, GoodsReceiptActivity.class));
     }
 
     public void gotoKho(View view) {
-        startActivity(new Intent(MainActivity.this, KhoActivity.class));
+        startActivity(new Intent(MainActivity.this, StorageActivity.class));
     }
 
     public void gotoVatTu(View view) {
-        startActivity(new Intent(MainActivity.this, VatTuActivity.class));
+        startActivity(new Intent(MainActivity.this, SupplyActivity.class));
     }
 
     public void gotoChart(View view) {
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void gotoFeedBack(View view) {
-        startActivity(new Intent(MainActivity.this, FeedBackActivity.class));
+        startActivity(new Intent(MainActivity.this, SendMailActivity.class));
     }
 
     public void gotoPhieuXuat(View view) {

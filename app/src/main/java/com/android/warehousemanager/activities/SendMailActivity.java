@@ -28,7 +28,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class FeedBackActivity extends AppCompatActivity {
+public class SendMailActivity extends AppCompatActivity {
     private EditText etMessage, etSendEmail, etSubject;
     private Button btnSendEmail;
     private final String username = "thuanemail6420@gmail.com";
@@ -102,7 +102,7 @@ public class FeedBackActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = ProgressDialog.show(FeedBackActivity.this,"Information","Sending ... ",true,false);
+            dialog = ProgressDialog.show(SendMailActivity.this,"Information","Sending ... ",true,false);
         }
 
         @Override
@@ -121,7 +121,7 @@ public class FeedBackActivity extends AppCompatActivity {
             super.onPostExecute(s);
             dialog.dismiss();
             if(s.equalsIgnoreCase("success")){
-                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(FeedBackActivity.this);
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(SendMailActivity.this);
                 builder.setCancelable(false);
                 builder.setTitle(Html.fromHtml("<font color='#509324'>Success</font>"));
                 builder.setMessage("Mail send  successfully.");

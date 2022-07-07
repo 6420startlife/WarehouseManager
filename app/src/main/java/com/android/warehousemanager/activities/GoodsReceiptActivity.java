@@ -20,7 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.warehousemanager.api.ApiService;
-import com.android.warehousemanager.adapters.PhieuNhapAdapter;
+import com.android.warehousemanager.adapters.GoodsReceiptAdapter;
 import com.android.warehousemanager.models.GoodsReceipt;
 import com.android.warehousemanager.interfaces.IClickItemPhieuNhapListener;
 import com.android.warehousemanager.R;
@@ -32,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhieuNhapActivity extends AppCompatActivity {
+public class GoodsReceiptActivity extends AppCompatActivity {
     protected static final int REQUEST_ADD_PHIEU_NHAP = 2;
     protected static final int REQUEST_EDIT_PHIEU_NHAP = 3;
     protected static final int REQUEST_REMOVE_PHIEU_NHAP = 4;
@@ -41,7 +41,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     private List<GoodsReceipt> list = new ArrayList<>();
-    private PhieuNhapAdapter adapter;
+    private GoodsReceiptAdapter adapter;
 
     public List<GoodsReceipt> getList() {
         return list;
@@ -78,7 +78,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GoodsReceipt> call, Response<GoodsReceipt> response) {
                 if(!response.isSuccessful()) {
-                    Toast.makeText(PhieuNhapActivity.this, "Request fail " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GoodsReceiptActivity.this, "Request fail " + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(response.code() == STATUS_CODE_NO_CONTENT){
@@ -88,7 +88,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<GoodsReceipt> call, Throwable t) {
-                Toast.makeText(PhieuNhapActivity.this, "Call Api Remove Phieu Nhap fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GoodsReceiptActivity.this, "Call Api Remove Phieu Nhap fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
@@ -100,7 +100,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GoodsReceipt> call, Response<GoodsReceipt> response) {
                 if(!response.isSuccessful()) {
-                    Toast.makeText(PhieuNhapActivity.this, "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GoodsReceiptActivity.this, "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(response.code() == STATUS_CODE_NO_CONTENT){
@@ -110,7 +110,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<GoodsReceipt> call, Throwable t) {
-                Toast.makeText(PhieuNhapActivity.this, "Call Api Update Phieu Nhap fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GoodsReceiptActivity.this, "Call Api Update Phieu Nhap fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
@@ -153,7 +153,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
 
     private void initRecycleView() {
         rvPhieuNhap.startLayoutAnimation();
-        adapter = new PhieuNhapAdapter(list ,new IClickItemPhieuNhapListener() {
+        adapter = new GoodsReceiptAdapter(list ,new IClickItemPhieuNhapListener() {
             @Override
             public void onClickItemPhieuNhap(GoodsReceipt value) {
                 onClickGoToDetail(value);
@@ -174,7 +174,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<GoodsReceipt>> call, Response<List<GoodsReceipt>> response) {
                 if(!response.isSuccessful()){
-                    Toast.makeText(PhieuNhapActivity.this, "Request Fail " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GoodsReceiptActivity.this, "Request Fail " + response.code(), Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                     return;
                 }
@@ -187,14 +187,14 @@ public class PhieuNhapActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<GoodsReceipt>> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(PhieuNhapActivity.this, "Call Api get All Phieu Nhap fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GoodsReceiptActivity.this, "Call Api get All Phieu Nhap fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
     }
 
     private void onClickGoToAddPhieuNhap() {
-        Intent intent = new Intent(PhieuNhapActivity.this, PhieuNhapActivity_Add.class);
+        Intent intent = new Intent(GoodsReceiptActivity.this, AddGoodsReceiptActivity.class);
         launcher.launch(intent);
     }
 
@@ -204,7 +204,7 @@ public class PhieuNhapActivity extends AppCompatActivity {
     }
 
     public void onClickGoToDetail(GoodsReceipt value) {
-        Intent intent = new Intent(PhieuNhapActivity.this, DetailPhieuNhapActivity.class);
+        Intent intent = new Intent(GoodsReceiptActivity.this, DetailGoodsReceiptActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("edit_phieu_nhap", value);
         intent.putExtras(bundle);

@@ -22,7 +22,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.warehousemanager.api.ApiService;
-import com.android.warehousemanager.adapters.VatTuAdapter;
+import com.android.warehousemanager.adapters.SupplyAdapter;
 import com.android.warehousemanager.interfaces.IClickItemVatTuListener;
 import com.android.warehousemanager.models.Supply;
 import com.android.warehousemanager.R;
@@ -34,13 +34,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VatTuActivity extends AppCompatActivity {
+public class SupplyActivity extends AppCompatActivity {
     protected static final int REQUEST_ADD_VAT_TU = 1;
     protected static final int REQUEST_EDIT_VAT_TU = 2;
     private ListView lvVatTu;
     private ProgressDialog progressDialog;
 
-    private VatTuAdapter adapter;
+    private SupplyAdapter adapter;
     private List<Supply> listSupply = new ArrayList<>();
 
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(
@@ -108,7 +108,7 @@ public class VatTuActivity extends AppCompatActivity {
     }
 
     private void initListView() {
-        adapter = new VatTuAdapter(VatTuActivity.this, 0, listSupply, new IClickItemVatTuListener() {
+        adapter = new SupplyAdapter(SupplyActivity.this, 0, listSupply, new IClickItemVatTuListener() {
             @Override
             public void onClickItemVatTu(Supply supply) {
                 onClickToEditVatTu(supply);
@@ -132,7 +132,7 @@ public class VatTuActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<Supply> call, Throwable t) {
-                Toast.makeText(VatTuActivity.this,"Call API create Vat Tu fail" ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(SupplyActivity.this,"Call API create Vat Tu fail" ,Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
@@ -149,7 +149,7 @@ public class VatTuActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Supply> call, Throwable t) {
-                Toast.makeText(VatTuActivity.this,"Call API update Vat Tu fail" ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(SupplyActivity.this,"Call API update Vat Tu fail" ,Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
@@ -166,7 +166,7 @@ public class VatTuActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Supply> call, Throwable t) {
-                Toast.makeText(VatTuActivity.this,"Call API remove Vat Tu fail" ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(SupplyActivity.this,"Call API remove Vat Tu fail" ,Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
@@ -179,7 +179,7 @@ public class VatTuActivity extends AppCompatActivity {
             public void onResponse(Call<List<Supply>> call, Response<List<Supply>> response) {
                 if(!response.isSuccessful()){
                     progressDialog.dismiss();
-                    Toast.makeText(VatTuActivity.this, "Request fail " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SupplyActivity.this, "Request fail " + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 listSupply.clear();
@@ -191,19 +191,19 @@ public class VatTuActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Supply>> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(VatTuActivity.this, "Call Api fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SupplyActivity.this, "Call Api fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
     }
 
     private void onClickToAddVatTu() {
-        Intent intent = new Intent(VatTuActivity.this, VatTuActivity_Edit.class);
+        Intent intent = new Intent(SupplyActivity.this, EditSupplyActivity.class);
         launcher.launch(intent);
     }
 
     private void onLongClickToRemoveVatTu(int position) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(VatTuActivity.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SupplyActivity.this);
         alertDialogBuilder.setMessage("Bán có muốn xóa vật tư này!");
         alertDialogBuilder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
@@ -223,7 +223,7 @@ public class VatTuActivity extends AppCompatActivity {
     }
 
     private void onClickToEditVatTu(Supply supply) {
-        Intent intent = new Intent(VatTuActivity.this, VatTuActivity_Edit.class);
+        Intent intent = new Intent(SupplyActivity.this, EditSupplyActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("edit_vat_tu", supply);
         intent.putExtras(bundle);

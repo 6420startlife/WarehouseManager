@@ -2,14 +2,14 @@ package com.android.warehousemanager.models;
 
 import java.io.Serializable;
 
-public class VatTu implements Serializable {
+public class Supply implements Serializable {
     private String id;
     private String name;
     private String image;
     private String unit;
     private String from;
 
-    public VatTu(String maVatTu, String tenVatTu, String anhVatTu, String donViTinh, String xuatXu) {
+    public Supply(String maVatTu, String tenVatTu, String anhVatTu, String donViTinh, String xuatXu) {
         this.id = maVatTu;
         this.name = tenVatTu;
         this.image = anhVatTu;
@@ -17,7 +17,7 @@ public class VatTu implements Serializable {
         this.from = xuatXu;
     }
 
-    public VatTu() {
+    public Supply() {
     }
 
     public String getId() {

@@ -13,48 +13,48 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.warehousemanager.interfaces.IClickItemVatTuListener;
-import com.android.warehousemanager.models.VatTu;
+import com.android.warehousemanager.models.Supply;
 import com.android.warehousemanager.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class VatTuAdapter extends ArrayAdapter<VatTu> {
+public class VatTuAdapter extends ArrayAdapter<Supply> {
     private  Context context;
-    public List<VatTu> data;
+    public List<Supply> data;
 
     private ImageView ivAnhVatTu;
     private TextView tvMaVatTu, tvTenVatTu, tvDonViTinh, tvXuatXu;
     private ConstraintLayout layoutItemVatTu;
     private IClickItemVatTuListener listener;
 
-    public List<VatTu> getData() {
+    public List<Supply> getData() {
         return data;
     }
 
-    public void setData(List<VatTu> data) {
+    public void setData(List<Supply> data) {
         this.data = data;
     }
 
-    public void addItem(VatTu vatTu) {
-        data.add(vatTu);
+    public void addItem(Supply supply) {
+        data.add(supply);
     }
 
-    public void editItem(VatTu vatTu) {
+    public void editItem(Supply supply) {
         int position;
-        for (VatTu item : data) {
-            if(item.getId().equalsIgnoreCase(vatTu.getId())){
+        for (Supply item : data) {
+            if(item.getId().equalsIgnoreCase(supply.getId())){
                 position = data.indexOf(item);
-                data.set(position,vatTu);
+                data.set(position, supply);
                 break;
             }
         }
     }
 
-    public void removeItem(VatTu vatTu) {
+    public void removeItem(Supply supply) {
         int position;
-        for (VatTu item : data) {
-            if(item.getId().equalsIgnoreCase(vatTu.getId())){
+        for (Supply item : data) {
+            if(item.getId().equalsIgnoreCase(supply.getId())){
                 position = data.indexOf(item);
                 data.remove(position);
                 break;
@@ -68,11 +68,11 @@ public class VatTuAdapter extends ArrayAdapter<VatTu> {
 
     @Nullable
     @Override
-    public VatTu getItem(int position) {
+    public Supply getItem(int position) {
         return data.get(position);
     }
 
-    public VatTuAdapter(@NonNull Context context, int resource, @NonNull List<VatTu> objects, IClickItemVatTuListener listener) {
+    public VatTuAdapter(@NonNull Context context, int resource, @NonNull List<Supply> objects, IClickItemVatTuListener listener) {
         super(context, resource, objects);
         this.context = context;
         this.data = objects;
@@ -89,7 +89,7 @@ public class VatTuAdapter extends ArrayAdapter<VatTu> {
     }
 
     private void setEvent(int position) {
-        VatTu value = data.get(position);
+        Supply value = data.get(position);
         tvMaVatTu.setText(value.getId());
         tvTenVatTu.setText(value.getName());
         tvDonViTinh.setText(value.getUnit());

@@ -1,8 +1,8 @@
 package com.android.warehousemanager.interfaces;
 
-import com.android.warehousemanager.models.VatTu;
+import com.android.warehousemanager.models.Supply;
 
 public interface IClickItemVatTuListener {
-    void onClickItemVatTu(VatTu vatTu);
+    void onClickItemVatTu(Supply supply);
     void onLongClickItemVatTu(int position);
 }

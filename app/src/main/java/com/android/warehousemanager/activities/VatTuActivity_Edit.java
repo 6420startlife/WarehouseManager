@@ -29,7 +29,7 @@ import android.widget.Toast;
 
 import com.android.warehousemanager.api.ApiService;
 import com.android.warehousemanager.models.ApiResponse;
-import com.android.warehousemanager.models.VatTu;
+import com.android.warehousemanager.models.Supply;
 import com.android.warehousemanager.R;
 import com.android.warehousemanager.utils.RealPathUtil;
 import com.google.android.material.textfield.TextInputEditText;
@@ -124,7 +124,7 @@ public class VatTuActivity_Edit extends AppCompatActivity {
             isAdd = true;
             Picasso.get().load(defaultImageUrl).into(ivAnhVatTu_Edit);
         }else{
-            VatTu value = (VatTu) bundle.get("edit_vat_tu");
+            Supply value = (Supply) bundle.get("edit_vat_tu");
             if(value != null){
                 tietMaVatTu.setText(value.getId());
                 tietMaVatTu.setEnabled(false);
@@ -177,7 +177,7 @@ public class VatTuActivity_Edit extends AppCompatActivity {
         }
         if(get_uri() == null) {
             progressDialog.show();
-            VatTu value = new VatTu(tietMaVatTu.getText().toString().trim()
+            Supply value = new Supply(tietMaVatTu.getText().toString().trim()
                     ,tietTenVatTu.getText().toString().trim()
                     ,defaultImageUrl
                     ,tietDonViTinh.getText().toString().trim()
@@ -207,7 +207,7 @@ public class VatTuActivity_Edit extends AppCompatActivity {
                             return;
                         }
                         ApiResponse apiResponse = response.body();
-                        VatTu value = new VatTu(tietMaVatTu.getText().toString().trim()
+                        Supply value = new Supply(tietMaVatTu.getText().toString().trim()
                                 ,tietTenVatTu.getText().toString().trim()
                                 ,apiResponse.getData()
                                 ,tietDonViTinh.getText().toString().trim()
@@ -233,7 +233,7 @@ public class VatTuActivity_Edit extends AppCompatActivity {
 
     }
 
-    private void returnResult(VatTu value) {
+    private void returnResult(Supply value) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         if(isAdd){

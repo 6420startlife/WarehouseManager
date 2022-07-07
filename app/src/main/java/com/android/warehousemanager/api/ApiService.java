@@ -4,7 +4,7 @@ import com.android.warehousemanager.models.ApiResponse;
 import com.android.warehousemanager.models.ChiTietPhieuNhap;
 import com.android.warehousemanager.models.Kho;
 import com.android.warehousemanager.models.PhieuNhap;
-import com.android.warehousemanager.models.VatTu;
+import com.android.warehousemanager.models.Supply;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -40,13 +40,13 @@ public interface ApiService {
             .create(ApiService.class);
 
     @GET("VatTu")
-    Call<List<VatTu>> getAllVatTu();
+    Call<List<Supply>> getAllVatTu();
     @PUT("VatTu")
-    Call<VatTu> updateVatTu(@Body VatTu vatTu);
+    Call<Supply> updateVatTu(@Body Supply supply);
     @POST("VatTu")
-    Call<VatTu> createVatTu(@Body VatTu vatTu);
+    Call<Supply> createVatTu(@Body Supply supply);
     @DELETE("VatTu/{id}")
-    Call<VatTu> removeVatTu(@Path("id") String maVatTu);
+    Call<Supply> removeVatTu(@Path("id") String maVatTu);
     @GET("VatTu/spinner")
     Call<List<String>> getVatTuSpinner();
 

@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.android.warehousemanager.api.ApiService;
 import com.android.warehousemanager.adapters.StorageAdapter;
-import com.android.warehousemanager.interfaces.IClickItemKhoListener;
+import com.android.warehousemanager.interfaces.IClickItemStorageListener;
 import com.android.warehousemanager.models.Storage;
 import com.android.warehousemanager.R;
 
@@ -140,14 +140,14 @@ public class StorageActivity extends AppCompatActivity {
     }
 
     private void initListView() {
-        adapter = new StorageAdapter(StorageActivity.this, 0, listStorage, new IClickItemKhoListener() {
+        adapter = new StorageAdapter(StorageActivity.this, 0, listStorage, new IClickItemStorageListener() {
             @Override
-            public void onClickItemKho(Storage storage) {
+            public void onClickItemStorage(Storage storage) {
                 onClickToEditKho(storage);
             }
 
             @Override
-            public void onLongClickItemKho(int position) {
+            public void onLongClickItemStorage(int position) {
                 onLongClickToRemoveKho(position);
             }
         });

@@ -79,7 +79,7 @@ public class GoodsReceiptAdapter extends RecyclerView.Adapter<GoodsReceiptAdapte
         holder.imgArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickItemPhieuNhapListener.onClickItemPhieuNhap(value);
+                clickItemPhieuNhapListener.onClickItemGR(value);
             }
         });
     }

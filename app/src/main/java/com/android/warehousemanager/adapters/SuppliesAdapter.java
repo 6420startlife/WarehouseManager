@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class SuppliesAdapter extends ArrayAdapter<Supplies> {
-    private  Context context;
+    private Context context;
     public List<Supplies> data;
 
     private ImageView ivAnhVatTu;
@@ -43,7 +43,7 @@ public class SuppliesAdapter extends ArrayAdapter<Supplies> {
     public void editItem(Supplies supplies) {
         int position;
         for (Supplies item : data) {
-            if(item.getId().equalsIgnoreCase(supplies.getId())){
+            if (item.getId().equalsIgnoreCase(supplies.getId())) {
                 position = data.indexOf(item);
                 data.set(position, supplies);
                 break;
@@ -54,7 +54,7 @@ public class SuppliesAdapter extends ArrayAdapter<Supplies> {
     public void removeItem(Supplies supplies) {
         int position;
         for (Supplies item : data) {
-            if(item.getId().equalsIgnoreCase(supplies.getId())){
+            if (item.getId().equalsIgnoreCase(supplies.getId())) {
                 position = data.indexOf(item);
                 data.remove(position);
                 break;
@@ -96,7 +96,7 @@ public class SuppliesAdapter extends ArrayAdapter<Supplies> {
         tvXuatXu.setText(value.getFrom());
         try {
             Picasso.get().load(value.getImage()).into(ivAnhVatTu);
-        }catch (Exception e){
+        } catch (Exception e) {
             Picasso.get().load("https://res.cloudinary.com/thuan6420/image/upload/v1652627208/xo5qx46gfuat6bas9jd0.jpg").into(ivAnhVatTu);
         }
         layoutItemVatTu.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +115,7 @@ public class SuppliesAdapter extends ArrayAdapter<Supplies> {
     }
 
     private void setControl(View view) {
-        tvMaVatTu = view.findViewById(R.id.tvMaVatTu);
+        tvMaVatTu = view.findViewById(R.id.tvIdSupplies);
         tvTenVatTu = view.findViewById(R.id.tvTenVatTu);
         tvDonViTinh = view.findViewById(R.id.tvDonViTinh);
         tvXuatXu = view.findViewById(R.id.tvXuatXu);

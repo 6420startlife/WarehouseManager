@@ -29,7 +29,7 @@
         android:layout_marginEnd="10dp"/>
 
     <TextView
-        android:id="@+id/tvMaVatTu"
+        android:id="@+id/tvIdSupplies"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="GO"
@@ -50,7 +50,7 @@
         android:text="Gạch Ống"
         android:textSize="24dp"
         app:layout_constraintEnd_toStartOf="@+id/tvDonViTinh"
-        app:layout_constraintStart_toEndOf="@+id/tvMaVatTu"
+        app:layout_constraintStart_toEndOf="@+id/tvIdSupplies"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -61,6 +61,6 @@
         android:text="Bình Dương"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tvDonViTinh"
-        app:layout_constraintStart_toEndOf="@+id/tvMaVatTu"
+        app:layout_constraintStart_toEndOf="@+id/tvIdSupplies"
         app:layout_constraintTop_toBottomOf="@+id/tvTenVatTu" />
 </androidx.constraintlayout.widget.ConstraintLayout>

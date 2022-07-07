@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.android.warehousemanager.interfaces.IClickItemKhoListener;
+import com.android.warehousemanager.interfaces.IClickItemStorageListener;
 import com.android.warehousemanager.models.Storage;
 import com.android.warehousemanager.R;
 
@@ -23,7 +23,7 @@ public class StorageAdapter extends ArrayAdapter<Storage> {
 
     private Context context;
     public List<Storage> data;
-    private IClickItemKhoListener listener;
+    private IClickItemStorageListener listener;
 
     public List<Storage> getData() {
         return data;
@@ -69,7 +69,7 @@ public class StorageAdapter extends ArrayAdapter<Storage> {
         return data.get(position);
     }
 
-    public StorageAdapter(@NonNull Context context, int resource, @NonNull List<Storage> objects, IClickItemKhoListener listener) {
+    public StorageAdapter(@NonNull Context context, int resource, @NonNull List<Storage> objects, IClickItemStorageListener listener) {
         super(context, resource, objects);
         this.context = context;
         this.data = objects;
@@ -79,7 +79,7 @@ public class StorageAdapter extends ArrayAdapter<Storage> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_kho, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_storage, parent, false);
         setControl(view);
         setEvent(position);
         return view;
@@ -92,13 +92,13 @@ public class StorageAdapter extends ArrayAdapter<Storage> {
         layoutKho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onClickItemKho(storage);
+                listener.onClickItemStorage(storage);
             }
         });
         layoutKho.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                listener.onLongClickItemKho(position);
+                listener.onLongClickItemStorage(position);
                 return false;
             }
         });

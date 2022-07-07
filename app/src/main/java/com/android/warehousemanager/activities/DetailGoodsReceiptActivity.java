@@ -27,7 +27,7 @@ import com.android.warehousemanager.api.ApiService;
 import com.android.warehousemanager.adapters.DetailGoodsReceiptAdapter;
 import com.android.warehousemanager.models.DetailGoodsReceipt;
 import com.android.warehousemanager.models.GoodsReceipt;
-import com.android.warehousemanager.interfaces.IClickItemDetailPhieuNhapListener;
+import com.android.warehousemanager.interfaces.IClickItemDetailGoodsReceiptListener;
 import com.android.warehousemanager.R;
 
 import java.util.List;
@@ -190,9 +190,9 @@ public class DetailGoodsReceiptActivity extends AppCompatActivity {
     }
 
     private void fetchDataToAdapter(List<DetailGoodsReceipt> list) {
-        adapter = new DetailGoodsReceiptAdapter(list, new IClickItemDetailPhieuNhapListener() {
+        adapter = new DetailGoodsReceiptAdapter(list, new IClickItemDetailGoodsReceiptListener() {
             @Override
-            public void onClickDetailPhieuNhap(DetailGoodsReceipt value) {
+            public void onClickDGR(DetailGoodsReceipt value) {
 
                 onClickGoToEditDetailPhieuNhap(value);
             }

@@ -31,7 +31,7 @@ import com.android.warehousemanager.adapters.SpinnerAdapter;
 import com.android.warehousemanager.models.ApiResponse;
 import com.android.warehousemanager.models.DetailGoodsReceipt;
 import com.android.warehousemanager.models.GoodsReceipt;
-import com.android.warehousemanager.interfaces.IClickItemDetailPhieuNhapListener;
+import com.android.warehousemanager.interfaces.IClickItemDetailGoodsReceiptListener;
 import com.android.warehousemanager.R;
 
 import java.util.Calendar;
@@ -154,9 +154,9 @@ public class AddGoodsReceiptActivity extends AppCompatActivity {
         });
 
         List<DetailGoodsReceipt> data = new LinkedList<>();
-        adapter = new DetailGoodsReceiptAdapter(data, new IClickItemDetailPhieuNhapListener() {
+        adapter = new DetailGoodsReceiptAdapter(data, new IClickItemDetailGoodsReceiptListener() {
             @Override
-            public void onClickDetailPhieuNhap(DetailGoodsReceipt value) {
+            public void onClickDGR(DetailGoodsReceipt value) {
                 onClickGoToEditDetailPhieuNhap(value);
             }
         });

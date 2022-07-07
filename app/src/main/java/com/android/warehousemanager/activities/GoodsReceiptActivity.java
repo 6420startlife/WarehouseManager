@@ -155,7 +155,7 @@ public class GoodsReceiptActivity extends AppCompatActivity {
         rvGR.startLayoutAnimation();
         adapter = new GoodsReceiptAdapter(goodsReceipts,new IClickItemPhieuNhapListener() {
             @Override
-            public void onClickItemPhieuNhap(GoodsReceipt value) {
+            public void onClickItemGR(GoodsReceipt value) {
                 onClickGoToDetail(value);
             }
         });

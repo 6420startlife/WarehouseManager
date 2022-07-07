@@ -20,7 +20,6 @@ public class ChiTietPhieuNhap implements Serializable {
     public void setSophieu(int sophieu) {
         this.sophieu = sophieu;
     }
-
     public String getMavattu() {
         return mavattu;
     }

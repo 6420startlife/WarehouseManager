@@ -126,14 +126,14 @@ public class VatTuActivity_Edit extends AppCompatActivity {
         }else{
             VatTu value = (VatTu) bundle.get("edit_vat_tu");
             if(value != null){
-                tietMaVatTu.setText(value.getMa_vat_tu());
+                tietMaVatTu.setText(value.getId());
                 tietMaVatTu.setEnabled(false);
-                tietTenVatTu.setText(value.getTen_vat_tu());
-                tietDonViTinh.setText(value.getDon_vi_tinh());
-                tietXuatXu.setText(value.getXuat_xu());
-                setUrlImage(value.getAnh_vat_tu());
+                tietTenVatTu.setText(value.getName());
+                tietDonViTinh.setText(value.getUnit());
+                tietXuatXu.setText(value.getFrom());
+                setUrlImage(value.getImage());
                 try{
-                    Picasso.get().load(value.getAnh_vat_tu()).into(ivAnhVatTu_Edit);
+                    Picasso.get().load(value.getImage()).into(ivAnhVatTu_Edit);
                 }catch (Exception e){
                     Picasso.get().load(defaultImageUrl).into(ivAnhVatTu_Edit);
                 }

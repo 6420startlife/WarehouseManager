@@ -18,15 +18,18 @@ import com.android.warehousemanager.models.DetailGoodsReceipt;
 import com.android.warehousemanager.R;
 
 public class EditDetailGoodsReceiptActivity extends AppCompatActivity {
-    private ImageView ivSaveDetailPhieuNhap, ivCancelDetailPhieuNhap;
-    private TextView tvMaVatTu;
-    private EditText etSoLuong;
-    private int soPhieu;
+    /*
+        DGR = Detail Goods Receipt
+     */
+    private ImageView ivSaveDGR, ivCancelDGR;
+    private TextView tvIdSupplies;
+    private EditText etAmount;
+    private int idGRKeeper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_detail_phieu_nhap);
+        setContentView(R.layout.activity_edit_detail_goods_receipt);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Sửa chi tiết phiếu nhập");
         setControl();
@@ -44,13 +47,13 @@ public class EditDetailGoodsReceiptActivity extends AppCompatActivity {
     }
 
     private void setEvent() {
-        ivSaveDetailPhieuNhap.setOnClickListener(new View.OnClickListener() {
+        ivSaveDGR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClickSaveDetailPhieuNhap();
             }
         });
-        ivCancelDetailPhieuNhap.setOnClickListener(new View.OnClickListener() {
+        ivCancelDGR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -63,22 +66,22 @@ public class EditDetailGoodsReceiptActivity extends AppCompatActivity {
         }
         DetailGoodsReceipt value_dpn = (DetailGoodsReceipt) bundle.get("edit_detail_phieu_nhap");
         if(value_dpn != null){
-            soPhieu = value_dpn.getId();
-            tvMaVatTu.setText(value_dpn.getIdSupply());
-            etSoLuong.setText(String.valueOf(value_dpn.getAmount()));
+            idGRKeeper = value_dpn.getId();
+            tvIdSupplies.setText(value_dpn.getIdSupply());
+            etAmount.setText(String.valueOf(value_dpn.getAmount()));
         }
     }
 
     private void onClickSaveDetailPhieuNhap() {
-        if(etSoLuong.getText().toString().trim().length() == 0){
-            etSoLuong.setError("hãy nhập số lượng");
+        if(etAmount.getText().toString().trim().length() == 0){
+            etAmount.setError("hãy nhập số lượng");
             return;
         }
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        DetailGoodsReceipt value = new DetailGoodsReceipt(soPhieu,
-                tvMaVatTu.getText().toString().trim(),
-                Integer.valueOf(etSoLuong.getText().toString().trim()));
+        DetailGoodsReceipt value = new DetailGoodsReceipt(idGRKeeper,
+                tvIdSupplies.getText().toString().trim(),
+                Integer.valueOf(etAmount.getText().toString().trim()));
         bundle.putSerializable("edit_detail_phieu_nhap",value);
         intent.putExtras(bundle);
         setResult(REQUEST_EDIT_DETAIL_PHIEU_NHAP,intent);
@@ -86,10 +89,10 @@ public class EditDetailGoodsReceiptActivity extends AppCompatActivity {
     }
 
     private void setControl() {
-        tvMaVatTu = findViewById(R.id.etMaVatTu);
-        etSoLuong = findViewById(R.id.etSoLuong);
-        ivSaveDetailPhieuNhap = findViewById(R.id.ivSaveDetailPhieuNhap);
-        ivCancelDetailPhieuNhap = findViewById(R.id.ivCancelDetailPhieuNhap);
+        tvIdSupplies = findViewById(R.id.etMaVatTu);
+        etAmount = findViewById(R.id.etSoLuong);
+        ivSaveDGR = findViewById(R.id.ivSaveDetailPhieuNhap);
+        ivCancelDGR = findViewById(R.id.ivCancelDetailPhieuNhap);
 
     }
 }

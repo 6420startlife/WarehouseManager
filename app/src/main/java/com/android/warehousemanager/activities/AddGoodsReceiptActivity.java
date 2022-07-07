@@ -43,17 +43,22 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddGoodsReceiptActivity extends AppCompatActivity {
-    private ImageView ivAddDetailPhieuNhap, ivCancelPhieuNhap, ivAddPhieuNhap;
-    private EditText etNgayLap;
-    private AutoCompleteTextView actvKho;
+    /*
+        GR = Goods Receipt
+        DGR = Detail Goods Receipt
+        GRKeeper = Identify Goods Receipt need keeping
+     */
+    private ImageView ivAddDGR, ivCancelGR, ivAddGR;
+    private EditText etDate;
+    private AutoCompleteTextView actvStorage;
 
     private DatePickerDialog.OnDateSetListener listener;
     private Calendar calendar;
 
-    private RecyclerView rvDetailPhieuNhap;
+    private RecyclerView rvDGR;
     private DetailGoodsReceiptAdapter adapter;
     private SpinnerAdapter spinnerAdapter;
-    private int soPhieu;
+    private int idGRKeeper;
 
 
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(
@@ -82,17 +87,11 @@ public class AddGoodsReceiptActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_phieu_nhap);
+        setContentView(R.layout.activity_add_goods_receipt);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Thêm phiếu nhập");
         setControl();
         setEvent();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
     }
 
     @Override
@@ -106,19 +105,19 @@ public class AddGoodsReceiptActivity extends AppCompatActivity {
     }
 
     private void setEvent() {
-        ivCancelPhieuNhap.setOnClickListener(new View.OnClickListener() {
+        ivCancelGR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-        ivAddPhieuNhap.setOnClickListener(new View.OnClickListener() {
+        ivAddGR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addPhieuNhap();
             }
         });
-        ivAddDetailPhieuNhap.setOnClickListener(new View.OnClickListener() {
+        ivAddDGR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClickGoToAddDetailPhieuNhap();
@@ -129,7 +128,7 @@ public class AddGoodsReceiptActivity extends AppCompatActivity {
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
         final int month = calendar.get(Calendar.MONTH);
         final int year = calendar.get(Calendar.YEAR);
-        etNgayLap.setOnClickListener(new View.OnClickListener() {
+        etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(AddGoodsReceiptActivity.this, new DatePickerDialog.OnDateSetListener() {
@@ -147,7 +146,7 @@ public class AddGoodsReceiptActivity extends AppCompatActivity {
                         }else{
                             date += "/" + month + "/" + year;
                         }
-                        etNgayLap.setText(date);
+                        etDate.setText(date);
                     }
                 },year,month,day);
                 datePickerDialog.show();
@@ -161,7 +160,7 @@ public class AddGoodsReceiptActivity extends AppCompatActivity {
                 onClickGoToEditDetailPhieuNhap(value);
             }
         });
-        rvDetailPhieuNhap.setAdapter(adapter);
+        rvDGR.setAdapter(adapter);
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -174,9 +173,9 @@ public class AddGoodsReceiptActivity extends AppCompatActivity {
                 adapter.removeData(position);
                 adapter.notifyDataSetChanged();
             }
-        }).attachToRecyclerView(rvDetailPhieuNhap);
+        }).attachToRecyclerView(rvDGR);
 
-        ApiService.API_SERVICE.getKhoSpinner().enqueue(new Callback<List<String>>() {
+        ApiService.API_SERVICE.getStorageSpinner().enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if(!response.isSuccessful()){
@@ -184,7 +183,7 @@ public class AddGoodsReceiptActivity extends AppCompatActivity {
                     return;
                 }
                 spinnerAdapter = new SpinnerAdapter(AddGoodsReceiptActivity.this,0,response.body());
-                actvKho.setAdapter(spinnerAdapter);
+                actvStorage.setAdapter(spinnerAdapter);
             }
 
             @Override
@@ -208,18 +207,18 @@ public class AddGoodsReceiptActivity extends AppCompatActivity {
     }
 
     private void addPhieuNhap() {
-        if(actvKho.getText().toString().trim().length() == 0){
+        if(actvStorage.getText().toString().trim().length() == 0){
             Toast.makeText(this, "Chọn ", Toast.LENGTH_SHORT).show();
             return;
-        }else if(etNgayLap.getText().toString().trim().length() == 0){
-            etNgayLap.setError("hãy nhập ngày");
+        }else if(etDate.getText().toString().trim().length() == 0){
+            etDate.setError("hãy nhập ngày");
             return;
         }else if(adapter.getItemCount() == 0){
             Toast.makeText(AddGoodsReceiptActivity.this,"Hãy thêm ít nhất 1 vật tư",Toast.LENGTH_SHORT).show();
             return;
         }
-        String[] maKho =  actvKho.getText().toString().trim().split("\\s",2);
-        GoodsReceipt value = new GoodsReceipt(etNgayLap.getText().toString().trim(),maKho[0]);
+        String[] maKho =  actvStorage.getText().toString().trim().split("\\s",2);
+        GoodsReceipt value = new GoodsReceipt(etDate.getText().toString().trim(),maKho[0]);
         ApiService.API_SERVICE.createPhieuNhap(value).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
@@ -228,8 +227,8 @@ public class AddGoodsReceiptActivity extends AppCompatActivity {
                     return;
                 }
                 ApiResponse apiResponse = response.body();
-                soPhieu = Integer.valueOf(apiResponse.getData());
-                createCTPNToApi(soPhieu, value);
+                idGRKeeper = Integer.valueOf(apiResponse.getData());
+                createCTPNToApi(idGRKeeper, value);
                 Intent intent =  new Intent();
                 setResult(REQUEST_ADD_PHIEU_NHAP,intent);
                 finish();
@@ -261,11 +260,11 @@ public class AddGoodsReceiptActivity extends AppCompatActivity {
     }
 
     private void setControl() {
-        actvKho = findViewById(R.id.actvKho);
-        etNgayLap = findViewById(R.id.etNgayLap);
-        ivAddDetailPhieuNhap = findViewById(R.id.ivAddDetailPhieuNhap);
-        ivCancelPhieuNhap = findViewById(R.id.ivCancelPhieuNhap);
-        ivAddPhieuNhap = findViewById(R.id.ivAddPhieuNhap);
-        rvDetailPhieuNhap = findViewById(R.id.rvDetailPhieuNhap);
+        actvStorage = findViewById(R.id.actvKho);
+        etDate = findViewById(R.id.etNgayLap);
+        ivAddDGR = findViewById(R.id.ivAddDetailPhieuNhap);
+        ivCancelGR = findViewById(R.id.ivCancelPhieuNhap);
+        ivAddGR = findViewById(R.id.ivAddPhieuNhap);
+        rvDGR = findViewById(R.id.rvDetailPhieuNhap);
     }
 }

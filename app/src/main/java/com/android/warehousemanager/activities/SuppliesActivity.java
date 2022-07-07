@@ -22,9 +22,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.warehousemanager.api.ApiService;
-import com.android.warehousemanager.adapters.SupplyAdapter;
+import com.android.warehousemanager.adapters.SuppliesAdapter;
 import com.android.warehousemanager.interfaces.IClickItemVatTuListener;
-import com.android.warehousemanager.models.Supply;
+import com.android.warehousemanager.models.Supplies;
 import com.android.warehousemanager.R;
 
 import java.util.ArrayList;
@@ -34,14 +34,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SupplyActivity extends AppCompatActivity {
+public class SuppliesActivity extends AppCompatActivity {
     protected static final int REQUEST_ADD_VAT_TU = 1;
     protected static final int REQUEST_EDIT_VAT_TU = 2;
-    private ListView lvVatTu;
+    private ListView lvSupplies;
     private ProgressDialog progressDialog;
 
-    private SupplyAdapter adapter;
-    private List<Supply> listSupply = new ArrayList<>();
+    private SuppliesAdapter adapter;
+    private List<Supplies> listSupplies = new ArrayList<>();
 
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -50,12 +50,12 @@ public class SupplyActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if(result.getResultCode() == REQUEST_ADD_VAT_TU){
                         if(result.getData().getExtras() != null){
-                            Supply value = (Supply) result.getData().getExtras().get("add_vat_tu");
+                            Supplies value = (Supplies) result.getData().getExtras().get("add_vat_tu");
                             addDataToApi(value);
                         }
                     }else if(result.getResultCode() == REQUEST_EDIT_VAT_TU){
                         if(result.getData().getExtras() != null){
-                            Supply value = (Supply) result.getData().getExtras().get("edit_vat_tu");
+                            Supplies value = (Supplies) result.getData().getExtras().get("edit_vat_tu");
                             updateDataToApi(value);
                         }
                     }
@@ -98,7 +98,7 @@ public class SupplyActivity extends AppCompatActivity {
     }
 
     private void setControl() {
-        lvVatTu = findViewById(R.id.lvVatTu);
+        lvSupplies = findViewById(R.id.lvVatTu);
     }
 
     private void initProgressDialog() {
@@ -108,10 +108,10 @@ public class SupplyActivity extends AppCompatActivity {
     }
 
     private void initListView() {
-        adapter = new SupplyAdapter(SupplyActivity.this, 0, listSupply, new IClickItemVatTuListener() {
+        adapter = new SuppliesAdapter(SuppliesActivity.this, 0, listSupplies, new IClickItemVatTuListener() {
             @Override
-            public void onClickItemVatTu(Supply supply) {
-                onClickToEditVatTu(supply);
+            public void onClickItemVatTu(Supplies supplies) {
+                onClickToEditVatTu(supplies);
             }
 
             @Override
@@ -119,54 +119,54 @@ public class SupplyActivity extends AppCompatActivity {
                 onLongClickToRemoveVatTu(position);
             }
         });
-        lvVatTu.setAdapter(adapter);
+        lvSupplies.setAdapter(adapter);
     }
 
-    private void addDataToApi(Supply value) {
-        ApiService.API_SERVICE.createVatTu(value).enqueue(new Callback<Supply>() {
+    private void addDataToApi(Supplies value) {
+        ApiService.API_SERVICE.createVatTu(value).enqueue(new Callback<Supplies>() {
             @Override
-            public void onResponse(Call<Supply> call, Response<Supply> response) {
+            public void onResponse(Call<Supplies> call, Response<Supplies> response) {
                 if(response.code() == STATUS_CODE_NO_CONTENT){
                     uploadDataFromData();
                 }
             }
             @Override
-            public void onFailure(Call<Supply> call, Throwable t) {
-                Toast.makeText(SupplyActivity.this,"Call API create Vat Tu fail" ,Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<Supplies> call, Throwable t) {
+                Toast.makeText(SuppliesActivity.this,"Call API create Vat Tu fail" ,Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
     }
 
-    private void updateDataToApi(Supply value) {
-        ApiService.API_SERVICE.updateVatTu(value).enqueue(new Callback<Supply>() {
+    private void updateDataToApi(Supplies value) {
+        ApiService.API_SERVICE.updateVatTu(value).enqueue(new Callback<Supplies>() {
             @Override
-            public void onResponse(Call<Supply> call, Response<Supply> response) {
+            public void onResponse(Call<Supplies> call, Response<Supplies> response) {
                 if(response.code() == STATUS_CODE_NO_CONTENT){
                     uploadDataFromData();
                 }
             }
 
             @Override
-            public void onFailure(Call<Supply> call, Throwable t) {
-                Toast.makeText(SupplyActivity.this,"Call API update Vat Tu fail" ,Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<Supplies> call, Throwable t) {
+                Toast.makeText(SuppliesActivity.this,"Call API update Vat Tu fail" ,Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
     }
 
-    private void removeDataFromApi(Supply item) {
-        ApiService.API_SERVICE.removeVatTu(item.getId()).enqueue(new Callback<Supply>() {
+    private void removeDataFromApi(Supplies item) {
+        ApiService.API_SERVICE.removeVatTu(item.getId()).enqueue(new Callback<Supplies>() {
             @Override
-            public void onResponse(Call<Supply> call, Response<Supply> response) {
+            public void onResponse(Call<Supplies> call, Response<Supplies> response) {
                 if(response.code() == STATUS_CODE_NO_CONTENT){
                     uploadDataFromData();
                 }
             }
 
             @Override
-            public void onFailure(Call<Supply> call, Throwable t) {
-                Toast.makeText(SupplyActivity.this,"Call API remove Vat Tu fail" ,Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<Supplies> call, Throwable t) {
+                Toast.makeText(SuppliesActivity.this,"Call API remove Vat Tu fail" ,Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
@@ -174,41 +174,41 @@ public class SupplyActivity extends AppCompatActivity {
 
     private void uploadDataFromData(){
         progressDialog.show();
-        ApiService.API_SERVICE.getAllVatTu().enqueue(new Callback<List<Supply>>() {
+        ApiService.API_SERVICE.getAllVatTu().enqueue(new Callback<List<Supplies>>() {
             @Override
-            public void onResponse(Call<List<Supply>> call, Response<List<Supply>> response) {
+            public void onResponse(Call<List<Supplies>> call, Response<List<Supplies>> response) {
                 if(!response.isSuccessful()){
                     progressDialog.dismiss();
-                    Toast.makeText(SupplyActivity.this, "Request fail " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SuppliesActivity.this, "Request fail " + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                listSupply.clear();
-                listSupply.addAll(response.body());
+                listSupplies.clear();
+                listSupplies.addAll(response.body());
                 adapter.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
             @Override
-            public void onFailure(Call<List<Supply>> call, Throwable t) {
+            public void onFailure(Call<List<Supplies>> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(SupplyActivity.this, "Call Api fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SuppliesActivity.this, "Call Api fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi", t.getMessage());
             }
         });
     }
 
     private void onClickToAddVatTu() {
-        Intent intent = new Intent(SupplyActivity.this, EditSupplyActivity.class);
+        Intent intent = new Intent(SuppliesActivity.this, EditSuppliesActivity.class);
         launcher.launch(intent);
     }
 
     private void onLongClickToRemoveVatTu(int position) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SupplyActivity.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SuppliesActivity.this);
         alertDialogBuilder.setMessage("Bán có muốn xóa vật tư này!");
         alertDialogBuilder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Supply item = adapter.getItem(position);
+                Supplies item = adapter.getItem(position);
                 removeDataFromApi(item);
                 uploadDataFromData();
             }
@@ -222,10 +222,10 @@ public class SupplyActivity extends AppCompatActivity {
         alertDialogBuilder.show();
     }
 
-    private void onClickToEditVatTu(Supply supply) {
-        Intent intent = new Intent(SupplyActivity.this, EditSupplyActivity.class);
+    private void onClickToEditVatTu(Supplies supplies) {
+        Intent intent = new Intent(SuppliesActivity.this, EditSuppliesActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("edit_vat_tu", supply);
+        bundle.putSerializable("edit_vat_tu", supplies);
         intent.putExtras(bundle);
         launcher.launch(intent);
     }

@@ -4,7 +4,7 @@ import com.android.warehousemanager.models.ApiResponse;
 import com.android.warehousemanager.models.DetailGoodsReceipt;
 import com.android.warehousemanager.models.Storage;
 import com.android.warehousemanager.models.GoodsReceipt;
-import com.android.warehousemanager.models.Supply;
+import com.android.warehousemanager.models.Supplies;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -40,15 +40,15 @@ public interface ApiService {
             .create(ApiService.class);
 
     @GET("VatTu")
-    Call<List<Supply>> getAllVatTu();
+    Call<List<Supplies>> getAllVatTu();
     @PUT("VatTu")
-    Call<Supply> updateVatTu(@Body Supply supply);
+    Call<Supplies> updateVatTu(@Body Supplies supplies);
     @POST("VatTu")
-    Call<Supply> createVatTu(@Body Supply supply);
+    Call<Supplies> createVatTu(@Body Supplies supplies);
     @DELETE("VatTu/{id}")
-    Call<Supply> removeVatTu(@Path("id") String maVatTu);
+    Call<Supplies> removeVatTu(@Path("id") String maVatTu);
     @GET("VatTu/spinner")
-    Call<List<String>> getVatTuSpinner();
+    Call<List<String>> getSuppliesSpinner();
 
     @GET("Kho")
     Call<List<Storage>> getAllKho();
@@ -59,7 +59,7 @@ public interface ApiService {
     @DELETE("Kho/{id}")
     Call<Storage> removeKho(@Path("id") String maKho);
     @GET("Kho/spinner")
-    Call<List<String>> getKhoSpinner();
+    Call<List<String>> getStorageSpinner();
 
     @GET("PhieuNhap")
     Call<List<GoodsReceipt>> getAllPhieuNhap();

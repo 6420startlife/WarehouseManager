@@ -13,48 +13,48 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.warehousemanager.interfaces.IClickItemVatTuListener;
-import com.android.warehousemanager.models.Supply;
+import com.android.warehousemanager.models.Supplies;
 import com.android.warehousemanager.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class SupplyAdapter extends ArrayAdapter<Supply> {
+public class SuppliesAdapter extends ArrayAdapter<Supplies> {
     private  Context context;
-    public List<Supply> data;
+    public List<Supplies> data;
 
     private ImageView ivAnhVatTu;
     private TextView tvMaVatTu, tvTenVatTu, tvDonViTinh, tvXuatXu;
     private ConstraintLayout layoutItemVatTu;
     private IClickItemVatTuListener listener;
 
-    public List<Supply> getData() {
+    public List<Supplies> getData() {
         return data;
     }
 
-    public void setData(List<Supply> data) {
+    public void setData(List<Supplies> data) {
         this.data = data;
     }
 
-    public void addItem(Supply supply) {
-        data.add(supply);
+    public void addItem(Supplies supplies) {
+        data.add(supplies);
     }
 
-    public void editItem(Supply supply) {
+    public void editItem(Supplies supplies) {
         int position;
-        for (Supply item : data) {
-            if(item.getId().equalsIgnoreCase(supply.getId())){
+        for (Supplies item : data) {
+            if(item.getId().equalsIgnoreCase(supplies.getId())){
                 position = data.indexOf(item);
-                data.set(position, supply);
+                data.set(position, supplies);
                 break;
             }
         }
     }
 
-    public void removeItem(Supply supply) {
+    public void removeItem(Supplies supplies) {
         int position;
-        for (Supply item : data) {
-            if(item.getId().equalsIgnoreCase(supply.getId())){
+        for (Supplies item : data) {
+            if(item.getId().equalsIgnoreCase(supplies.getId())){
                 position = data.indexOf(item);
                 data.remove(position);
                 break;
@@ -68,11 +68,11 @@ public class SupplyAdapter extends ArrayAdapter<Supply> {
 
     @Nullable
     @Override
-    public Supply getItem(int position) {
+    public Supplies getItem(int position) {
         return data.get(position);
     }
 
-    public SupplyAdapter(@NonNull Context context, int resource, @NonNull List<Supply> objects, IClickItemVatTuListener listener) {
+    public SuppliesAdapter(@NonNull Context context, int resource, @NonNull List<Supplies> objects, IClickItemVatTuListener listener) {
         super(context, resource, objects);
         this.context = context;
         this.data = objects;
@@ -82,14 +82,14 @@ public class SupplyAdapter extends ArrayAdapter<Supply> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_vat_tu, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_supplies, parent, false);
         setControl(view);
         setEvent(position);
         return view;
     }
 
     private void setEvent(int position) {
-        Supply value = data.get(position);
+        Supplies value = data.get(position);
         tvMaVatTu.setText(value.getId());
         tvTenVatTu.setText(value.getName());
         tvDonViTinh.setText(value.getUnit());

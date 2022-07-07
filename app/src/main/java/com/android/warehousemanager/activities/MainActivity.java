@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void gotoVatTu(View view) {
-        startActivity(new Intent(MainActivity.this, SupplyActivity.class));
+        startActivity(new Intent(MainActivity.this, SuppliesActivity.class));
     }
 
     public void gotoChart(View view) {

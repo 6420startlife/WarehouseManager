@@ -37,12 +37,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetailGoodsReceiptActivity extends AppCompatActivity {
+    /*
+        GR = Goods Receipt
+        DGR = Detail Goods Receipt
+     */
     protected static final int REQUEST_ADD_DETAIL_PHIEU_NHAP = 5;
     protected static final int REQUEST_EDIT_DETAIL_PHIEU_NHAP = 6;
-    private TextView tvSoPhieu, tvMaKho, tvNgayLap;
-    private ImageView ivEditPhieuNhap, ivDeletePhieuNhap;
-    private RecyclerView rvDetailPhieuNhap;
-    private ImageView ivAddDetailPhieuNhap;
+    private TextView tvIdGR, tvIdStorage, tvDate;
+    private ImageView ivEditGR, ivDeleteGR;
+    private RecyclerView rvDGR;
+    private ImageView ivAddDGR;
 
     private DetailGoodsReceiptAdapter adapter;
 
@@ -56,9 +60,9 @@ public class DetailGoodsReceiptActivity extends AppCompatActivity {
                             return;
                         }
                         GoodsReceipt value = (GoodsReceipt) result.getData().getExtras().get("edit_phieu_nhap");
-                        tvSoPhieu.setText(String.valueOf(value.getId()));
-                        tvMaKho.setText(value.getIdStorage());
-                        tvNgayLap.setText(value.getDate());
+                        tvIdGR.setText(String.valueOf(value.getId()));
+                        tvIdStorage.setText(value.getIdStorage());
+                        tvDate.setText(value.getDate());
                         setResult(REQUEST_EDIT_PHIEU_NHAP,result.getData());
                     }
                     else if(result.getResultCode() == REQUEST_ADD_DETAIL_PHIEU_NHAP){
@@ -125,7 +129,7 @@ public class DetailGoodsReceiptActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_phieu_nhap);
+        setContentView(R.layout.activity_detail_goods_receipt);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Chi tiết phiếu nhập");
         setControl();
@@ -139,25 +143,25 @@ public class DetailGoodsReceiptActivity extends AppCompatActivity {
         }
         GoodsReceipt value = (GoodsReceipt) bundle.get("edit_phieu_nhap");
         if(value != null){
-            tvSoPhieu.setText(String.valueOf(value.getId()));
-            tvMaKho.setText(value.getIdStorage());
-            tvNgayLap.setText(value.getDate());
+            tvIdGR.setText(String.valueOf(value.getId()));
+            tvIdStorage.setText(value.getIdStorage());
+            tvDate.setText(value.getDate());
         }
-        ivEditPhieuNhap.setOnClickListener(new View.OnClickListener() {
+        ivEditGR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GoodsReceipt value = new GoodsReceipt(Integer.valueOf(tvSoPhieu.getText().toString().trim())
-                        ,tvNgayLap.getText().toString().trim(),tvMaKho.getText().toString().trim());
+                GoodsReceipt value = new GoodsReceipt(Integer.valueOf(tvIdGR.getText().toString().trim())
+                        , tvDate.getText().toString().trim(), tvIdStorage.getText().toString().trim());
                 onClickGoToEditPhieuNhap(value);
             }
         });
-        ivDeletePhieuNhap.setOnClickListener(new View.OnClickListener() {
+        ivDeleteGR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClickDeletePhieuNhap();
             }
         });
-        ivAddDetailPhieuNhap.setOnClickListener(new View.OnClickListener() {
+        ivAddDGR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClickGoToAddDetailPhieuNhap();
@@ -193,7 +197,7 @@ public class DetailGoodsReceiptActivity extends AppCompatActivity {
                 onClickGoToEditDetailPhieuNhap(value);
             }
         });
-        rvDetailPhieuNhap.setAdapter(adapter);
+        rvDGR.setAdapter(adapter);
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -208,7 +212,7 @@ public class DetailGoodsReceiptActivity extends AppCompatActivity {
                 adapter.removeData(position);
                 adapter.notifyDataSetChanged();
             }
-        }).attachToRecyclerView(rvDetailPhieuNhap);
+        }).attachToRecyclerView(rvDGR);
     }
 
     private void removeDataFromApi(DetailGoodsReceipt value) {
@@ -247,13 +251,13 @@ public class DetailGoodsReceiptActivity extends AppCompatActivity {
 
     private void onClickGoToAddDetailPhieuNhap() {
         Intent intent = new Intent(DetailGoodsReceiptActivity.this, AddDetailGoodsReceiptActivity.class);
-        intent.putExtra("new_detail_so_phieu",tvSoPhieu.getText().toString().trim());
+        intent.putExtra("new_detail_so_phieu", tvIdGR.getText().toString().trim());
         launcher.launch(intent);
     }
 
     private void onClickDeletePhieuNhap() {
-        GoodsReceipt value = new GoodsReceipt(Integer.valueOf(tvSoPhieu.getText().toString())
-                ,tvNgayLap.getText().toString().trim(),tvMaKho.getText().toString().trim());
+        GoodsReceipt value = new GoodsReceipt(Integer.valueOf(tvIdGR.getText().toString())
+                , tvDate.getText().toString().trim(), tvIdStorage.getText().toString().trim());
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable("remove_phieu_nhap",value);
@@ -271,13 +275,13 @@ public class DetailGoodsReceiptActivity extends AppCompatActivity {
     }
 
     private void setControl() {
-        tvSoPhieu = findViewById(R.id.tvSoPhieu);
-        tvMaKho = findViewById(R.id.tvMaKho);
-        tvNgayLap = findViewById(R.id.tvNgayLap);
-        ivEditPhieuNhap = findViewById(R.id.ivEditPhieuNhap);
-        ivDeletePhieuNhap = findViewById(R.id.ivDeletePhieuNhap);
-        rvDetailPhieuNhap = findViewById(R.id.rvDetailPhieuNhap);
-        ivAddDetailPhieuNhap = findViewById(R.id.ivAddDetailPhieuNhap);
+        tvIdGR = findViewById(R.id.tvSoPhieu);
+        tvIdStorage = findViewById(R.id.tvMaKho);
+        tvDate = findViewById(R.id.tvNgayLap);
+        ivEditGR = findViewById(R.id.ivEditPhieuNhap);
+        ivDeleteGR = findViewById(R.id.ivDeletePhieuNhap);
+        rvDGR = findViewById(R.id.rvDetailPhieuNhap);
+        ivAddDGR = findViewById(R.id.ivAddDetailPhieuNhap);
     }
 
 }

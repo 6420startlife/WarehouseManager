@@ -37,7 +37,7 @@ import retrofit2.Response;
 public class StorageActivity extends AppCompatActivity {
     protected static final int REQUEST_ADD_KHO = 1;
     protected static final int REQUEST_EDIT_KHO = 2;
-    private ListView lvKho;
+    private ListView lvStorage;
     private ProgressDialog progressDialog;
 
     private List<Storage> listStorage = new ArrayList<>();
@@ -151,7 +151,7 @@ public class StorageActivity extends AppCompatActivity {
                 onLongClickToRemoveKho(position);
             }
         });
-        lvKho.setAdapter(adapter);
+        lvStorage.setAdapter(adapter);
     }
 
     private void uploadDataFromApi() {
@@ -226,7 +226,7 @@ public class StorageActivity extends AppCompatActivity {
     }
 
     private void setcontrol() {
-        lvKho = findViewById(R.id.lvKho);
+        lvStorage = findViewById(R.id.lvKho);
     }
 
 }

@@ -36,19 +36,19 @@ public class GoodsReceiptActivity extends AppCompatActivity {
     protected static final int REQUEST_ADD_PHIEU_NHAP = 2;
     protected static final int REQUEST_EDIT_PHIEU_NHAP = 3;
     protected static final int REQUEST_REMOVE_PHIEU_NHAP = 4;
-    private RecyclerView rvPhieuNhap;
-    private EditText etTimKiem;
+    private RecyclerView rvGR;
+    private EditText etSearch;
     private ProgressDialog progressDialog;
 
-    private List<GoodsReceipt> list = new ArrayList<>();
+    private List<GoodsReceipt> goodsReceipts = new ArrayList<>();
     private GoodsReceiptAdapter adapter;
 
-    public List<GoodsReceipt> getList() {
-        return list;
+    public List<GoodsReceipt> getGoodsReceipts() {
+        return goodsReceipts;
     }
 
-    public void setList(List<GoodsReceipt> list) {
-        this.list = list;
+    public void setGoodsReceipts(List<GoodsReceipt> goodsReceipts) {
+        this.goodsReceipts = goodsReceipts;
     }
 
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(
@@ -152,14 +152,14 @@ public class GoodsReceiptActivity extends AppCompatActivity {
     }
 
     private void initRecycleView() {
-        rvPhieuNhap.startLayoutAnimation();
-        adapter = new GoodsReceiptAdapter(list ,new IClickItemPhieuNhapListener() {
+        rvGR.startLayoutAnimation();
+        adapter = new GoodsReceiptAdapter(goodsReceipts,new IClickItemPhieuNhapListener() {
             @Override
             public void onClickItemPhieuNhap(GoodsReceipt value) {
                 onClickGoToDetail(value);
             }
         });
-        rvPhieuNhap.setAdapter(adapter);
+        rvGR.setAdapter(adapter);
     }
 
     private void initProgressDialog() {
@@ -178,8 +178,8 @@ public class GoodsReceiptActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     return;
                 }
-                list.clear();
-                list.addAll(response.body());
+                goodsReceipts.clear();
+                goodsReceipts.addAll(response.body());
                 adapter.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
@@ -199,8 +199,8 @@ public class GoodsReceiptActivity extends AppCompatActivity {
     }
 
     private void setControl() {
-        rvPhieuNhap = findViewById(R.id.rvPhieuNhap);
-        etTimKiem = findViewById(R.id.etTimKiem);
+        rvGR = findViewById(R.id.rvPhieuNhap);
+        etSearch = findViewById(R.id.etTimKiem);
     }
 
     public void onClickGoToDetail(GoodsReceipt value) {

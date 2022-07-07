@@ -17,15 +17,15 @@ import com.android.warehousemanager.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class EditStorageActivity extends AppCompatActivity {
-    private TextInputEditText tietMaKho, tietTenKho;
-    private Button btnLuuKho;
+    private TextInputEditText tietIdStorage, tietNameStorage;
+    private Button btnSaveStorage;
 
     private boolean isAdd = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kho_edit);
+        setContentView(R.layout.activity_edit_storage);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Kho");
         setControl();
@@ -43,13 +43,13 @@ public class EditStorageActivity extends AppCompatActivity {
     }
 
     private void setControl() {
-        tietMaKho = findViewById(R.id.tietMaKho);
-        tietTenKho = findViewById(R.id.tietTenKho);
-        btnLuuKho = findViewById(R.id.btnLuuKho);
+        tietIdStorage = findViewById(R.id.tietMaKho);
+        tietNameStorage = findViewById(R.id.tietTenKho);
+        btnSaveStorage = findViewById(R.id.btnLuuKho);
     }
 
     private void setEvent(){
-        btnLuuKho.setOnClickListener(new View.OnClickListener() {
+        btnSaveStorage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 returnSaveResult();
@@ -60,23 +60,23 @@ public class EditStorageActivity extends AppCompatActivity {
             isAdd = true;
         }else{
             Storage value = (Storage) bundle.get("edit_kho");
-            tietMaKho.setText(value.getId());
-            tietMaKho.setEnabled(false);
-            tietTenKho.setText(value.getName());
+            tietIdStorage.setText(value.getId());
+            tietIdStorage.setEnabled(false);
+            tietNameStorage.setText(value.getName());
         }
     }
 
     private void returnSaveResult() {
-        if(tietMaKho.getText().toString().trim().length() == 0){
-            tietMaKho.setError("hãy nhập mã kho");
+        if(tietIdStorage.getText().toString().trim().length() == 0){
+            tietIdStorage.setError("hãy nhập mã kho");
             return;
-        }else if(tietTenKho.getText().toString().trim().length() == 0){
-            tietTenKho.setError("hãy nhập tên kho");
+        }else if(tietNameStorage.getText().toString().trim().length() == 0){
+            tietNameStorage.setError("hãy nhập tên kho");
             return;
         }
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        Storage storage = new Storage(tietMaKho.getText().toString().trim(),tietTenKho.getText().toString().trim());
+        Storage storage = new Storage(tietIdStorage.getText().toString().trim(), tietNameStorage.getText().toString().trim());
         if(isAdd){
             bundle.putSerializable("add_kho", storage);
             intent.putExtras(bundle);

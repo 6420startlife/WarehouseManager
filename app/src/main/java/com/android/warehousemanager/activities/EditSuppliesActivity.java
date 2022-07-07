@@ -1,7 +1,7 @@
 package com.android.warehousemanager.activities;
 
-import static com.android.warehousemanager.activities.SupplyActivity.REQUEST_ADD_VAT_TU;
-import static com.android.warehousemanager.activities.SupplyActivity.REQUEST_EDIT_VAT_TU;
+import static com.android.warehousemanager.activities.SuppliesActivity.REQUEST_ADD_VAT_TU;
+import static com.android.warehousemanager.activities.SuppliesActivity.REQUEST_EDIT_VAT_TU;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -29,7 +29,7 @@ import android.widget.Toast;
 
 import com.android.warehousemanager.api.ApiService;
 import com.android.warehousemanager.models.ApiResponse;
-import com.android.warehousemanager.models.Supply;
+import com.android.warehousemanager.models.Supplies;
 import com.android.warehousemanager.R;
 import com.android.warehousemanager.utils.RealPathUtil;
 import com.google.android.material.textfield.TextInputEditText;
@@ -47,24 +47,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditSupplyActivity extends AppCompatActivity {
+public class EditSuppliesActivity extends AppCompatActivity {
     public static final int REQUEST_READ_EXTERNAL_STORAGE = 10;
     public static final int REQUEST_READ_EXTERNAL_STORAGE_REAL_PATH = 11;
-    private ImageView ivAnhVatTu_Edit;
-    private TextInputEditText tietMaVatTu, tietTenVatTu, tietDonViTinh, tietXuatXu;
-    private Button btnLuuVatTu;
+    private ImageView ivEditImageSupplies;
+    private TextInputEditText tietIdSupplies, tietNameSupplies, tietUnitSupplies, tietFromSupplies;
+    private Button btnSaveSupplies;
 
     private String urlImage;
-    private Uri _uri;
+    private Uri uriKeeper;
     private ProgressDialog progressDialog;
     private boolean isAdd = false;
     private final String defaultImageUrl = "https://res.cloudinary.com/thuan6420/image/upload/v1652627208/xo5qx46gfuat6bas9jd0.jpg";;
 
-    public Uri get_uri() {
-        return _uri;
+    public Uri getUriKeeper() {
+        return uriKeeper;
     }
-    public void set_uri(Uri _uri) {
-        this._uri = _uri;
+    public void setUriKeeper(Uri uriKeeper) {
+        this.uriKeeper = uriKeeper;
     }
     public String getUrlImage() {
         return urlImage;
@@ -80,10 +80,10 @@ public class EditSupplyActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if(result.getResultCode() == Activity.RESULT_OK){
                         if(result.getData() != null){
-                            set_uri(result.getData().getData());
+                            setUriKeeper(result.getData().getData());
                             try{
-                                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), get_uri());
-                                ivAnhVatTu_Edit.setImageBitmap(bitmap);
+                                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), getUriKeeper());
+                                ivEditImageSupplies.setImageBitmap(bitmap);
                             }catch (IOException e){
                                 Log.e("Error",e.getMessage());
                             }
@@ -105,15 +105,15 @@ public class EditSupplyActivity extends AppCompatActivity {
     }
 
     private void setEvent() {
-        progressDialog = new ProgressDialog(EditSupplyActivity.this);
+        progressDialog = new ProgressDialog(EditSuppliesActivity.this);
         progressDialog.setMessage("Please wait ...");
-        btnLuuVatTu.setOnClickListener(new View.OnClickListener() {
+        btnSaveSupplies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 uploadImageToGetUrl();
             }
         });
-        ivAnhVatTu_Edit.setOnClickListener(new View.OnClickListener() {
+        ivEditImageSupplies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseImage();
@@ -122,20 +122,20 @@ public class EditSupplyActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle == null) {
             isAdd = true;
-            Picasso.get().load(defaultImageUrl).into(ivAnhVatTu_Edit);
+            Picasso.get().load(defaultImageUrl).into(ivEditImageSupplies);
         }else{
-            Supply value = (Supply) bundle.get("edit_vat_tu");
+            Supplies value = (Supplies) bundle.get("edit_vat_tu");
             if(value != null){
-                tietMaVatTu.setText(value.getId());
-                tietMaVatTu.setEnabled(false);
-                tietTenVatTu.setText(value.getName());
-                tietDonViTinh.setText(value.getUnit());
-                tietXuatXu.setText(value.getFrom());
+                tietIdSupplies.setText(value.getId());
+                tietIdSupplies.setEnabled(false);
+                tietNameSupplies.setText(value.getName());
+                tietUnitSupplies.setText(value.getUnit());
+                tietFromSupplies.setText(value.getFrom());
                 setUrlImage(value.getImage());
                 try{
-                    Picasso.get().load(value.getImage()).into(ivAnhVatTu_Edit);
+                    Picasso.get().load(value.getImage()).into(ivEditImageSupplies);
                 }catch (Exception e){
-                    Picasso.get().load(defaultImageUrl).into(ivAnhVatTu_Edit);
+                    Picasso.get().load(defaultImageUrl).into(ivEditImageSupplies);
                 }
             }
         }
@@ -162,26 +162,26 @@ public class EditSupplyActivity extends AppCompatActivity {
     }
 
     private void uploadImageToGetUrl() {
-        if(tietMaVatTu.getText().toString().trim().length() == 0){
-            tietMaVatTu.setError("hãy nhập mã vật tư");
+        if(tietIdSupplies.getText().toString().trim().length() == 0){
+            tietIdSupplies.setError("hãy nhập mã vật tư");
             return;
-        }else if(tietTenVatTu.getText().toString().trim().length() == 0){
-            tietTenVatTu.setError("hãy nhập tên vật tư");
+        }else if(tietNameSupplies.getText().toString().trim().length() == 0){
+            tietNameSupplies.setError("hãy nhập tên vật tư");
             return;
-        }else if(tietDonViTinh.getText().toString().trim().length() == 0){
-            tietDonViTinh.setError("hãy nhập đơn vị tính");
+        }else if(tietUnitSupplies.getText().toString().trim().length() == 0){
+            tietUnitSupplies.setError("hãy nhập đơn vị tính");
             return;
-        }else if(tietXuatXu.getText().toString().trim().length() == 0){
-            tietXuatXu.setError("hãy nhập xuất xứ");
+        }else if(tietFromSupplies.getText().toString().trim().length() == 0){
+            tietFromSupplies.setError("hãy nhập xuất xứ");
             return;
         }
-        if(get_uri() == null) {
+        if(getUriKeeper() == null) {
             progressDialog.show();
-            Supply value = new Supply(tietMaVatTu.getText().toString().trim()
-                    ,tietTenVatTu.getText().toString().trim()
+            Supplies value = new Supplies(tietIdSupplies.getText().toString().trim()
+                    , tietNameSupplies.getText().toString().trim()
                     ,defaultImageUrl
-                    ,tietDonViTinh.getText().toString().trim()
-                    ,tietXuatXu.getText().toString().trim());
+                    , tietUnitSupplies.getText().toString().trim()
+                    , tietFromSupplies.getText().toString().trim());
             returnResult(value);
             return;
         }
@@ -195,7 +195,7 @@ public class EditSupplyActivity extends AppCompatActivity {
                         progressDialog.show();
                     }
                 });
-                String strRealPath = RealPathUtil.getRealPath(EditSupplyActivity.this,get_uri());
+                String strRealPath = RealPathUtil.getRealPath(EditSuppliesActivity.this, getUriKeeper());
                 File file = new File(strRealPath);
                 RequestBody requestBodyFile = RequestBody.create(MediaType.parse("multipart/form-data"),file);
                 MultipartBody.Part partFile = MultipartBody.Part.createFormData("file",file.getName(),requestBodyFile);
@@ -207,11 +207,11 @@ public class EditSupplyActivity extends AppCompatActivity {
                             return;
                         }
                         ApiResponse apiResponse = response.body();
-                        Supply value = new Supply(tietMaVatTu.getText().toString().trim()
-                                ,tietTenVatTu.getText().toString().trim()
+                        Supplies value = new Supplies(tietIdSupplies.getText().toString().trim()
+                                , tietNameSupplies.getText().toString().trim()
                                 ,apiResponse.getData()
-                                ,tietDonViTinh.getText().toString().trim()
-                                ,tietXuatXu.getText().toString().trim());
+                                , tietUnitSupplies.getText().toString().trim()
+                                , tietFromSupplies.getText().toString().trim());
                         returnResult(value);
                     }
 
@@ -219,10 +219,10 @@ public class EditSupplyActivity extends AppCompatActivity {
                     public void onFailure(Call<ApiResponse> call, Throwable t) {
                         progressDialog.dismiss();
                         if (t.getMessage().equalsIgnoreCase("timeout")){
-                            Toast.makeText(EditSupplyActivity.this, "Timeout", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditSuppliesActivity.this, "Timeout", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Toast.makeText(EditSupplyActivity.this, "Call API upload image fail", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditSuppliesActivity.this, "Call API upload image fail", Toast.LENGTH_SHORT).show();
                         Log.e("ErrorApi", t.getMessage());
                     }
                 });
@@ -233,7 +233,7 @@ public class EditSupplyActivity extends AppCompatActivity {
 
     }
 
-    private void returnResult(Supply value) {
+    private void returnResult(Supplies value) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         if(isAdd){
@@ -250,12 +250,12 @@ public class EditSupplyActivity extends AppCompatActivity {
     }
 
     private void setControl() {
-        ivAnhVatTu_Edit = findViewById(R.id.ivAnhVatTu_Edit);
-        tietMaVatTu = findViewById(R.id.tietMaVatTu);
-        tietTenVatTu = findViewById(R.id.tietTenVatTu);
-        tietDonViTinh = findViewById(R.id.tietDonViTinh);
-        tietXuatXu = findViewById(R.id.tietXuatXu);
-        btnLuuVatTu = findViewById(R.id.btnLuuVatTu);
+        ivEditImageSupplies = findViewById(R.id.ivAnhVatTu_Edit);
+        tietIdSupplies = findViewById(R.id.tietMaVatTu);
+        tietNameSupplies = findViewById(R.id.tietTenVatTu);
+        tietUnitSupplies = findViewById(R.id.tietDonViTinh);
+        tietFromSupplies = findViewById(R.id.tietXuatXu);
+        btnSaveSupplies = findViewById(R.id.btnLuuVatTu);
     }
 
     @Override

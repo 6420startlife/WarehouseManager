@@ -85,17 +85,20 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) {
                 if(!response.isSuccessful()){
-                    Toast.makeText(DetailPhieuNhapActivity.this, "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailPhieuNhapActivity.this,
+                            "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(response.code() == STATUS_CODE_NO_CONTENT) {
-                    Toast.makeText(DetailPhieuNhapActivity.this, "Sửa thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailPhieuNhapActivity.this,
+                            "Sửa thành công", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Toast.makeText(DetailPhieuNhapActivity.this, "Call Api update CTPN fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailPhieuNhapActivity.this,
+                        "Call Api update CTPN fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi",t.getMessage());
             }
         });
@@ -106,17 +109,20 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) {
                 if(!response.isSuccessful()){
-                    Toast.makeText(DetailPhieuNhapActivity.this, "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailPhieuNhapActivity.this,
+                            "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(response.code() == STATUS_CODE_NO_CONTENT) {
-                    Toast.makeText(DetailPhieuNhapActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailPhieuNhapActivity.this,
+                            "Thêm thành công", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Toast.makeText(DetailPhieuNhapActivity.this, "Call Api add CTPN fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailPhieuNhapActivity.this,
+                        "Call Api add CTPN fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi",t.getMessage());
             }
         });
@@ -171,7 +177,8 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<DetailGoodsReceipt>> call, Response<List<DetailGoodsReceipt>> response) {
                 if(!response.isSuccessful()){
-                    Toast.makeText(DetailPhieuNhapActivity.this, "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailPhieuNhapActivity.this,
+                            "Request fail" + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 fetchDataToAdapter(response.body());
@@ -179,7 +186,8 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<DetailGoodsReceipt>> call, Throwable t) {
-                Toast.makeText(DetailPhieuNhapActivity.this, "Call Api get All CTPN fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailPhieuNhapActivity.this,
+                        "Call Api get All CTPN fail", Toast.LENGTH_SHORT).show();
                 Log.e("ErrorApi",t.getMessage());
             }
         });
@@ -222,7 +230,8 @@ public class DetailPhieuNhapActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Toast.makeText(DetailPhieuNhapActivity.this, "call api remove ctpn fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailPhieuNhapActivity.this,
+                        "call api remove ctpn fail", Toast.LENGTH_SHORT).show();
             }
         });
     }

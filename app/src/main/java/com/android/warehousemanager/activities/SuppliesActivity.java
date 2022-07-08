@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import com.android.warehousemanager.api.ApiService;
 import com.android.warehousemanager.adapters.SuppliesAdapter;
-import com.android.warehousemanager.interfaces.IClickItemVatTuListener;
+import com.android.warehousemanager.interfaces.IClickItemSuppliesListener;
 import com.android.warehousemanager.models.Supplies;
 import com.android.warehousemanager.R;
 
@@ -108,7 +108,7 @@ public class SuppliesActivity extends AppCompatActivity {
     }
 
     private void initListView() {
-        adapter = new SuppliesAdapter(SuppliesActivity.this, 0, listSupplies, new IClickItemVatTuListener() {
+        adapter = new SuppliesAdapter(SuppliesActivity.this, 0, listSupplies, new IClickItemSuppliesListener() {
             @Override
             public void onClickItemVatTu(Supplies supplies) {
                 onClickToEditVatTu(supplies);

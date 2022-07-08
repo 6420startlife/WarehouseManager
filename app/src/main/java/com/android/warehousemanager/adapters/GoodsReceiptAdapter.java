@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.warehousemanager.models.GoodsReceipt;
-import com.android.warehousemanager.interfaces.IClickItemPhieuNhapListener;
+import com.android.warehousemanager.interfaces.IClickItemGoodsReceiptListener;
 import com.android.warehousemanager.R;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 public class GoodsReceiptAdapter extends RecyclerView.Adapter<GoodsReceiptAdapter.ViewHolder> {
 
     private List<GoodsReceipt> data;
-    private IClickItemPhieuNhapListener clickItemPhieuNhapListener;
+    private IClickItemGoodsReceiptListener clickItemPhieuNhapListener;
 
     public List<GoodsReceipt> getData() {
         return data;
@@ -54,7 +54,7 @@ public class GoodsReceiptAdapter extends RecyclerView.Adapter<GoodsReceiptAdapte
         }
     }
 
-    public GoodsReceiptAdapter(List<GoodsReceipt> data, IClickItemPhieuNhapListener listener) {
+    public GoodsReceiptAdapter(List<GoodsReceipt> data, IClickItemGoodsReceiptListener listener) {
         this.data = data;
         this.clickItemPhieuNhapListener = listener;
     }

@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.android.warehousemanager.interfaces.IClickItemVatTuListener;
+import com.android.warehousemanager.interfaces.IClickItemSuppliesListener;
 import com.android.warehousemanager.models.Supplies;
 import com.android.warehousemanager.R;
 import com.squareup.picasso.Picasso;
@@ -26,7 +26,7 @@ public class SuppliesAdapter extends ArrayAdapter<Supplies> {
     private ImageView ivAnhVatTu;
     private TextView tvMaVatTu, tvTenVatTu, tvDonViTinh, tvXuatXu;
     private ConstraintLayout layoutItemVatTu;
-    private IClickItemVatTuListener listener;
+    private IClickItemSuppliesListener listener;
 
     public List<Supplies> getData() {
         return data;
@@ -72,7 +72,7 @@ public class SuppliesAdapter extends ArrayAdapter<Supplies> {
         return data.get(position);
     }
 
-    public SuppliesAdapter(@NonNull Context context, int resource, @NonNull List<Supplies> objects, IClickItemVatTuListener listener) {
+    public SuppliesAdapter(@NonNull Context context, int resource, @NonNull List<Supplies> objects, IClickItemSuppliesListener listener) {
         super(context, resource, objects);
         this.context = context;
         this.data = objects;

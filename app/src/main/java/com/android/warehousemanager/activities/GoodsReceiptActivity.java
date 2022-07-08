@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.android.warehousemanager.api.ApiService;
 import com.android.warehousemanager.adapters.GoodsReceiptAdapter;
 import com.android.warehousemanager.models.GoodsReceipt;
-import com.android.warehousemanager.interfaces.IClickItemPhieuNhapListener;
+import com.android.warehousemanager.interfaces.IClickItemGoodsReceiptListener;
 import com.android.warehousemanager.R;
 
 import java.util.ArrayList;
@@ -153,7 +153,7 @@ public class GoodsReceiptActivity extends AppCompatActivity {
 
     private void initRecycleView() {
         rvGR.startLayoutAnimation();
-        adapter = new GoodsReceiptAdapter(goodsReceipts,new IClickItemPhieuNhapListener() {
+        adapter = new GoodsReceiptAdapter(goodsReceipts,new IClickItemGoodsReceiptListener() {
             @Override
             public void onClickItemGR(GoodsReceipt value) {
                 onClickGoToDetail(value);

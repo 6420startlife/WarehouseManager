@@ -10,14 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.warehousemanager.models.DetailGoodsReceipt;
-import com.android.warehousemanager.interfaces.IClickItemDetailPhieuNhapListener;
+import com.android.warehousemanager.interfaces.IClickItemDetailGoodsReceiptListener;
 import com.android.warehousemanager.R;
 
 import java.util.List;
 
 public class DetailGoodsReceiptAdapter extends RecyclerView.Adapter<DetailGoodsReceiptAdapter.ViewHolder>{
     private List<DetailGoodsReceipt> data;
-    private IClickItemDetailPhieuNhapListener clickItemDetailPhieuNhapListener;
+    private IClickItemDetailGoodsReceiptListener clickItemDetailPhieuNhapListener;
 
     public List<DetailGoodsReceipt> getData() {
         return data;
@@ -52,7 +52,7 @@ public class DetailGoodsReceiptAdapter extends RecyclerView.Adapter<DetailGoodsR
         }
     }
 
-    public DetailGoodsReceiptAdapter(List<DetailGoodsReceipt> data, IClickItemDetailPhieuNhapListener listener) {
+    public DetailGoodsReceiptAdapter(List<DetailGoodsReceipt> data, IClickItemDetailGoodsReceiptListener listener) {
         this.data = data;
         this.clickItemDetailPhieuNhapListener = listener;
     }
@@ -76,7 +76,7 @@ public class DetailGoodsReceiptAdapter extends RecyclerView.Adapter<DetailGoodsR
         holder.ivDetailPhieuNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickItemDetailPhieuNhapListener.onClickDetailPhieuNhap(value);
+                clickItemDetailPhieuNhapListener.onClickDGR(value);
             }
         });
     }

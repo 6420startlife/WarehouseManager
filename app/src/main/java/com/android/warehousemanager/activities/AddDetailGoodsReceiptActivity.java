@@ -68,7 +68,7 @@ public class AddDetailGoodsReceiptActivity extends AppCompatActivity {
         ivAddDGR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickAddDetailPN();
+                onClickAddDGR();
             }
         });
         ApiService.API_SERVICE.getSuppliesSpinner().enqueue(new Callback<List<String>>() {
@@ -77,7 +77,8 @@ public class AddDetailGoodsReceiptActivity extends AppCompatActivity {
                 if(!response.isSuccessful()){
                     return;
                 }
-                SpinnerAdapter spinnerAdapter = new SpinnerAdapter(AddDetailGoodsReceiptActivity.this,0,response.body());
+                SpinnerAdapter spinnerAdapter = new SpinnerAdapter(AddDetailGoodsReceiptActivity.this
+                        ,0,response.body());
                 actvSupplies.setAdapter(spinnerAdapter);
             }
 
@@ -96,9 +97,10 @@ public class AddDetailGoodsReceiptActivity extends AppCompatActivity {
         }
     }
 
-    private void onClickAddDetailPN() {
+    private void onClickAddDGR() {
         if(actvSupplies.getText().toString().trim().length() == 0){
-            Toast.makeText(this, "Chọn vật tư ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,
+                    "Chọn vật tư ", Toast.LENGTH_SHORT).show();
             return;
         }else if(etAmount.getText().toString().trim().length() == 0){
             etAmount.setError("hãy nhập số lượng");
@@ -107,7 +109,9 @@ public class AddDetailGoodsReceiptActivity extends AppCompatActivity {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         String suppliesKeeper[] = actvSupplies.getText().toString().trim().split("\\s",2);
-        DetailGoodsReceipt value = new DetailGoodsReceipt(idGRKeeper, suppliesKeeper[0], Integer.valueOf(etAmount.getText().toString().trim()));
+        DetailGoodsReceipt value = new DetailGoodsReceipt(idGRKeeper
+                , suppliesKeeper[0]
+                , Integer.valueOf(etAmount.getText().toString().trim()));
         bundle.putSerializable("add_detail_phieu_nhap",value);
         intent.putExtras(bundle);
         setResult(REQUEST_ADD_DETAIL_PHIEU_NHAP,intent);
@@ -115,9 +119,9 @@ public class AddDetailGoodsReceiptActivity extends AppCompatActivity {
     }
 
     private void setControl() {
-        actvSupplies = findViewById(R.id.actvVatTu);
-        etAmount = findViewById(R.id.etSoLuong);
-        ivAddDGR = findViewById(R.id.ivAddDetailPN);
-        ivCancelDGR = findViewById(R.id.ivCancelDetailPN);
+        actvSupplies = findViewById(R.id.actvSupplies);
+        etAmount = findViewById(R.id.etAmount);
+        ivAddDGR = findViewById(R.id.ivAddDGR);
+        ivCancelDGR = findViewById(R.id.ivCancelDGR);
     }
 }

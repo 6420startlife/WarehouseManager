@@ -90,7 +90,7 @@ public class EditDetailGoodsReceiptActivity extends AppCompatActivity {
 
     private void setControl() {
         tvIdSupplies = findViewById(R.id.etMaVatTu);
-        etAmount = findViewById(R.id.etSoLuong);
+        etAmount = findViewById(R.id.etAmount);
         ivSaveDGR = findViewById(R.id.ivSaveDetailPhieuNhap);
         ivCancelDGR = findViewById(R.id.ivCancelDetailPhieuNhap);
 

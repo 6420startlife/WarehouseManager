@@ -26,7 +26,7 @@
                 android:hint="Chọn vật tư">
 
                 <AutoCompleteTextView
-                    android:id="@+id/actvVatTu"
+                    android:id="@+id/actvSupplies"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Số lượng">
                 <EditText
-                    android:id="@+id/etSoLuong"
+                    android:id="@+id/etAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
@@ -84,7 +84,7 @@
                     android:src="@drawable/bg_button_add_1" />
 
                 <ImageView
-                    android:id="@+id/ivAddDetailPN"
+                    android:id="@+id/ivAddDGR"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
@@ -118,7 +118,7 @@
                     android:src="@drawable/bg_button_cancel" />
 
                 <ImageView
-                    android:id="@+id/ivCancelDetailPN"
+                    android:id="@+id/ivCancelDGR"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"

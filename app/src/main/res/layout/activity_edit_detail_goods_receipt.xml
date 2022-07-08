@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Số lượng">
                 <EditText
-                    android:id="@+id/etSoLuong"
+                    android:id="@+id/etAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
